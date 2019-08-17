@@ -1,0 +1,20 @@
+{
+  "author": "NeverDecaf",
+  "manifest_version": 2,	
+  "name": "Chromium Web Store",
+  "version": "0.1",
+  "description": "Allow installing extensions from chrome web store on chromium based browsers.",
+  "background": { "scripts": ["background.js"] },
+  "permissions" : [
+  ],
+  "content_scripts": [
+	{
+		"matches": ["https://chrome.google.com/webstore/*"],
+		"js": ["background.js"],
+		"run_at": "document_start"
+	}
+	],
+	 "web_accessible_resources": [
+    "inject.js"
+  ]
+}
