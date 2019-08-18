@@ -10,7 +10,7 @@ var bodyObserver = new MutationObserver(function (mutations) {
 		return 'https://clients2.google.com/service/update2/crx?response=redirect&acceptformat=crx2,crx3&prodversion='+chromeVersion+'&x=id%3D'+extensionId+'%26installsource%3Dondemand%26uc'
 	};
 	mutations.forEach(function (mutation) {
-	if (mutation.target.tagName == 'DIV' && mutation.attributeName == 'class') {
+		if (mutation.attributeName == 'class' && mutation.target.tagName == 'DIV' && (mutation.target.className == 'a-eb-mb-x' || mutation.target.hasAttribute('webstore-source'))) {
 		var xpathResult = document.evaluate( '//div[div[@aria-label="Available on Chrome"] or (@class="h-e-f-Ra-c e-f-oh-Md-zb-k" and not(node())) ]', document, null, XPathResult.ANY_TYPE, null);
 
 		var results = [];
