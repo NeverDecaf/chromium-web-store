@@ -7,5 +7,5 @@ This extension brings the following functionality to ungoogled-chromium (and oth
 - Available extension updates will display on the badge, click to install them (note that non-webstore extensions may need to be installed manually even if you have the flag set.)
 - Automatic update checks only happen on browser startup. Clicking the badge does a check immediately.
 
-#### Install
+#### Installation
 - Download the .crx from [Releases](https://github.com/NeverDecaf/chromium-web-store/releases/latest) and drag-and-drop it into `chrome://extensions`
