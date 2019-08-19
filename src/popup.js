@@ -1,4 +1,3 @@
-
 chrome.management.getAll(function (e) {
     var chromeVersion = /Chrome\/([0-9.]+)/.exec(navigator.userAgent)[1];
     var webstoreUrl = 'clients2.google.com/service/update2/crx';
@@ -16,7 +15,7 @@ chrome.management.getAll(function (e) {
         }
     });
     updateUrls.push(updateUrl);
-    document.body.innerHTML = '<h3>Checking for updates...</h3>';
+    document.body.innerHTML = '<h3>All extensions are up to date!</h3>';
     var firstResponse = '<h3>Available Updates:</h3>';
     function getNewXhr() {
         var xhttp = new XMLHttpRequest();
@@ -24,10 +23,6 @@ chrome.management.getAll(function (e) {
             if (this.readyState == 4) {
                 if (this.status == 200) {
                     xmlDoc = this.responseXML;
-                    if (firstResponse) {
-                        document.body.innerHTML = firstResponse;
-                        firstResponse = null;
-                    }
                     var updates = xmlDoc.getElementsByTagName('app');
                     for (var i = 0; i < updates.length; i++) {
                         if (updateCheck = updates[i].querySelector("*")) {
@@ -35,6 +30,10 @@ chrome.management.getAll(function (e) {
                             var appid = updates[i].getAttribute('appid');
                             var is_webstore = xhttp._url == updateUrl;
                             if (updatever && installed_versions[appid].version != updatever) {
+                                if (firstResponse) {
+                                    document.body.innerHTML = firstResponse;
+                                    firstResponse = null;
+                                }
                                 elem = document.createElement('div');
                                 span = document.createElement('span');
                                 span.setAttribute('style', "color: blue; cursor: pointer; text-decoration: underline; margin-right:5px;");
