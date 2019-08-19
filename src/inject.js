@@ -1,8 +1,6 @@
 var bodyObserver = new MutationObserver(function (mutations) {
     function getExtensionId(url) {
-        url = url.split('#')[0].split('?')[0];
-        var pathfrags = url.split('/');
-        return pathfrags[pathfrags.length - 1];
+        return /.*detail\/[^\/]*\/([a-z]*)/i.exec(url)[1];
     };
     function buildExtensionUrl(extensionId) {
         var chromeVersion = /Chrome\/([0-9.]+)/.exec(navigator.userAgent)[1];
@@ -10,7 +8,7 @@ var bodyObserver = new MutationObserver(function (mutations) {
     };
     mutations.forEach(function (mutation) {
         if (mutation.attributeName == 'class' && mutation.target.tagName == 'DIV' && (mutation.target.className == 'a-eb-mb-x' || mutation.target.hasAttribute('webstore-source'))) {
-            var xpathResult = document.evaluate('//div[div[@aria-label="Available on Chrome"] or (@class="h-e-f-Ra-c e-f-oh-Md-zb-k" and not(node())) ]', document, null, XPathResult.ANY_TYPE, null);
+            var xpathResult = document.evaluate('//div[div[@aria-label="Available on Chrome"] or @class="h-e-f-Ra-c e-f-oh-Md-zb-k"]', document, null, XPathResult.ANY_TYPE, null);
             var results = [];
             while (result = xpathResult.iterateNext())
                 results.push(result);
@@ -21,30 +19,22 @@ var bodyObserver = new MutationObserver(function (mutations) {
                 button_div.setAttribute('aria-label', 'Add to Chromium');
                 button_div.setAttribute('tabindex', '0');
                 button_div.setAttribute('style', 'user-select: none;');
-                var dlurl = '';
+                let dlurl = '';
                 if (parentpanel = results[i].closest('a')) {
                     dlurl = buildExtensionUrl(getExtensionId(parentpanel.href));
-                    parentpanel.setAttribute('ext_dl_url', dlurl);
-                    parentpanel.addEventListener("click", function () {
-                        this.setAttribute('id', 'ext_dl_url');
-                    });
-                } else if (clickedon = document.getElementById('ext_dl_url')) {
-                    clickedon.removeAttribute('id');
-                    dlurl = clickedon.getAttribute('ext_dl_url');
                 } else {
-                    dlurl = buildExtensionUrl(getExtensionId(document.head.querySelector('meta[property="og:url"]').getAttribute('content')));
+                    dlurl = buildExtensionUrl(getExtensionId(window.location.href));
                 }
-                button_div.setAttribute('ext_dl_url', dlurl);
                 var hf = document.createElement('div');
                 hf.setAttribute('class', 'g-c-Hf');
                 button_div.appendChild(hf);
                 var x = document.createElement('div');
                 x.setAttribute('class', 'g-c-x');
                 hf.appendChild(x);
-                var R = document.createElement('div');
-                R.setAttribute('class', 'g-c-R  webstore-test-button-label');
-                R.innerHTML = 'Add to Chromium';
-                x.appendChild(R);
+                var r = document.createElement('div');
+                r.setAttribute('class', 'g-c-R  webstore-test-button-label');
+                r.innerHTML = 'Add to Chromium';
+                x.appendChild(r);
                 button_div.addEventListener("mouseover", function () {
                     this.classList.add('g-c-l');
                 });
@@ -52,7 +42,7 @@ var bodyObserver = new MutationObserver(function (mutations) {
                     this.classList.remove('g-c-l');
                 });
                 button_div.addEventListener("click", function () {
-                    window.open(this.getAttribute('ext_dl_url'));
+                    window.open(dlurl);
                 });
                 results[i].innerHTML = "";
                 results[i].appendChild(button_div);
