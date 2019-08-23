@@ -6,7 +6,11 @@ This extension brings the following functionality to ungoogled-chromium (and oth
 #### Usage
 - If you wish to install extensions directly instead of just downloading the crx, you must change the flag `chrome://flags/#extension-mime-request-handling` to `Always prompt for install`.
 - Available extension updates will display on the badge, click to install them (note that non-webstore extensions may need to be installed manually even if you have the flag set.)
-- Automatic update checks only happen on browser startup. Clicking the badge does a check immediately.
 
 #### Installation
 - Download the .crx from [Releases](https://github.com/NeverDecaf/chromium-web-store/releases/latest) and drag-and-drop it into `chrome://extensions`
+
+#### Options Notes
+- Right click the badge and choose `Options` from the context menu or access them via `chrome://extensions`.
+- Automatic updates normally occur on browser startup, extension addition/removal, and once per hour.
+- "Web Store" extensions refer to any that were obtained from the [Chrome Web Store](https://chrome.google.com/webstore/category/extensions), despite displaying `Source: Not from Chrome Web Store` when checking extension details.
