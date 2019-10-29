@@ -1,11 +1,12 @@
 const container = document.getElementById("app");
 const appcontainer = document.createElement("ul");
-container.appendChild(appcontainer);
 var header = document.createElement('em');
 const updatefailure = document.createElement('em');
 updatefailure.innerHTML = 'UPDATE CHECK FAILED';
 var alluptodate = document.createElement('h1');
 alluptodate.innerHTML = 'Checking for updates...';
+container.appendChild(alluptodate);
+container.appendChild(appcontainer);
 chrome.storage.sync.get({
     "auto_update": true,
     "check_store_apps": true,
@@ -30,14 +31,11 @@ chrome.storage.sync.get({
             }
         });
         updateUrls.push(updateUrl);
-        container.appendChild(alluptodate);
         function getNewXhr() {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4) {
                     if (this.status == 200) {
-                        if (alluptodate)
-                            alluptodate.innerHTML = 'All extensions are up to date!';
                         xmlDoc = this.responseXML;
                         var updates = xmlDoc.getElementsByTagName('app');
                         let updateCount = 0;
@@ -48,10 +46,6 @@ chrome.storage.sync.get({
                                 var is_webstore = xhttp._url == updateUrl;
                                 if (updatever && installed_versions[appid].version != updatever) {
                                     updateCount++;
-                                    if (alluptodate) {
-                                        container.removeChild(alluptodate);
-                                        alluptodate = null;
-                                    }
                                     var li = document.createElement('li');
                                     li.setAttribute('data-enabled', installed_versions[appid].enabled ? 'true' : 'false');
                                     img = document.createElement('img');
@@ -75,15 +69,18 @@ chrome.storage.sync.get({
                                         storepage.setAttribute('href', installed_versions[appid].homepageUrl);
                                         li.appendChild(storepage);
                                     }
-                                    let crx_url = updateCheck.getAttribute('codebase');
+                                    li.setAttribute('crx_url', updateCheck.getAttribute('codebase'));
                                     li.addEventListener("click", function (evt) {
+                                        let crx_url = updateCheck.getAttribute('codebase');
                                         if (evt.target.tagName != 'A')
                                             window.open(crx_url);
                                     });
                                     appcontainer.appendChild(li);
+                                    alluptodate.style.display = 'none';
                                 }
                             }
                         }
+
                         chrome.browserAction.getBadgeText({}, function (currentText) {
                             if (currentText != '?') {
                                 if (!currentText) {
@@ -112,12 +109,18 @@ chrome.storage.sync.get({
         chrome.browserAction.setBadgeText({
             text: ''
         });
+        completed = updateUrls.length;
         updateUrls.forEach(function (uurl) {
             if ((updateUrl == uurl && settings.check_store_apps) || (updateUrl != uurl && settings.check_external_apps)) {
                 xhr = getNewXhr();
                 xhr.open("GET", uurl, true);
                 xhr._url = uurl;
                 xhr.send();
+                xhr.onloadend = function () {
+                    completed--;
+                    if (completed == 0)
+                        alluptodate.innerHTML = 'All extensions are up to date!';
+                };
             }
         });
     });
