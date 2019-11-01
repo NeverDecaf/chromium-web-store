@@ -2,14 +2,15 @@
     "author": "NeverDecaf",
     "manifest_version": 2,
     "name": "Chromium Web Store",
-    "version": "0.6.0",
+    "version": "0.7.0",
     "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqF/d41Q7agjkUzYq8ZGbQr8XW8mmEIMXOnR1uCTnYLL+Dm9Z+LO50xZukOISNy6zFxpI8ts/OGLsm+I2x9+UprUU4/EVdmxuwegFE6NBoEhHoRNYY0gbXZkaU8YY/XwzjVY/k18DDhl5NYPEnF6uq4Oyidg+xtd3W4+iGYczuOLER1Tp5y614zOTphcvFYhvUkCijQ6HT1TtRq/34SlFoRQqo4SFiLriK451xWIcfwiMLIekWrdoQa1v8dqIlMA3r6CKc0QykJpSYbiyormWiZ0hl2HLpkZ85mD9V0eDQ5RCtb6vkybK7INcq4yKQV4YkXhr9NpX9U4re4dlFQjEJQIDAQAB",
     "description": "Allow installing/updating extensions from chrome web store on chromium based browsers. Click badge to check for updates.",
     "permissions": [
         "management",
         "https://clients2.google.com/service/*",
         "storage",
-		"alarms"
+		"alarms",
+		"contextMenus"
     ],
     "browser_action": {
         "default_icon": {
