@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <gupdate xmlns='http://www.google.com/update2/response' protocol='2.0'>
   <app appid='ocaahdebbfolfmndjeplogmgcagdmblk'>
-    <updatecheck codebase='https://github.com/NeverDecaf/chromium-web-store/releases/latest/download/Chromium.Web.Store.crx' version='0.7.0' />
+    <updatecheck codebase='https://github.com/NeverDecaf/chromium-web-store/releases/latest/download/Chromium.Web.Store.crx' version='0.7.1' />
   </app>
 </gupdate>

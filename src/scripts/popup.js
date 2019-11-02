@@ -70,8 +70,8 @@ chrome.storage.sync.get({
                                         li.appendChild(storepage);
                                     }
                                     li.setAttribute('crx_url', updateCheck.getAttribute('codebase'));
+									let crx_url = updateCheck.getAttribute('codebase');
                                     li.addEventListener("click", function (evt) {
-                                        let crx_url = updateCheck.getAttribute('codebase');
                                         if (evt.target.tagName != 'A')
                                             window.open(crx_url);
                                     });
