@@ -22,3 +22,10 @@ label > span {
     margin-left: 0.3em;
     user-select: none;
 }
+
+label > img {
+    flex: 0 0 auto;
+    margin: auto 4px auto 8px;
+    width: 16px;
+    height: 16px;
+}

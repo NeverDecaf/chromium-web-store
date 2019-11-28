@@ -7,30 +7,33 @@ var alluptodate = document.createElement('h1');
 alluptodate.innerHTML = 'Checking for updates...';
 container.appendChild(alluptodate);
 container.appendChild(appcontainer);
-chrome.storage.sync.get({
-    "auto_update": true,
-    "check_store_apps": true,
-    "check_external_apps": true
-}, function (settings) {
-    if (!settings.check_store_apps && !settings.check_external_apps)
-        alluptodate.innerHTML = 'All extensions are up to date!';
-    chrome.management.getAll(function (e) {
-        var chromeVersion = /Chrome\/([0-9.]+)/.exec(navigator.userAgent)[1];
-        var webstoreUrl = 'clients2.google.com/service/update2/crx';
-        var updateUrl = 'https://clients2.google.com/service/update2/crx?response=updatecheck&acceptformat=crx2,crx3&prodversion=' + chromeVersion;
-        var installed_versions = {};
-        var updateUrls = [];
-        e.forEach(function (ex) {
-            if (ex.updateUrl) {
-                if (webstoreUrl == ex.updateUrl.replace(/^(?:https?:\/\/)?/i, "")) {
-                    updateUrl += '&x=id%3D' + ex.id + '%26uc';
-                } else {
-                    updateUrls.push(ex.updateUrl);
-                }
-                installed_versions[ex.id] = ex;
+chrome.management.getAll(function (e) {
+    var default_options = {
+        "auto_update": true,
+        "check_store_apps": true,
+        "check_external_apps": true
+    };
+    var chromeVersion = /Chrome\/([0-9.]+)/.exec(navigator.userAgent)[1];
+    var webstoreUrl = 'clients2.google.com/service/update2/crx';
+    var updateUrl = 'https://clients2.google.com/service/update2/crx?response=updatecheck&acceptformat=crx2,crx3&prodversion=' + chromeVersion;
+    var installed_versions = {};
+    var updateUrls = [];
+    e.forEach(function (ex) {
+        if (ex.updateUrl) {
+            if (webstoreUrl == ex.updateUrl.replace(/^(?:https?:\/\/)?/i, "")) {
+                updateUrl += '&x=id%3D' + ex.id + '%26uc';
+            } else {
+                updateUrls.push(ex.updateUrl);
             }
-        });
-        updateUrls.push(updateUrl);
+            installed_versions[ex.id] = ex;
+        }
+        default_options[ex.id] = false;
+    });
+    updateUrls.push(updateUrl);
+    chrome.storage.sync.get(default_options, function (settings) {
+        if (!settings.check_store_apps && !settings.check_external_apps)
+            alluptodate.innerHTML = 'All extensions are up to date!';
+
         function getNewXhr() {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
@@ -44,7 +47,7 @@ chrome.storage.sync.get({
                                 var updatever = updateCheck.getAttribute('version');
                                 var appid = updates[i].getAttribute('appid');
                                 var is_webstore = xhttp._url == updateUrl;
-                                if (updatever && installed_versions[appid].version != updatever) {
+                                if (updatever && !settings[appid] && installed_versions[appid].version != updatever) {
                                     updateCount++;
                                     var li = document.createElement('li');
                                     li.setAttribute('data-enabled', installed_versions[appid].enabled ? 'true' : 'false');
@@ -70,7 +73,7 @@ chrome.storage.sync.get({
                                         li.appendChild(storepage);
                                     }
                                     li.setAttribute('crx_url', updateCheck.getAttribute('codebase'));
-									let crx_url = updateCheck.getAttribute('codebase');
+                                    let crx_url = updateCheck.getAttribute('codebase');
                                     li.addEventListener("click", function (evt) {
                                         if (evt.target.tagName != 'A')
                                             window.open(crx_url);
@@ -80,7 +83,6 @@ chrome.storage.sync.get({
                                 }
                             }
                         }
-
                         chrome.browserAction.getBadgeText({}, function (currentText) {
                             if (currentText != '?') {
                                 if (!currentText) {
@@ -121,6 +123,8 @@ chrome.storage.sync.get({
                     if (completed == 0)
                         alluptodate.innerHTML = 'All extensions are up to date!';
                 };
+            } else {
+                completed--;
             }
         });
     });
