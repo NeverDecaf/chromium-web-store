@@ -44,8 +44,8 @@ ul li[data-enabled="false"] {
 
 ul li:hover {
     outline-color: rgb(77,144,254);
-	outline-style: auto;
-	outline-width: 1px;
+    outline-style: auto;
+    outline-width: 1px;
 }
 
 img {
@@ -69,7 +69,7 @@ a {
 }
 
 a:hover {
-	color:red;
+    color:red;
 }
 
 em {
@@ -79,8 +79,8 @@ em {
     padding: 0 8px;
     width: 272px;
     font-style: normal;
-	font-weight: bold;
-	text-align: center;
+    font-weight: bold;
+    text-align: center;
     background-color: red;
     box-sizing: border-box;
     z-index: 100;
@@ -92,11 +92,18 @@ em:empty {
 }
 
 svg {
-	fill: rgb(95, 99, 104);
-	width: 20px;
-	height: 20px;
+    fill: rgb(95, 99, 104);
+    width: 20px;
+    height: 20px;
 }
 
 a:hover > svg {
     transform: scale(1.15);
+}
+
+@media (prefers-color-scheme: dark) {
+body, #app {
+    background-color: #313131;
+    color: #bfbfbf;
+}
 }

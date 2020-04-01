@@ -29,3 +29,10 @@ label > img {
     width: 16px;
     height: 16px;
 }
+
+@media (prefers-color-scheme: dark) {
+body {
+    background-color: #313131;
+    color: #bfbfbf;
+}
+}
