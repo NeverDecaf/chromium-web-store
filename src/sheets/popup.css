@@ -72,23 +72,9 @@ a:hover {
     color:red;
 }
 
-em {
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 0 8px;
-    width: 272px;
-    font-style: normal;
+#updatefailure {
     font-weight: bold;
-    text-align: center;
     background-color: red;
-    box-sizing: border-box;
-    z-index: 100;
-    cursor: default;
-}
-
-em:empty {
-    display: none;
 }
 
 svg {
