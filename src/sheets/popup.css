@@ -72,7 +72,7 @@ a:hover {
     color:red;
 }
 
-#updatefailure {
+.updatefailure {
     font-weight: bold;
     background-color: red;
 }

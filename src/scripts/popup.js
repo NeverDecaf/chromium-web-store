@@ -37,10 +37,11 @@ checkForUpdates(function (updateCheck, installed_versions, appid, updatever, is_
     });
     appcontainer.appendChild(li);
     update_status.style.display = 'none';
+}, function (is_webstore, ext_name) {
+    let faildiv = document.createElement('h1');
+    faildiv.setAttribute('class', 'updatefailure');
+    faildiv.innerHTML = ext_name + ' Update Failed';
+    appcontainer.appendChild(faildiv);
 }, function () {
-    update_status.innerHTML = 'UPDATE CHECK FAILED';
-    update_status.setAttribute('id', 'updatefailure');
-}, function () {
-    if (update_status.getAttribute('id') != 'updatefailure')
-        update_status.innerHTML = 'All extensions are up to date!';
+    update_status.innerHTML = 'All extensions are up to date!';
 });

@@ -1,5 +1,6 @@
 const chromeVersion = /Chrome\/([0-9.]+)/.exec(navigator.userAgent)[1];
 const webstoreUrl = 'clients2.google.com/service/update2/crx';
+
 function checkForUpdates(update_callback = null, failure_callback = null, completed_callback = null) {
     chrome.management.getAll(function (e) {
         let default_options = {
@@ -19,15 +20,21 @@ function checkForUpdates(update_callback = null, failure_callback = null, comple
                     if (webstoreUrl == ex.updateUrl.replace(/^(?:https?:\/\/)?/i, "")) {
                         updateUrl += '&x=id%3D' + ex.id + '%26uc';
                     } else if (settings.check_external_apps) {
-                        updateUrls.push(ex.updateUrl);
+                        updateUrls.push({
+                            'url': ex.updateUrl,
+                            'name': ex.name
+                        });
                     }
                     installed_versions[ex.id] = ex;
                 }
             });
             if (settings.check_store_apps)
-                updateUrls.push(updateUrl);
+                updateUrls.push({
+                    'url': updateUrl,
+                    'name': 'CWS Extensions'
+                });
 
-            function getNewXhr(is_webstore) {
+            function getNewXhr(is_webstore, ext_name) {
                 let xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function () {
                     if (this.readyState == 4) {
@@ -60,7 +67,7 @@ function checkForUpdates(update_callback = null, failure_callback = null, comple
                             });
                         } else {
                             if (failure_callback)
-                                failure_callback();
+                                failure_callback(is_webstore, ext_name);
                             if (is_webstore)
                                 chrome.browserAction.setBadgeText({
                                     text: "?"
@@ -78,8 +85,8 @@ function checkForUpdates(update_callback = null, failure_callback = null, comple
             if (pending_updates == 0 && completed_callback)
                 completed_callback();
             updateUrls.forEach(function (uurl) {
-                xhr = getNewXhr(uurl == updateUrl);
-                xhr.open("GET", uurl, true);
+                xhr = getNewXhr(uurl.url == updateUrl, uurl.name);
+                xhr.open("GET", uurl.url, true);
                 xhr.send();
                 xhr.onloadend = function () {
                     pending_updates--;
