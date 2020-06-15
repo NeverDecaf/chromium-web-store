@@ -1,15 +1,34 @@
 const chromeVersion = /Chrome\/([0-9.]+)/.exec(navigator.userAgent)[1];
 const webstoreUrl = 'clients2.google.com/service/update2/crx';
-function version_is_newer(current, available)
-{
+
+function version_is_newer(current, available) {
     let current_subvs = current.split(".");
     let available_subvs = available.split(".");
     for (let i = 0; i < 4; i++) {
-        if ((current_subvs[i] || 0) < (available_subvs[i] || 0))
+        let ver_diff = (parseInt(available_subvs[i]) || 0) - (parseInt(current_subvs[i]) || 0);
+        if (ver_diff > 0)
             return true;
+        else if (ver_diff < 0)
+            return false;
     }
     return false;
 }
+
+function promptInstall(crx_url, is_webstore, extension_dl_ids) {
+	if (is_webstore)
+	window.open(crx_url, '_blank');
+            else
+                chrome.downloads.download({
+                    url: crx_url
+                }, (dlid) => {
+					if (extension_dl_ids !== undefined)
+						extension_dl_ids[dlid] = 1;
+                    chrome.runtime.sendMessage({
+                        downloadId: dlid
+                    });
+                });
+}
+
 function checkForUpdates(update_callback = null, failure_callback = null, completed_callback = null) {
     chrome.management.getAll(function (e) {
         let default_options = {
@@ -54,7 +73,7 @@ function checkForUpdates(update_callback = null, failure_callback = null, comple
                                 if (updateCheck = updates[i].querySelector("*")) {
                                     let updatever = updateCheck.getAttribute('version');
                                     let appid = updates[i].getAttribute('appid');
-                                    if (updatever && version_is_newer(installed_versions[appid].version,updatever)) {
+                                    if (updatever && installed_versions[appid] !== undefined && version_is_newer(installed_versions[appid].version, updatever)) {
                                         updateCount++;
                                         if (update_callback)
                                             update_callback(updateCheck, installed_versions, appid, updatever, is_webstore);

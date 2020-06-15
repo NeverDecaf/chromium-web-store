@@ -1,10 +1,13 @@
+var extensionsDownloads = {};
+
 function updateAll(info) {
     if (info.menuItemId == 'updateAll')
         checkForUpdates(function (updateCheck, installed_versions, appid, updatever, is_webstore) {
             let crx_url = updateCheck.getAttribute('codebase');
-            window.open(crx_url, '_blank');
+            promptInstall(crx_url, is_webstore, extensionsDownloads);
         });
 };
+
 function updateBadge(modified_ext_id = null) {
     checkForUpdates();
 };
@@ -33,5 +36,20 @@ chrome.runtime.onInstalled.addListener(function () {
         id: 'updateAll',
         contexts: ["browser_action"]
     });
+});
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    if (request.downloadId) {
+        extensionsDownloads[request.downloadId] = true;
+    }
+});
+chrome.downloads.onChanged.addListener((d) => {
+    if (d.endTime && extensionsDownloads[d.id]) {
+        delete extensionsDownloads[d.id];
+        chrome.downloads.search({
+            id: d.id
+        }, (di) => {
+            window.open('file://' + di[0].filename);
+        });
+    }
 });
 chrome.contextMenus.onClicked.addListener(updateAll);

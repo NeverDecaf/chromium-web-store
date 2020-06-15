@@ -4,7 +4,6 @@ const update_status = document.createElement('h1');
 update_status.innerHTML = 'Checking for updates...';
 container.appendChild(update_status);
 container.appendChild(appcontainer);
-
 checkForUpdates(function (updateCheck, installed_versions, appid, updatever, is_webstore) {
     let li = document.createElement('li');
     li.setAttribute('data-enabled', installed_versions[appid].enabled ? 'true' : 'false');
@@ -33,7 +32,7 @@ checkForUpdates(function (updateCheck, installed_versions, appid, updatever, is_
     let crx_url = updateCheck.getAttribute('codebase');
     li.addEventListener("click", function (evt) {
         if (evt.target.tagName != 'A')
-            window.open(crx_url);
+            promptInstall(crx_url, is_webstore);
     });
     appcontainer.appendChild(li);
     update_status.style.display = 'none';
