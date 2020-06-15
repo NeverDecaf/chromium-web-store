@@ -7,10 +7,11 @@ This extension brings the following functionality to ungoogled-chromium (and oth
 - If you wish to install extensions directly instead of just downloading the crx, you must change the flag `chrome://flags/#extension-mime-request-handling` to `Always prompt for install`.
 - Available extension updates will display on the badge, click to install them (note that non-webstore extensions may need to be installed manually even if you have the flag set.)
 #### Installation
-- Download the .crx from [Releases](https://github.com/NeverDecaf/chromium-web-store/releases/latest) and drag-and-drop it into `chrome://extensions`
+1. Go to `chrome://extensions` and enable developer mode (toggle in top right).
+2. Download the .crx from [Releases](https://github.com/NeverDecaf/chromium-web-store/releases/latest) and drag-and-drop it onto the `chrome://extensions` page.
 #### If drag-and-dropping does not work, try this workaround:
-1. Download the .crx from releases and extract the contents to a folder
-2. Visit chrome://extensions/ and turn on developer mode (toggle in top right)
+1. Download the .crx from releases and extract the contents to a folder.
+2. Visit `chrome://extensions/` and turn on developer mode (toggle in top right).
 3. Click `Load unpacked` and select the directory you extracted the crx to.
 #### Setup Video
 [![here](https://raw.githubusercontent.com/NeverDecaf/chromium-web-store/master/video_thumbnail.png)](https://chromium.woolyss.com/f/video-extension-chromium-web-store.mp4)
