@@ -1,19 +1,19 @@
 {
     "extName": {
         "message": "Chromium Web Store",
-        "description": "The title of the extension, displayed in the web store."
+        "description": "The title of the extension, displayed in the Web Store."
     },
     "extDesc": {
         "message": "Enables installation and semi-automatic updating for extensions from the Chrome Web Store (or elsewhere) on Chromium based browsers.",
-        "description": "The description of the extension, displayed in the web store."
+        "description": "The description of the extension, displayed in the Web Store."
     },
 
     "options_updateHeading": {
-        "message": "Update Options",
+        "message": "Update options",
         "description": ""
     },
     "options_ignoredExtensionsHeading": {
-        "message": "Ignored Extensions",
+        "message": "Ignored extensions",
         "description": ""
     },
     "options_autoUpdate": {
@@ -25,7 +25,7 @@
         "description": ""
     },
     "options_updateWebstore": {
-        "message": "Check for updates to web store extensions",
+        "message": "Check for updates to Web Store extensions",
         "description": ""
     },
     "options_updateWebstoreTooltip": {
@@ -33,7 +33,7 @@
         "description": ""
     },
     "options_updateNonWebstore": {
-        "message": "Check for updates to non-web store extensions",
+        "message": "Check for updates to non-Web Store extensions",
         "description": ""
     },
     "options_updateNonWebstoreTooltip": {
@@ -64,7 +64,7 @@
     },
 
     "contextMenu_updateAll": {
-        "message": "Update All Extensions",
+        "message": "Update all extensions",
         "description": ""
     },
 	
