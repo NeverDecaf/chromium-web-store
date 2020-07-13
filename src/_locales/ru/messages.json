@@ -1,9 +1,9 @@
 {
-    "extName": {
+    "extension_Name": {
         "message": "Chromium Web Store",
         "description": "Название расширения, отображаемое в Web Store."
     },
-    "extDesc": {
+    "extension_Description": {
         "message": "Включает установку и полуавтоматическое обновление расширений из Chrome Web Store (или других сайтов) в браузерах, основанных на Chromium.",
         "description": "Описание расширения, отображаемое в Web Store."
     },
