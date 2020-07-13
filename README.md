@@ -20,3 +20,7 @@ This extension brings the following functionality to ungoogled-chromium (and oth
 - Right click the badge and choose `Options` from the context menu or access them via `chrome://extensions`.
 - Automatic updates normally occur on browser startup, extension addition/removal, and once per hour.
 - "Web Store" extensions refer to any that were obtained from the [Chrome Web Store](https://chrome.google.com/webstore/category/extensions), despite displaying `Source: Not from Chrome Web Store` when checking extension details.
+#### If you wish to help with localization, follow these steps:
+1. Create a directory in `_locales` named any supported [locale code](https://developer.chrome.com/webstore/i18n?csw=1#localeTable).
+2. Copy `_locales/en/messages.json` to your newly created directory and edit the "message" fields as necessary, you don't need to change anything else.
+3. Submit a PR or open an issue with your translation and I will merge it.
