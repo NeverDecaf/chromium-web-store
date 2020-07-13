@@ -1,0 +1,75 @@
+{
+    "extName": {
+        "message": "Chromium Web Store",
+        "description": "The title of the extension, displayed in the web store."
+    },
+    "extDesc": {
+        "message": "Enables installation and semi-automatic updating for extensions from the Chrome Web Store (or elsewhere) on Chromium based browsers.",
+        "description": "The description of the extension, displayed in the web store."
+    },
+
+    "options_updateHeading": {
+        "message": "Update Options",
+        "description": ""
+    },
+    "options_ignoredExtensionsHeading": {
+        "message": "Ignored Extensions",
+        "description": ""
+    },
+    "options_autoUpdate": {
+        "message": "Automatically check for extension updates",
+        "description": ""
+    },
+    "options_autoUpdateTooltip": {
+        "message": "Click the Chromium Web Store badge to perform a manual check",
+        "description": ""
+    },
+    "options_updateWebstore": {
+        "message": "Check for updates to web store extensions",
+        "description": ""
+    },
+    "options_updateWebstoreTooltip": {
+        "message": "Will contact Google to check for updates",
+        "description": ""
+    },
+    "options_updateNonWebstore": {
+        "message": "Check for updates to non-web store extensions",
+        "description": ""
+    },
+    "options_updateNonWebstoreTooltip": {
+        "message": "Only works if extension supports auto-updating",
+        "description": ""
+    },
+    "options_neverCheckTooltip": {
+        "message": "Never check for updates to this extension",
+        "description": ""
+    },
+
+    "popup_checkingForUpdates": {
+        "message": "Checking for updates...",
+        "description": ""
+    },
+    "popup_allUpToDate": {
+        "message": "All extensions are up to date!",
+        "description": ""
+    },
+    "popup_updateFailed": {
+        "message": "$extName$ Update Failed",
+        "description": "extName will be the name of the extension that failed to update.",
+        "placeholders": {
+            "extName": {
+                "content": "$1"
+            }
+        }
+    },
+
+    "contextMenu_updateAll": {
+        "message": "Update All Extensions",
+        "description": ""
+    },
+	
+    "webstore_addButton": {
+        "message": "Add to Chromium",
+        "description": ""
+    }
+}

@@ -8,7 +8,7 @@ function load_options() {
     chrome.management.getAll(function (e) {
         e.forEach(function (ex) {
             label = document.createElement('label');
-            label.setAttribute('title', 'Never check for updates to this extension');
+            label.setAttribute('title', chrome.i18n.getMessage("options_neverCheckTooltip"));
             span = document.createElement('span');
             div = document.createElement('div');
             img = document.createElement('img');

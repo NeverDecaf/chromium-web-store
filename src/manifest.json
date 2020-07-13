@@ -1,10 +1,11 @@
 {
     "author": "NeverDecaf",
     "manifest_version": 2,
-    "name": "Chromium Web Store",
+    "name": "__MSG_extName__",
+    "description": "__MSG_extDesc__",
+    "default_locale": "en",
     "version": "1.0.0",
     "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqF/d41Q7agjkUzYq8ZGbQr8XW8mmEIMXOnR1uCTnYLL+Dm9Z+LO50xZukOISNy6zFxpI8ts/OGLsm+I2x9+UprUU4/EVdmxuwegFE6NBoEhHoRNYY0gbXZkaU8YY/XwzjVY/k18DDhl5NYPEnF6uq4Oyidg+xtd3W4+iGYczuOLER1Tp5y614zOTphcvFYhvUkCijQ6HT1TtRq/34SlFoRQqo4SFiLriK451xWIcfwiMLIekWrdoQa1v8dqIlMA3r6CKc0QykJpSYbiyormWiZ0hl2HLpkZ85mD9V0eDQ5RCtb6vkybK7INcq4yKQV4YkXhr9NpX9U4re4dlFQjEJQIDAQAB",
-    "description": "Allow installing/updating extensions from chrome web store on chromium based browsers. Click badge to check for updates.",
     "permissions": [
         "management",
         "https://clients2.google.com/service/*",
@@ -19,21 +20,18 @@
             "16": "assets/icon/icon_16.png",
             "24": "assets/icon/icon_24.png"
         },
-        "default_title": "Chromium Web Store",
+        "default_title": "__MSG_extName__",
         "default_popup": "popup.html"
     },
     "content_scripts": [{
         "matches": ["https://chrome.google.com/webstore*"],
-        "js": ["scripts/store.js"],
-        "run_at": "document_start"
+        "js": ["scripts/inject.js"],
+        "run_at": "document_end"
     }],
     "background": {
         "scripts": ["scripts/util.js", "scripts/background.js"],
         "persistent": false
     },
-    "web_accessible_resources": [
-        "scripts/inject.js"
-    ],
     "update_url": "https://raw.githubusercontent.com/NeverDecaf/chromium-web-store/master/updates.xml",
     "icons": {
         "16": "assets/icon/icon_16.png",

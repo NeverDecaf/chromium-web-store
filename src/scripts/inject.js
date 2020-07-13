@@ -9,7 +9,7 @@ function createButton(newParent) {
     var button_div = document.createElement('div');
     button_div.setAttribute('role', 'button');
     button_div.setAttribute('class', 'dd-Va g-c-wb g-eg-ua-Uc-c-za g-c-Oc-td-jb-oa g-c');
-    button_div.setAttribute('aria-label', 'Add to Chromium');
+    button_div.setAttribute('aria-label', chrome.i18n.getMessage("webstore_addButton"));
     button_div.setAttribute('tabindex', '0');
     button_div.setAttribute('style', 'user-select: none;');
     var hf = document.createElement('div');
@@ -20,7 +20,7 @@ function createButton(newParent) {
     hf.appendChild(x);
     var r = document.createElement('div');
     r.setAttribute('class', 'g-c-R  webstore-test-button-label');
-    r.innerHTML = 'Add to Chromium';
+    r.innerHTML = chrome.i18n.getMessage("webstore_addButton");
     x.appendChild(r);
     let dlurl = buildExtensionUrl(getExtensionId(window.location.href));
     button_div.addEventListener("click", function () {
@@ -46,8 +46,8 @@ var modifyButtonObserver = new MutationObserver(function (mutations) {
                         var outerButton = originalButton.cloneNode(true);
                         originalButton.parentNode.replaceChild(outerButton, originalButton);
                         var innerButton = outerButton.querySelector('[class*=webstore-test-button-label]');
-                        outerButton.setAttribute('aria-label', 'Add to Chromium');
-                        innerButton.innerHTML = 'Add to Chromium';
+                        outerButton.setAttribute('aria-label', chrome.i18n.getMessage("webstore_addButton"));
+                        innerButton.innerHTML = chrome.i18n.getMessage("webstore_addButton");
                         let dlurl = buildExtensionUrl(getExtensionId(extensionLinks[i].href));
                         outerButton.addEventListener("click", function (evt) {
                             window.open(dlurl);

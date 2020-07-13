@@ -2,30 +2,30 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>Chromium Web Store</title>
         <link rel="stylesheet" href="sheets/options.css" />
     </head>
     <body>
         <div id="app">
-            <h2>Update Options</h2>
+            <h2 data-localize="__MSG_options_updateHeading__">Update Options</h2>
             <div>
-                <label title="Click the Chromium Web Store badge to perform a manual check">
-                    <input type="checkbox" id="auto_update" /> <span>Automatically check for extension updates</span>
+                <label title="__MSG_options_autoUpdateTooltip__">
+                    <input type="checkbox" id="auto_update"/> <span data-localize="__MSG_options_autoUpdate__">Automatically check for extension updates</span>
                 </label>
             </div>
             <div>
-                <label title="Will contact google to check for updates">
-                    <input type="checkbox" id="check_store_apps"/> <span>Check for updates to web store extensions</span>
+                <label title="__MSG_options_updateWebstoreTooltip__">
+                    <input type="checkbox" id="check_store_apps"/> <span data-localize="__MSG_options_updateWebstore__">Check for updates to web store extensions</span>
                 </label>
             </div>
 			    <div>
-                <label title="Only works if extension supports autoupdating">
-                    <input type="checkbox" id="check_external_apps"/> <span>Check for updates to non-web store extensions</span>
+                <label title="__MSG_options_updateNonWebstoreTooltip__">
+                    <input type="checkbox" id="check_external_apps"/> <span data-localize="__MSG_options_updateNonWebstore__">Check for updates to non-web store extensions</span>
                 </label>
             </div>
-			<h2>Ignored Extensions</h2>
+			<h2 data-localize="__MSG_options_ignoredExtensionsHeading__">Ignored Extensions</h2>
 			<div id='updatetoggle'></div>
         </div>
 		<script src="scripts/options.js"></script>
+		<script src="scripts/localize.js"></script>
     </body>
 </html>

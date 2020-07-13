@@ -32,7 +32,7 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
 });
 chrome.runtime.onInstalled.addListener(function () {
     chrome.contextMenus.create({
-        title: "Update All Extensions",
+        title: chrome.i18n.getMessage("contextMenu_updateAll"),
         id: 'updateAll',
         contexts: ["browser_action"]
     });
