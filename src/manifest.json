@@ -12,8 +12,7 @@
         "storage",
 		"alarms",
 		"contextMenus",
-		"downloads",
-		"tabs"
+		"downloads"
     ],
     "browser_action": {
         "default_icon": {
