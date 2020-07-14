@@ -1,5 +1,4 @@
 var extensionsDownloads = {};
-
 function updateAll(info) {
     if (info.menuItemId == 'updateAll')
         checkForUpdates(function (updateCheck, installed_versions, appid, updatever, is_webstore) {
@@ -7,7 +6,6 @@ function updateAll(info) {
             promptInstall(crx_url, is_webstore, extensionsDownloads);
         });
 };
-
 function updateBadge(modified_ext_id = null) {
     checkForUpdates();
 };
@@ -48,7 +46,7 @@ chrome.downloads.onChanged.addListener((d) => {
         chrome.downloads.search({
             id: d.id
         }, (di) => {
-            window.open('file://' + di[0].filename);
+            chrome.tabs.create({url: 'file:///' + di[0].filename});
         });
     }
 });

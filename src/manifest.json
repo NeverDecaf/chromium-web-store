@@ -13,7 +13,7 @@
 		"alarms",
 		"contextMenus",
 		"downloads",
-		"file://*"
+		"tabs"
     ],
     "browser_action": {
         "default_icon": {
