@@ -1,0 +1,75 @@
+{
+    "extension_Name": {
+        "message": "Chromium Web Store",
+        "description": "Nazwa rozszerzenia, pokazywana w Chrome Web Store."
+    },
+    "extension_Description": {
+        "message": "Umożliwia instalację oraz półautomatyczną aktualizację dla rozszerzeń z Chrome Web Store (albo skądś indziej) na przeglądarkach bazujących na Chromium.",
+        "description": Opis rozszerzenia, pokazywany w Chrome Web Store."
+    },
+
+    "options_updateHeading": {
+        "message": "Zaktualizuj opcje",
+        "description": ""
+    },
+    "options_ignoredExtensionsHeading": {
+        "message": "Ignorowane rozszerzenia",
+        "description": ""
+    },
+    "options_autoUpdate": {
+        "message": "Automatycznie sprawdzaj aktualizacje rozszerzeń",
+        "description": ""
+    },
+    "options_autoUpdateTooltip": {
+        "message": "Kliknij na ikonę Chromium Web Store, aby manualnie sprawdzić",
+        "description": ""
+    },
+    "options_updateWebstore": {
+        "message": "Sprawdź aktualizacje rozszerzeń Chrome Web Store",
+        "description": ""
+    },
+    "options_updateWebstoreTooltip": {
+        "message": "Skontaktujemy się z Google, aby sprawdzić aktualizacje",
+        "description": ""
+    },
+    "options_updateNonWebstore": {
+        "message": "Sprawdź aktualizacje dla rozszerzeń spoza Chrome Web Store",
+        "description": ""
+    },
+    "options_updateNonWebstoreTooltip": {
+        "message": "Działa tylko wtedy, jeżeli rozszerzenie wspiera automatyczne aktualizacje",
+        "description": ""
+    },
+    "options_neverCheckTooltip": {
+        "message": "Nigdy nie sprawdzaj aktualizacji dla tego rozszerzenia",
+        "description": ""
+    },
+
+    "popup_checkingForUpdates": {
+        "message": "Sprawdzanie aktualizacji...",
+        "description": ""
+    },
+    "popup_allUpToDate": {
+        "message": "Wszystkie rozszerzenia są aktualne!",
+        "description": ""
+    },
+    "popup_updateFailed": {
+        "message": "Aktualizacja $extName$ nieudana",
+        "description": "extName będzie nazwą rozszerzenia, któremu nie udało się zaktualizować.",
+        "placeholders": {
+            "extName": {
+                "content": "$1"
+            }
+        }
+    },
+
+    "contextMenu_updateAll": {
+        "message": "Zaktualizuj wszystkie rozszerzenia",
+        "description": ""
+    },
+	
+    "webstore_addButton": {
+        "message": "Dodaj do Chromium",
+        "description": ""
+    }
+}
