@@ -1,7 +1,9 @@
 const container = document.getElementById("app");
 const appcontainer = document.createElement("ul");
 const update_status = document.createElement('h1');
-update_status.innerHTML = chrome.i18n.getMessage("popup_checkingForUpdates");
+const update_span = document.createElement('span');
+update_span.innerHTML = chrome.i18n.getMessage("popup_checkingForUpdates");
+update_status.appendChild(update_span);
 container.appendChild(update_status);
 container.appendChild(appcontainer);
 checkForUpdates(function (updateCheck, installed_versions, appid, updatever, is_webstore) {
@@ -39,8 +41,10 @@ checkForUpdates(function (updateCheck, installed_versions, appid, updatever, is_
 }, function (is_webstore, ext_name) {
     let faildiv = document.createElement('h1');
     faildiv.setAttribute('class', 'updatefailure');
-    faildiv.innerHTML = chrome.i18n.getMessage("popup_updateFailed", ext_name);
+	let failspan = document.createElement('span');
+	faildiv.appendChild(failspan);
+    failspan.innerHTML = chrome.i18n.getMessage("popup_updateFailed", ext_name);
     appcontainer.appendChild(faildiv);
 }, function () {
-    update_status.innerHTML = chrome.i18n.getMessage("popup_allUpToDate");
+    update_span.innerHTML = chrome.i18n.getMessage("popup_allUpToDate");
 });
