@@ -28,21 +28,28 @@ function load_options() {
             maindiv.appendChild(div);
             default_options[ex.id] = false;
         });
-        chrome.storage.sync.get(default_options, function (items) {
-            for (const [setting, checked] of Object.entries(items)) {
-                let node = document.getElementById(setting);
-                node.checked = checked;
-                node.addEventListener("click", e => {
-                    const checked = e.target.checked;
-                    chrome.storage.sync.set({
-                        [e.target.id]: checked
-                    }, function () {
-                        if (chrome.runtime.lastError) {
-                            node.checked = !checked;
-                        }
-                    });
+        chrome.storage.sync.get(default_options, function (stored_values) {
+            stored_values["ignored_extensions"] = [];
+            chrome.storage.managed.get(stored_values, function (items) {
+                items.ignored_extensions.forEach((ignored_appid) => {
+                    if (ignored_appid in items) items[ignored_appid] = true
                 });
-            }
+                delete items.ignored_extensions;
+                for (const [setting, checked] of Object.entries(items)) {
+                    let node = document.getElementById(setting);
+                    node.checked = checked;
+                    node.addEventListener("click", e => {
+                        const checked = e.target.checked;
+                        chrome.storage.sync.set({
+                            [e.target.id]: checked
+                        }, function () {
+                            if (chrome.runtime.lastError) {
+                                node.checked = !checked;
+                            }
+                        });
+                    });
+                }
+            });
         });
     });
 }
