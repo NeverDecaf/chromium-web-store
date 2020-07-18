@@ -44,6 +44,15 @@
         "message": "Never check for updates to this extension",
         "description": ""
     },
+	"options_updateDelay": {
+        "message": "Check for updates every $delayInMinutes$ minutes",
+        "description": "delayInMinutes will be a field that can be edited by the user",
+        "placeholders": {
+            "delayInMinutes": {
+                "content": "$1"
+            }
+        }
+    },
 
     "popup_checkingForUpdates": {
         "message": "Checking for updates...",
