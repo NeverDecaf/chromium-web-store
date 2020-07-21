@@ -8,10 +8,10 @@ import os
 import fileinput
 import re
 
-ANDROID_SRC = './src_nolocale'
 LOCALE = 'en'
+ANDROID_SRC = './{}_nolocale'.format(LOCALE)
 MANIFEST = '{}/manifest.json'.format(ANDROID_SRC)
-UPDATE_FILE_NAME = 'updates_nolocale.xml'
+UPDATE_FILE_NAME = 'updates_{}_nolocale.xml'.format(LOCALE)
 CRX_URL = 'https://github.com/NeverDecaf/chromium-web-store/raw/master/Chromium%20Web%20Store%20NoLocale.crx'
 
 if os.path.exists(ANDROID_SRC):
@@ -62,7 +62,8 @@ with open(MANIFEST,'w') as f:
 # copy updates.xml and modify to point to android crx
 with open('updates.xml','r') as f:
     with open(UPDATE_FILE_NAME,'w') as f2:
-        f2.write(re.sub("(?<=codebase=[\"'])([^'\"]*)",CRX_URL,f.read()))
+        f2.write(f.read())
+        # f2.write(re.sub("(?<=codebase=[\"'])([^'\"]*)",CRX_URL,f.read()))
 
 # removes _locales dir
 shutil.rmtree(os.path.join(ANDROID_SRC,'_locales'))
