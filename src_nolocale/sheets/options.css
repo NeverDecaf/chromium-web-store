@@ -1,0 +1,38 @@
+body {
+    margin-bottom: 2.4em;
+    min-width: 400px;
+    font-size: 81.25%;
+}
+
+h2 {
+    line-height: 1.8;
+    border-bottom: 1px solid #dbdbdb;
+    margin-bottom: 1rem;
+    padding-bottom: 0.4rem;
+}
+
+label {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 2em;
+    line-height: 1.8;
+}
+
+label > span {
+    margin-left: 0.3em;
+    user-select: none;
+}
+
+label > img {
+    flex: 0 0 auto;
+    margin: auto 4px auto 8px;
+    width: 16px;
+    height: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+body {
+    background-color: #313131;
+    color: #bfbfbf;
+}
+}

@@ -1,0 +1,28 @@
+{
+    "type": "object",
+    "properties": {
+        "ignored_extensions": {
+            "title": "A list of appids of extensions which should not be checked for updates.",
+            "description": "Appids which are not installed will simply be ignored, it is safe to add them here.",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "auto_update": {
+            "title": "Enable automatic updates in extension options.",
+            "description": "Default value is true",
+            "type": "boolean"
+        },
+        "check_store_apps": {
+            "title": "Enable updates for Chrome Web Store extensions in extension options.",
+            "description": "Default value is true",
+            "type": "boolean"
+        },
+        "check_external_apps": {
+            "title": "Enable updates for non-Chrome Web Store extensions in extension options.",
+            "description": "Default value is true",
+            "type": "boolean"
+        }
+    }
+}

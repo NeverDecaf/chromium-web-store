@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="sheets/options.css" />
+    </head>
+    <body>
+        <div id="app">
+            <h2 data-localize="Update options">Update Options</h2>
+            <div>
+                <label title="Click the Chromium Web Store badge to perform a manual check">
+                    <input type="checkbox" id="auto_update"/> <span data-localize="Automatically check for extension updates">Automatically check for extension updates</span>
+                </label>
+            </div>
+            <div>
+                <label title="Will contact Google to check for updates">
+                    <input type="checkbox" id="check_store_apps"/> <span data-localize="Check for updates to Chrome Web Store extensions">Check for updates to web store extensions</span>
+                </label>
+            </div>
+			    <div>
+                <label title="Only works if extension supports auto-updating">
+                    <input type="checkbox" id="check_external_apps"/> <span data-localize="Check for updates to non-Chrome Web Store extensions">Check for updates to non-web store extensions</span>
+                </label>
+            </div>
+			<h2 data-localize="Ignored extensions">Ignored Extensions</h2>
+			<div id='updatetoggle'></div>
+        </div>
+		<script src="scripts/options.js"></script>
+		<script src="scripts/localize.js"></script>
+    </body>
+</html>

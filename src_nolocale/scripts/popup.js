@@ -2,7 +2,7 @@ const container = document.getElementById("app");
 const appcontainer = document.createElement("ul");
 const update_status = document.createElement('h1');
 const update_span = document.createElement('span');
-update_span.innerHTML = chrome.i18n.getMessage("popup_checkingForUpdates");
+update_span.innerHTML = "Checking for updates...";
 update_status.appendChild(update_span);
 container.appendChild(update_status);
 container.appendChild(appcontainer);
@@ -43,8 +43,8 @@ checkForUpdates(function (updateCheck, installed_versions, appid, updatever, is_
     faildiv.setAttribute('class', 'updatefailure');
 	let failspan = document.createElement('span');
 	faildiv.appendChild(failspan);
-    failspan.innerHTML = chrome.i18n.getMessage("popup_updateFailed", extName);
+    failspan.innerHTML = ""+extName+" Update Failed";
     appcontainer.appendChild(faildiv);
 }, function () {
-    update_span.innerHTML = chrome.i18n.getMessage("popup_allUpToDate");
+    update_span.innerHTML = "All extensions are up to date!";
 });

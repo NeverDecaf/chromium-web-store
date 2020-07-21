@@ -1,0 +1,55 @@
+body {
+    margin: 0;
+    font-size: 1rem;
+    font-family: "Helvetica Neue", "Segoe UI", Arial, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+ol,
+ul {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    list-style-type: none;
+}
+
+a {
+    outline-style: none;
+    text-decoration: none;
+}
+
+img {
+    vertical-align: middle;
+    border-style: none;
+}
+
+button,
+input,
+select {
+    font: inherit;
+    margin: 0;
+    outline-style: none;
+    overflow: visible;
+}
+
+textarea {
+    font: inherit;
+    margin: 0;
+    outline-style: none;
+    overflow: auto;
+    resize: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}

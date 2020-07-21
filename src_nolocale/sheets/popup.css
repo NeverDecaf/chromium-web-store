@@ -1,0 +1,94 @@
+#app {
+    font-size: 14px;
+    color: #333;
+    user-select: none;
+}
+
+h1 {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    text-align: center;
+}
+
+ul {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    list-style-type: none;
+}
+
+em,
+h1,
+ul li {
+    margin: 6px 4px;
+    height: 32px;
+    line-height: 32px;
+    border-radius: 2px;
+    box-shadow: 0 0 0 1px #e3e3e3, 0 0 2px 0 rgba(229, 233, 239, 0.3);
+    transition: background-color 0.15s;
+    overflow: hidden;
+}
+
+ul li {
+    display: flex;
+    align-items: center;
+	cursor: pointer;
+}
+
+ul li[data-enabled="false"] {
+    background-color: rgb(229, 233, 239);
+}
+
+ul li:hover {
+    outline-color: rgb(77,144,254);
+    outline-style: auto;
+    outline-width: 1px;
+}
+
+img {
+    flex: 0 0 auto;
+    margin: auto 4px auto 8px;
+    width: 16px;
+    height: 16px;
+}
+
+span {
+    flex: 1 1 100%;
+    margin: auto 4px auto 4px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+a {
+    flex: 0 0 auto;
+    margin: auto 8px auto 4px;
+}
+
+a:hover {
+    color:red;
+}
+
+.updatefailure {
+    font-weight: bold;
+    background-color: red;
+}
+
+svg {
+    fill: rgb(95, 99, 104);
+    width: 20px;
+    height: 20px;
+}
+
+a:hover > svg {
+    transform: scale(1.15);
+}
+
+@media (prefers-color-scheme: dark) {
+body, #app {
+    background-color: #313131;
+    color: #bfbfbf;
+}
+}
