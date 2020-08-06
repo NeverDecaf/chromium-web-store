@@ -23,7 +23,7 @@
         "default_popup": "popup.html"
     },
     "content_scripts": [{
-        "matches": ["https://chrome.google.com/webstore*"],
+        "matches": ["https://chrome.google.com/webstore/*"],
         "js": ["scripts/inject.js"],
         "run_at": "document_end"
     }],

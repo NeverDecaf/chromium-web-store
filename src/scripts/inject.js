@@ -1,10 +1,12 @@
 function getExtensionId(url) {
     return /.*detail\/[^\/]*\/([a-z]*)/i.exec(url)[1];
 }
+
 function buildExtensionUrl(extensionId) {
     var chromeVersion = /Chrome\/([0-9.]+)/.exec(navigator.userAgent)[1];
     return 'https://clients2.google.com/service/update2/crx?response=redirect&acceptformat=crx2,crx3&prodversion=' + chromeVersion + '&x=id%3D' + extensionId + '%26installsource%3Dondemand%26uc';
 }
+
 function createButton(newParent) {
     var button_div = document.createElement('div');
     button_div.setAttribute('role', 'button');
@@ -37,8 +39,8 @@ function createButton(newParent) {
 }
 var modifyButtonObserver = new MutationObserver(function (mutations) {
     mutations.forEach(function (mutation) {
-        if (mutation.addedNodes.length && !mutation.removedNodes.length && mutation.nextSibling == null && !mutation.addedNodes[0].className) {
-            if (window.location.pathname.indexOf('detail') != 10) {
+        if (mutation.addedNodes.length && !mutation.removedNodes.length && mutation.nextSibling == null && !mutation.addedNodes[0].className && mutation.addedNodes[0] instanceof Element) {
+            if (window.location.pathname.indexOf('detail') != 10 && mutation.addedNodes[0]) {
                 var extensionLinks = mutation.addedNodes[0].getElementsByTagName('a');
                 for (var i = 0; i < extensionLinks.length; i++) {
                     if (extensionLinks[i].getAttribute('type') == 'W') {
@@ -81,3 +83,10 @@ attachMainObserver = new MutationObserver(function (mutations) {
 attachMainObserver.observe(document.body, {
     childList: true
 });
+window.onload = () => {
+    chrome.runtime.onMessage.addListener(request => {
+        if (request.action === "install") {
+            window.open(buildExtensionUrl(getExtensionId(window.location.href)));
+        }
+    });
+};
