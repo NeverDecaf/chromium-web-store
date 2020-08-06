@@ -1,11 +1,17 @@
 var extensionsDownloads = {};
-function updateAll(info) {
+
+function handleContextClick(info, tab) {
     if (info.menuItemId == 'updateAll')
         checkForUpdates(function (updateCheck, installed_versions, appid, updatever, is_webstore) {
             let crx_url = updateCheck.getAttribute('codebase');
             promptInstall(crx_url, is_webstore, extensionsDownloads);
         });
+    else if (info.menuItemId == 'installExt')
+        chrome.tabs.sendMessage(tab.id, {
+            action: "install"
+        });
 };
+
 function updateBadge(modified_ext_id = null) {
     checkForUpdates();
 };
@@ -34,6 +40,11 @@ chrome.runtime.onInstalled.addListener(function () {
         id: 'updateAll',
         contexts: ["browser_action"]
     });
+    chrome.contextMenus.create({
+        title: "Add to Chromium",
+        id: 'installExt',
+        documentUrlPatterns: ["https://chrome.google.com/webstore/detail/*"]
+    });
 });
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.downloadId) {
@@ -46,8 +57,10 @@ chrome.downloads.onChanged.addListener((d) => {
         chrome.downloads.search({
             id: d.id
         }, (di) => {
-            chrome.tabs.create({url: 'file:///' + di[0].filename});
+            chrome.tabs.create({
+                url: 'file:///' + di[0].filename
+            });
         });
     }
 });
-chrome.contextMenus.onClicked.addListener(updateAll);
+chrome.contextMenus.onClicked.addListener(handleContextClick);

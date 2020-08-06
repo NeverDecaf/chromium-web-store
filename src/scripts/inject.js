@@ -37,9 +37,10 @@ function createButton(newParent) {
     newParent.innerHTML = "";
     newParent.appendChild(button_div);
 }
-var modifyButtonObserver = new MutationObserver(function (mutations) {
+var modifyButtonObserver = new MutationObserver(function (mutations, observer) {
     mutations.forEach(function (mutation) {
-        if (mutation.addedNodes.length && !mutation.removedNodes.length && mutation.nextSibling == null && !mutation.addedNodes[0].className && mutation.addedNodes[0] instanceof Element) {
+        // || used for different pages in this order: details, search results, extended search results
+        if (mutation.addedNodes.length && !mutation.removedNodes.length && mutation.nextSibling == null && (mutation.addedNodes[0].className == 'f-rd' || mutation.addedNodes[0].className == 'a-eb-mb-x' || (mutation.target.className == 'h-a-x' && (!mutation.previousSibling || !mutation.previousSibling.hasAttribute('aria-labeledby'))))) {
             if (window.location.pathname.indexOf('detail') != 10 && mutation.addedNodes[0]) {
                 var extensionLinks = mutation.addedNodes[0].getElementsByTagName('a');
                 for (var i = 0; i < extensionLinks.length; i++) {
@@ -62,23 +63,23 @@ var modifyButtonObserver = new MutationObserver(function (mutations) {
                         });
                     }
                 }
-            } else if (mutation.previousSibling && mutation.previousSibling.hasAttribute('role')) {
+            } else {
                 var container_div = document.querySelector('.h-e-f-Ra-c');
-                if (null == container_div.firstChild) {
+                if (container_div && null == container_div.firstChild) {
                     createButton(container_div);
                 }
             }
         }
     });
 });
-attachMainObserver = new MutationObserver(function (mutations) {
+attachMainObserver = new MutationObserver(function (mutations, observer) {
     mutations.forEach(function (mutation) {
-        modifyButtonObserver.observe(mutation.target.querySelectorAll('body > div:not(:empty)')[0], {
+        modifyButtonObserver.observe(mutation.target.querySelector('.F-ia-k'), {
             subtree: true,
             childList: true
         });
     });
-    attachMainObserver.disconnect();
+    observer.disconnect();
 });
 attachMainObserver.observe(document.body, {
     childList: true

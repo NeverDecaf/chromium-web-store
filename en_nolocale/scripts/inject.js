@@ -1,10 +1,12 @@
 function getExtensionId(url) {
     return /.*detail\/[^\/]*\/([a-z]*)/i.exec(url)[1];
 }
+
 function buildExtensionUrl(extensionId) {
     var chromeVersion = /Chrome\/([0-9.]+)/.exec(navigator.userAgent)[1];
     return 'https://clients2.google.com/service/update2/crx?response=redirect&acceptformat=crx2,crx3&prodversion=' + chromeVersion + '&x=id%3D' + extensionId + '%26installsource%3Dondemand%26uc';
 }
+
 function createButton(newParent) {
     var button_div = document.createElement('div');
     button_div.setAttribute('role', 'button');
@@ -35,10 +37,11 @@ function createButton(newParent) {
     newParent.innerHTML = "";
     newParent.appendChild(button_div);
 }
-var modifyButtonObserver = new MutationObserver(function (mutations) {
+var modifyButtonObserver = new MutationObserver(function (mutations, observer) {
     mutations.forEach(function (mutation) {
-        if (mutation.addedNodes.length && !mutation.removedNodes.length && mutation.nextSibling == null && !mutation.addedNodes[0].className) {
-            if (window.location.pathname.indexOf('detail') != 10) {
+        // || used for different pages in this order: details, search results, extended search results
+        if (mutation.addedNodes.length && !mutation.removedNodes.length && mutation.nextSibling == null && (mutation.addedNodes[0].className == 'f-rd' || mutation.addedNodes[0].className == 'a-eb-mb-x' || (mutation.target.className == 'h-a-x' && (!mutation.previousSibling || !mutation.previousSibling.hasAttribute('aria-labeledby'))))) {
+            if (window.location.pathname.indexOf('detail') != 10 && mutation.addedNodes[0]) {
                 var extensionLinks = mutation.addedNodes[0].getElementsByTagName('a');
                 for (var i = 0; i < extensionLinks.length; i++) {
                     if (extensionLinks[i].getAttribute('type') == 'W') {
@@ -60,24 +63,31 @@ var modifyButtonObserver = new MutationObserver(function (mutations) {
                         });
                     }
                 }
-            } else if (mutation.previousSibling && mutation.previousSibling.hasAttribute('role')) {
+            } else {
                 var container_div = document.querySelector('.h-e-f-Ra-c');
-                if (null == container_div.firstChild) {
+                if (container_div && null == container_div.firstChild) {
                     createButton(container_div);
                 }
             }
         }
     });
 });
-attachMainObserver = new MutationObserver(function (mutations) {
+attachMainObserver = new MutationObserver(function (mutations, observer) {
     mutations.forEach(function (mutation) {
-        modifyButtonObserver.observe(mutation.target.querySelectorAll('body > div:not(:empty)')[0], {
+        modifyButtonObserver.observe(mutation.target.querySelector('.F-ia-k'), {
             subtree: true,
             childList: true
         });
     });
-    attachMainObserver.disconnect();
+    observer.disconnect();
 });
 attachMainObserver.observe(document.body, {
     childList: true
 });
+window.onload = () => {
+    chrome.runtime.onMessage.addListener(request => {
+        if (request.action === "install") {
+            window.open(buildExtensionUrl(getExtensionId(window.location.href)));
+        }
+    });
+};
