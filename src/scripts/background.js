@@ -1,4 +1,9 @@
 var extensionsDownloads = {};
+var default_options = {
+    "auto_update": true,
+    "check_store_apps": true,
+    "check_external_apps": true
+};
 
 function handleContextClick(info, tab) {
     if (info.menuItemId == 'updateAll')
@@ -29,7 +34,11 @@ chrome.runtime.onStartup.addListener(function () {
 });
 chrome.alarms.onAlarm.addListener(function (alarm) {
     if (alarm.name == 'cws_check_extension_updates')
-        updateBadge();
+        chrome.storage.sync.get(default_options, function (settings) {
+            if (settings.auto_update) {
+                updateBadge();
+            }
+        });
 });
 chrome.runtime.onInstalled.addListener(function () {
     chrome.contextMenus.create({
@@ -62,5 +71,5 @@ chrome.downloads.onChanged.addListener((d) => {
 });
 chrome.contextMenus.onClicked.addListener(handleContextClick);
 chrome.alarms.create('cws_check_extension_updates', {
-	periodInMinutes: 60
+    periodInMinutes: 60
 });
