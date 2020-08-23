@@ -26,9 +26,6 @@ chrome.management.onUninstalled.addListener(function (ext) {
 });
 chrome.runtime.onStartup.addListener(function () {
     updateBadge();
-    chrome.alarms.create('cws_check_extension_updates', {
-        periodInMinutes: 60
-    });
 });
 chrome.alarms.onAlarm.addListener(function (alarm) {
     if (alarm.name == 'cws_check_extension_updates')
@@ -64,3 +61,6 @@ chrome.downloads.onChanged.addListener((d) => {
     }
 });
 chrome.contextMenus.onClicked.addListener(handleContextClick);
+chrome.alarms.create('cws_check_extension_updates', {
+	periodInMinutes: 60
+});
