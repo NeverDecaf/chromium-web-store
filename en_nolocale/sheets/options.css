@@ -1,6 +1,6 @@
 body {
-    margin-bottom: 2.4em;
-    min-width: 400px;
+    margin-bottom: 2rem;
+    width: 500px;
     font-size: 81.25%;
 }
 
@@ -14,15 +14,18 @@ h2 {
 label {
     display: inline-flex;
     align-items: center;
-    margin-left: 2em;
+    margin-left: 1rem;
     line-height: 1.8;
 }
 
 label > span {
-    margin-left: 0.3em;
+    margin-left: 0.3rem;
     user-select: none;
 }
 
+label > input {
+    flex: 0 0 auto;
+}
 label > img {
     flex: 0 0 auto;
     margin: auto 4px auto 8px;
