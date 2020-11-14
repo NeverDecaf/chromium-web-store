@@ -1,0 +1,84 @@
+{
+    "extension_Name": {
+        "message": "Chromium Web Store",
+        "description": "O título da extensão, exibido na Loja Web de Chrome."
+    },
+    "extension_Description": {
+        "message": "Permite a instalação e atualização semi-automática de extensões da Loja Web de Chrome (ou onde for) em navegadores baseados no Chromium.",
+        "description": "A descrição da extensão, exibida na Loja Web de Chrome."
+    },
+
+    "options_updateHeading": {
+        "message": "Opções de atualização",
+        "description": ""
+    },
+    "options_ignoredExtensionsHeading": {
+        "message": "Extensões ignoradas",
+        "description": ""
+    },
+    "options_autoUpdate": {
+        "message": "Buscar automaticamente por atualizações de extensões",
+        "description": ""
+    },
+    "options_autoUpdateTooltip": {
+        "message": "Clique no ícone da Loja Web de Chromium para efectuar uma verificação manual",
+        "description": ""
+    },
+    "options_updateWebstore": {
+        "message": "Verificar se há atualizações das extensões na Loja Web de Chrome",
+        "description": ""
+    },
+    "options_updateWebstoreTooltip": {
+        "message": "Conectará ao Google para buscar por atualizações",
+        "description": ""
+    },
+    "options_updateNonWebstore": {
+        "message": "Buscar por atualizações das extensões fora da Loja Web de Chrome",
+        "description": ""
+    },
+    "options_updateNonWebstoreTooltip": {
+        "message": "Só funcionará se a extensão suportar a auto-atualização",
+        "description": ""
+    },
+    "options_neverCheckTooltip": {
+        "message": "Nunca buscar por atualizações para esta extensão",
+        "description": ""
+    },
+	"options_updateDelay": {
+        "message": "Buscar por atualizações a cada $delayInMinutes$ minutos",
+        "description": "delayInMinutes será um campo que pode ser editado pelo usuário",
+        "placeholders": {
+            "delayInMinutes": {
+                "content": "$1"
+            }
+        }
+    },
+
+    "popup_checkingForUpdates": {
+        "message": "buscando por atualizações...",
+        "description": ""
+    },
+    "popup_allUpToDate": {
+        "message": "Todas as extensões são atualizadas!",
+        "description": ""
+    },
+    "popup_updateFailed": {
+        "message": "$extName$ Atualização falhou",
+        "description": "extName será o nome da extensão que não foi atualizada.",
+        "placeholders": {
+            "extName": {
+                "content": "$1"
+            }
+        }
+    },
+
+    "contextMenu_updateAll": {
+        "message": "Atualizar todas as extensões",
+        "description": ""
+    },
+	
+    "webstore_addButton": {
+        "message": "Adicionar ao Chromium",
+        "description": ""
+    }
+}
