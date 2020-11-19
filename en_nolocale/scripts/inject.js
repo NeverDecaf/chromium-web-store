@@ -39,37 +39,10 @@ function createButton(newParent) {
 }
 var modifyButtonObserver = new MutationObserver(function (mutations, observer) {
     mutations.forEach(function (mutation) {
-        // || used for different pages in this order: details, search results, extended search results
-        if (mutation.addedNodes.length && !mutation.removedNodes.length && mutation.nextSibling == null && (mutation.addedNodes[0].className == 'f-rd' || mutation.addedNodes[0].className == 'a-eb-mb-x' || (mutation.target.className == 'h-a-x' && (!mutation.previousSibling || !mutation.previousSibling.hasAttribute('aria-labeledby'))))) {
-            if (window.location.pathname.indexOf('detail') != 10 && mutation.addedNodes[0]) {
-                var extensionLinks = mutation.addedNodes[0].getElementsByTagName('a');
-                for (var i = 0; i < extensionLinks.length; i++) {
-                    if (extensionLinks[i].getAttribute('type') == 'W') {
-                        var originalButton = extensionLinks[i].querySelector('[role=button]')
-						if (originalButton) {
-                            var outerButton = originalButton.cloneNode(true);
-                            originalButton.parentNode.replaceChild(outerButton, originalButton);
-                            var innerButton = outerButton.querySelector('[class*=webstore-test-button-label]');
-                            outerButton.setAttribute('aria-label', "Add to Chromium");
-                            innerButton.innerHTML = "Add to Chromium";
-                            let dlurl = buildExtensionUrl(getExtensionId(extensionLinks[i].href));
-                            outerButton.addEventListener("click", function (evt) {
-                                window.open(dlurl);
-                            });
-                            outerButton.addEventListener("mouseover", function () {
-                                this.classList.add('g-c-l');
-                            });
-                            outerButton.addEventListener("mouseout", function () {
-                                this.classList.remove('g-c-l');
-                            });
-                        }
-                    }
-                }
-            } else {
-                var container_div = document.querySelector('.h-e-f-Ra-c');
-                if (container_div && null == container_div.firstChild) {
-                    createButton(container_div);
-                }
+        if (mutation.addedNodes.length && !mutation.removedNodes.length && mutation.nextSibling == null && mutation.addedNodes[0].className == 'f-rd') {
+            var container_div = document.querySelector('.h-e-f-Ra-c');
+            if (container_div && null == container_div.firstChild) {
+                createButton(container_div);
             }
         }
     });
