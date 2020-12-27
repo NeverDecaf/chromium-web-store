@@ -44,7 +44,7 @@
         "message": "Never check for updates to this extension",
         "description": ""
     },
-	"options_updateDelay": {
+    "options_updateDelay": {
         "message": "Check for updates every $delayInMinutes$ minutes",
         "description": "delayInMinutes will be a field that can be edited by the user",
         "placeholders": {
@@ -53,7 +53,6 @@
             }
         }
     },
-
     "popup_checkingForUpdates": {
         "message": "Checking for updates...",
         "description": ""
@@ -79,12 +78,10 @@
         "message": "These may have been removed due to a violation of the Terms of Service.",
         "description": "Shown when hovering over popup_removedExtensions."
     },
-
     "contextMenu_updateAll": {
         "message": "Update all extensions",
         "description": ""
     },
-	
     "webstore_addButton": {
         "message": "Add to Chromium",
         "description": ""

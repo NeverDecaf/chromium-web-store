@@ -62,12 +62,18 @@
             }
         }
     },
-
+    "popup_removedExtensions": {
+        "message": "Данные расширения были удалены из Chrome Web Store",
+        "description": "Отображается вверху списка удаленных расширений."
+    },
+    "popup_removedExtensionsTooltip": {
+        "message": "Они могли быть удалены из-за нарушения Условий использования.",
+        "description": "Отображается при наведении на popup_removedExtensions."
+    },
     "contextMenu_updateAll": {
         "message": "Обновить все расширения",
         "description": ""
     },
-	
     "webstore_addButton": {
         "message": "Добавить в Chromium",
         "description": ""
