@@ -4,7 +4,7 @@
     user-select: none;
 }
 
-h1 {
+.message {
     margin-top: 0;
     margin-bottom: 0;
     font-size: 14px;
@@ -19,32 +19,41 @@ ul {
     list-style-type: none;
 }
 
-em,
-h1,
+.message,
 ul li {
     margin: 6px 4px;
-    height: 32px;
-    line-height: 32px;
+    min-height: 32px;
     border-radius: 2px;
     box-shadow: 0 0 0 1px #e3e3e3, 0 0 2px 0 rgba(229, 233, 239, 0.3);
     transition: background-color 0.15s;
     overflow: hidden;
 }
 
+.message {
+    height:auto;
+    display: flex;
+    align-items: center;
+}
+
 ul li {
     display: flex;
     align-items: center;
-	cursor: pointer;
+    cursor: pointer;
 }
 
 ul li[data-enabled="false"] {
-    background-color: rgb(229, 233, 239);
+    background-color: #c2c2c2;
 }
 
 ul li:hover {
     outline-color: rgb(77,144,254);
     outline-style: auto;
     outline-width: 1px;
+}
+
+.message.hidden,
+ul li.hidden {
+    display: none;
 }
 
 img {
@@ -54,26 +63,47 @@ img {
     height: 16px;
 }
 
-span {
+span,
+.message p {
     flex: 1 1 100%;
     margin: auto 4px auto 4px;
+}
+
+span {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
 }
 
-a {
+a,
+input {
     flex: 0 0 auto;
     margin: auto 8px auto 4px;
+}
+
+li > a {
+    cursor: pointer;
 }
 
 a:hover {
     color:red;
 }
 
-.updatefailure {
-    font-weight: bold;
-    background-color: red;
+.updatefailure,
+.updatefailure:hover {
+    background-color: #ffcccb;
+    cursor: auto;
+    outline-style: none;
+}
+
+#removedStatus {
+    box-shadow: 0 0 0 1px red, 0 0 2px 0 red;
+}
+
+.removedext,
+.removedext:hover {
+    cursor: auto;
+    outline-style: none;
 }
 
 svg {
@@ -81,13 +111,18 @@ svg {
     width: 20px;
     height: 20px;
 }
+.removedext svg {
+    width: 16px;
+    height: 16px;
+}
 
 a:hover > svg {
     transform: scale(1.15);
 }
 
 @media (prefers-color-scheme: dark) {
-body, #app {
+body,
+#app {
     background-color: #313131;
     color: #bfbfbf;
 }

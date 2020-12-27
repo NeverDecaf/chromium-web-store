@@ -34,7 +34,8 @@ function checkForUpdates(update_callback = null, failure_callback = null, comple
         let default_options = {
             "auto_update": true,
             "check_store_apps": true,
-            "check_external_apps": true
+            "check_external_apps": true,
+            "removed_extensions": {}
         };
         e.forEach(function (ex) {
             default_options[ex.id] = false;
@@ -56,7 +57,8 @@ function checkForUpdates(update_callback = null, failure_callback = null, comple
                         } else if (settings.check_external_apps) {
                             updateUrls.push({
                                 'url': ex.updateUrl,
-                                'name': ex.name
+                                'name': ex.name,
+                                'id': ex.id
                             });
                         }
                         installed_versions[ex.id] = ex;
@@ -67,8 +69,7 @@ function checkForUpdates(update_callback = null, failure_callback = null, comple
                         'url': updateUrl,
                         'name': 'CWS Extensions'
                     });
-
-                function getNewXhr(is_webstore, ext_name) {
+                function getNewXhr(is_webstore, ext_id) {
                     let xhttp = new XMLHttpRequest();
                     xhttp.onreadystatechange = function () {
                         if (this.readyState == 4) {
@@ -79,11 +80,18 @@ function checkForUpdates(update_callback = null, failure_callback = null, comple
                                     if (updateCheck = updates[i].querySelector("*")) {
                                         let updatever = updateCheck.getAttribute('version');
                                         let appid = updates[i].getAttribute('appid');
-                                        if (updatever && installed_versions[appid] !== undefined && version_is_newer(installed_versions[appid].version, updatever)) {
+                                        let updatestatus = updateCheck.getAttribute('status');
+                                        if (updatestatus == 'ok' && updatever && installed_versions[appid] !== undefined && version_is_newer(installed_versions[appid].version, updatever)) {
                                             updateCount++;
                                             if (update_callback)
                                                 update_callback(updateCheck, installed_versions, appid, updatever, is_webstore);
+                                            if (appid in stored_values["removed_extensions"]) {
+                                                delete stored_values['removed_extensions'][appid];
+                                                chrome.storage.sync.set({'removed_extensions': stored_values['removed_extensions']});
+                                            }
                                         }
+                                        if (failure_callback && updatestatus == 'noupdate' && !(appid in stored_values["removed_extensions"]))
+                                            failure_callback(true, installed_versions[appid]);
                                     }
                                 }
                                 chrome.browserAction.getBadgeText({}, function (currentText) {
@@ -100,8 +108,12 @@ function checkForUpdates(update_callback = null, failure_callback = null, comple
                                     }
                                 });
                             } else {
-                                if (failure_callback)
-                                    failure_callback(is_webstore, ext_name);
+                                if (failure_callback) {
+                                    if (is_webstore)
+                                        failure_callback(false, {'name':'CWS Extensions'});
+                                    else
+                                        failure_callback(false, installed_versions[ext_id]);
+                                }
                                 if (is_webstore)
                                     chrome.browserAction.setBadgeText({
                                         text: "?"
@@ -119,7 +131,7 @@ function checkForUpdates(update_callback = null, failure_callback = null, comple
                 if (pending_updates == 0 && completed_callback)
                     completed_callback();
                 updateUrls.forEach(function (uurl) {
-                    xhr = getNewXhr(uurl.url == updateUrl, uurl.name);
+                    xhr = getNewXhr(uurl.url == updateUrl, uurl.id);
                     xhr.open("GET", uurl.url, true);
                     xhr.send();
                     xhr.onloadend = function () {
