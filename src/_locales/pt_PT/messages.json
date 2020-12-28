@@ -71,6 +71,14 @@
             }
         }
     },
+    "popup_removedExtensions": {
+	"message": "As extensões abaixo indicadas foram removidas da Chrome Web Store",
+	"description": "Will be shown above list of removed extensions."
+    },
+    "popup_removedExtensionsTooltip": {
+        "message": "As extensões podem ter sido removidas por violarem os Termos do Serviço.",
+        "description": "Shown when hovering over popup_removedExtensions."
+    },
 
     "contextMenu_updateAll": {
         "message": "Atualizar todas as extensões",
