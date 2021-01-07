@@ -54,6 +54,7 @@ checkForUpdates(function (updateCheck, installed_versions, appid, updatever, is_
     update_status.classList.add('hidden');
 }, function (was_removed, extData) {
     let li = document.createElement('li');
+	li.setAttribute('data-enabled', extData.enabled ? 'true' : 'false');
     li.setAttribute('class', 'updatefailure');
 	if ('icons' in extData) {
 		let img = document.createElement('img');
