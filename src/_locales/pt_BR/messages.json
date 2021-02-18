@@ -4,7 +4,7 @@
         "description": "O título da extensão, exibido na Loja Web de Chrome."
     },
     "extension_Description": {
-        "message": "Permite a instalação e atualização semi-automática de extensões da Loja Web de Chrome (ou onde for) em navegadores baseados no Chromium.",
+        "message": "Permite a instalação e atualização semi-automática de extensões da Loja Web de Chrome (ou outra localidade) em navegadores baseados no Chromium.",
         "description": "A descrição da extensão, exibida na Loja Web de Chrome."
     },
 
@@ -63,7 +63,7 @@
         "description": ""
     },
     "popup_updateFailed": {
-        "message": "$extName$ Atualização falhou",
+        "message": "Atualização de $extName$ falhou",
         "description": "extName será o nome da extensão que não foi atualizada.",
         "placeholders": {
             "extName": {
@@ -72,12 +72,12 @@
         }
     },
     "popup_removedExtensions": {
-        "message": "As seguintes extensões foram removidas da Chrome Web Store",
-        "description": "Will be shown above list of removed extensions. (Machine translated)"
+        "message": "As seguintes extensões foram removidas da Loja Web de Chrome",
+        "description": "Will be shown above list of removed extensions."
     },
     "popup_removedExtensionsTooltip": {
-        "message": "Eles podem ter sido removidos devido a uma violação dos Termos de Serviço.",
-        "description": "Shown when hovering over popup_removedExtensions. (Machine translated)"
+        "message": "Poderia ter sido devido à violação dos Termos de Serviço.",
+        "description": "Shown when hovering over popup_removedExtensions."
     },
     "contextMenu_updateAll": {
         "message": "Atualizar todas as extensões",
