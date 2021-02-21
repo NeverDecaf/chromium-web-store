@@ -92,8 +92,6 @@ a:hover {
 .updatefailure,
 .updatefailure:hover {
     background-color: #ffcccb;
-    cursor: auto;
-    outline-style: none;
 }
 
 #removedStatus {
@@ -101,7 +99,9 @@ a:hover {
 }
 
 .removedext,
-.removedext:hover {
+.removedext:hover,
+.updatefailure,
+.updatefailure:hover {
     cursor: auto;
     outline-style: none;
 }
@@ -111,7 +111,8 @@ svg {
     width: 20px;
     height: 20px;
 }
-.removedext svg {
+.removedext svg,
+.updatefailure svg {
     width: 16px;
     height: 16px;
 }

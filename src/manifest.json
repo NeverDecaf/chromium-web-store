@@ -14,6 +14,7 @@
 		"contextMenus",
 		"downloads"
     ],
+	"optional_permissions": [ "https://*/", "http://*/" ],
     "browser_action": {
         "default_icon": {
             "16": "assets/icon/icon_16.png",
