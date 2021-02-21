@@ -94,6 +94,10 @@ a:hover {
     background-color: #ffcccb;
 }
 
+.updatefailure[data-enabled="false"] {
+    background-color: #e7b9b8;
+}
+
 #removedStatus {
     box-shadow: 0 0 0 1px red, 0 0 2px 0 red;
 }

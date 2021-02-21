@@ -81,7 +81,7 @@ function checkForUpdates(update_callback = null, failure_callback = null, comple
                                         let updatever = updateCheck.getAttribute('version');
                                         let appid = updates[i].getAttribute('appid');
                                         let updatestatus = updateCheck.getAttribute('status');
-                                        if (updatestatus == 'ok' && updatever && installed_versions[appid] !== undefined && version_is_newer(installed_versions[appid].version, updatever)) {
+                                        if ((updatestatus == 'ok' || !is_webstore) && updatever && installed_versions[appid] !== undefined && version_is_newer(installed_versions[appid].version, updatever)) {
                                             updateCount++;
                                             if (update_callback)
                                                 update_callback(updateCheck, installed_versions, appid, updatever, is_webstore);
