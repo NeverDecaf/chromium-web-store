@@ -2,7 +2,8 @@ var extensionsDownloads = {};
 var default_options = {
     "auto_update": true,
     "check_store_apps": true,
-    "check_external_apps": true
+    "check_external_apps": true,
+    "update_period_in_minutes": 60
 };
 
 function handleContextClick(info, tab) {
@@ -30,7 +31,13 @@ chrome.management.onUninstalled.addListener(function (ext) {
     updateBadge(ext.id);
 });
 chrome.runtime.onStartup.addListener(function () {
-    updateBadge();
+    chrome.storage.local.get({
+        "badge_display": ""
+    }, (result) => {
+        chrome.browserAction.setBadgeText({
+            text: result.badge_display
+        });
+    });
 });
 chrome.alarms.onAlarm.addListener(function (alarm) {
     if (alarm.name == 'cws_check_extension_updates')
@@ -70,6 +77,12 @@ chrome.downloads.onChanged.addListener((d) => {
     }
 });
 chrome.contextMenus.onClicked.addListener(handleContextClick);
-chrome.alarms.create('cws_check_extension_updates', {
-    periodInMinutes: 60
+chrome.storage.sync.get(default_options, function (settings) {
+    chrome.alarms.get('cws_check_extension_updates', (alarm) => {
+        if (!alarm || !alarm.periodInMinutes) {
+            chrome.alarms.create('cws_check_extension_updates', {
+                periodInMinutes: settings.update_period_in_minutes
+            });
+        }
+    });
 });
