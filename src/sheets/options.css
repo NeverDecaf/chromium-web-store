@@ -18,6 +18,10 @@ label {
     line-height: 1.8;
 }
 
+label.sub {
+    margin-left: 2.5rem;
+}
+
 label > span {
     margin-left: 0.3rem;
     user-select: none;
@@ -26,11 +30,21 @@ label > span {
 label > input {
     flex: 0 0 auto;
 }
+
 label > img {
     flex: 0 0 auto;
     margin: auto 4px auto 8px;
     width: 16px;
     height: 16px;
+}
+
+input[type="number"] {
+    width: 3.8rem;
+    line-height: 1rem;
+}
+
+label.disabled {
+    color: grey;
 }
 
 @media (prefers-color-scheme: dark) {

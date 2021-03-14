@@ -3,7 +3,8 @@ function load_options() {
     var default_options = {
         "auto_update": true,
         "check_store_apps": true,
-        "check_external_apps": true
+        "check_external_apps": true,
+        "update_period_in_minutes": 60
     };
     chrome.management.getAll(function (e) {
         e.forEach(function (ex) {
@@ -35,20 +36,54 @@ function load_options() {
                     if (ignored_appid in items) items[ignored_appid] = true
                 });
                 delete items.ignored_extensions;
-                for (const [setting, checked] of Object.entries(items)) {
+                for (const [setting, value] of Object.entries(items)) {
                     let node = document.getElementById(setting);
-                    node.checked = checked;
-                    node.addEventListener("click", e => {
-                        const checked = e.target.checked;
-                        chrome.storage.sync.set({
-                            [e.target.id]: checked
-                        }, function () {
-                            if (chrome.runtime.lastError) {
-                                node.checked = !checked;
-                            }
+                    if (node.type == 'checkbox') {
+                        node.checked = value;
+                        node.addEventListener("change", e => {
+                            const checked = e.target.checked;
+                            chrome.storage.sync.set({
+                                [e.target.id]: checked
+                            }, function () {
+                                if (chrome.runtime.lastError) {
+                                    node.checked = !checked;
+                                }
+                            });
                         });
-                    });
+                    } else {
+                        node.value = value;
+                        node.addEventListener("input", e => {
+                            const val = parseInt(e.target.value) || 60;
+                            chrome.storage.sync.set({
+                                [e.target.id]: Math.max(1, val)
+                            }, function () {
+                                if (chrome.runtime.lastError) {
+                                    node.value = '60';
+                                }
+                            });
+                        });
+                    }
                 }
+                document.querySelectorAll('label.sub').forEach((node) => {
+                    const target_node = node;
+                    let checkbox_input = target_node.previousElementSibling.getElementsByTagName('input')[0];
+                    checkbox_input.addEventListener('change', (e) => {
+                        if (e.target.checked) {
+                            target_node.classList.remove('disabled');
+                            for (let input of target_node.getElementsByTagName('input'))
+                                input.disabled = false;
+                        } else {
+                            target_node.classList.add('disabled');
+                            for (let input of target_node.getElementsByTagName('input'))
+                                input.disabled = true;
+                        }
+                    });
+                    if (!checkbox_input.checked) {
+                        target_node.classList.add('disabled');
+                        for (let input of target_node.getElementsByTagName('input'))
+                            input.disabled = true;
+                    }
+                });
             });
         });
     });

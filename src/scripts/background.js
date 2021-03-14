@@ -31,11 +31,18 @@ chrome.management.onUninstalled.addListener(function (ext) {
     updateBadge(ext.id);
 });
 chrome.runtime.onStartup.addListener(function () {
-    chrome.storage.local.get({
-        "badge_display": ""
-    }, (result) => {
-        chrome.browserAction.setBadgeText({
-            text: result.badge_display
+    chrome.storage.sync.get(default_options, function (settings) {
+        chrome.storage.local.get({
+            "badge_display": "",
+            "last_scheduled_update": 0
+        }, (localstore) => {
+            chrome.browserAction.setBadgeText({
+                text: localstore.badge_display
+            });
+            chrome.alarms.create('cws_check_extension_updates', {
+                delayInMinutes: settings.update_period_in_minutes - Math.floor((Date.now() - localstore.last_scheduled_update) / 1000 / 60),
+                periodInMinutes: settings.update_period_in_minutes
+            });
         });
     });
 });
@@ -44,6 +51,9 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
         chrome.storage.sync.get(default_options, function (settings) {
             if (settings.auto_update) {
                 updateBadge();
+                chrome.storage.local.set({
+                    'last_scheduled_update': Date.now()
+                });
             }
         });
 });
@@ -77,12 +87,3 @@ chrome.downloads.onChanged.addListener((d) => {
     }
 });
 chrome.contextMenus.onClicked.addListener(handleContextClick);
-chrome.storage.sync.get(default_options, function (settings) {
-    chrome.alarms.get('cws_check_extension_updates', (alarm) => {
-        if (!alarm || !alarm.periodInMinutes) {
-            chrome.alarms.create('cws_check_extension_updates', {
-                periodInMinutes: settings.update_period_in_minutes
-            });
-        }
-    });
-});

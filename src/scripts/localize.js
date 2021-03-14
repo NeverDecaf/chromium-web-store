@@ -1,8 +1,7 @@
-function replace_i18n(obj, tag) {
+function replace_i18n(obj, tag, param1) {
     var msg = tag.replace(/__MSG_(\w+)__/g, function(match, v1) {
-        return v1 ? chrome.i18n.getMessage(v1) : '';
+        return v1 ? chrome.i18n.getMessage(v1, param1) : '';
     });
-
     if(msg != tag) obj.innerHTML = msg;
 }
 
@@ -12,9 +11,9 @@ function localizeHtmlPage() {
 
     for (var i in data) if (data.hasOwnProperty(i)) {
         var obj = data[i];
-        var tag = obj.getAttribute('data-localize').toString();
-
-        replace_i18n(obj, tag);
+        var tag = obj.getAttribute('data-localize')
+        var param1 = obj.getAttribute('data-param1')
+        replace_i18n(obj, tag, param1);
     }
 
     // Localize everything else by replacing all __MSG_***__ tags
