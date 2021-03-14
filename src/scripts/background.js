@@ -54,6 +54,10 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
                 chrome.storage.local.set({
                     'last_scheduled_update': Date.now()
                 });
+                chrome.alarms.create('cws_check_extension_updates', {
+                    delayInMinutes: settings.update_period_in_minutes,
+                    periodInMinutes: settings.update_period_in_minutes
+                });
             }
         });
 });
