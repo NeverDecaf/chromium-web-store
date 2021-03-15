@@ -44,7 +44,15 @@
         "message": "Никогда не проверять обновления для этого расширения",
         "description": ""
     },
-
+    "options_updateDelay": {
+        "message": "Проверять наличие обновлений каждые $delayInMinutes$ минут",
+        "description": "delayInMinutes - поле, содержимое которого может изменять пользователь",
+        "placeholders": {
+            "delayInMinutes": {
+                "content": "$1"
+            }
+        }
+    },
     "popup_checkingForUpdates": {
         "message": "Проверка обновлений...",
         "description": ""
