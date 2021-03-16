@@ -2,7 +2,8 @@ var extensionsDownloads = {};
 var default_options = {
     "auto_update": true,
     "check_store_apps": true,
-    "check_external_apps": true
+    "check_external_apps": true,
+    "update_period_in_minutes": 60
 };
 
 function handleContextClick(info, tab) {
@@ -20,6 +21,23 @@ function handleContextClick(info, tab) {
 function updateBadge(modified_ext_id = null) {
     checkForUpdates();
 };
+
+function startupTasks() {
+    chrome.storage.sync.get(default_options, function (settings) {
+        chrome.storage.local.get({
+            "badge_display": "",
+            "last_scheduled_update": 0
+        }, (localstore) => {
+            chrome.browserAction.setBadgeText({
+                text: localstore.badge_display
+            });
+            chrome.alarms.create('cws_check_extension_updates', {
+                delayInMinutes: settings.update_period_in_minutes - Math.floor((Date.now() - localstore.last_scheduled_update) / 1000 / 60),
+                periodInMinutes: settings.update_period_in_minutes
+            });
+        });
+    });
+};
 chrome.browserAction.setBadgeBackgroundColor({
     color: '#F00'
 });
@@ -30,17 +48,25 @@ chrome.management.onUninstalled.addListener(function (ext) {
     updateBadge(ext.id);
 });
 chrome.runtime.onStartup.addListener(function () {
-    updateBadge();
+    startupTasks();
 });
 chrome.alarms.onAlarm.addListener(function (alarm) {
     if (alarm.name == 'cws_check_extension_updates')
         chrome.storage.sync.get(default_options, function (settings) {
             if (settings.auto_update) {
                 updateBadge();
+                chrome.storage.local.set({
+                    'last_scheduled_update': Date.now()
+                });
+                chrome.alarms.create('cws_check_extension_updates', {
+                    delayInMinutes: settings.update_period_in_minutes,
+                    periodInMinutes: settings.update_period_in_minutes
+                });
             }
         });
 });
 chrome.runtime.onInstalled.addListener(function () {
+    startupTasks();
     chrome.contextMenus.create({
         title: "Update all extensions",
         id: 'updateAll',
@@ -70,6 +96,3 @@ chrome.downloads.onChanged.addListener((d) => {
     }
 });
 chrome.contextMenus.onClicked.addListener(handleContextClick);
-chrome.alarms.create('cws_check_extension_updates', {
-    periodInMinutes: 60
-});

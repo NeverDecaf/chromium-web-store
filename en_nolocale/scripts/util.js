@@ -69,6 +69,7 @@ function checkForUpdates(update_callback = null, failure_callback = null, comple
                         'url': updateUrl,
                         'name': 'CWS Extensions'
                     });
+
                 function getNewXhr(is_webstore, ext_id) {
                     let xhttp = new XMLHttpRequest();
                     xhttp.onreadystatechange = function () {
@@ -87,7 +88,9 @@ function checkForUpdates(update_callback = null, failure_callback = null, comple
                                                 update_callback(updateCheck, installed_versions, appid, updatever, is_webstore);
                                             if (appid in stored_values["removed_extensions"]) {
                                                 delete stored_values['removed_extensions'][appid];
-                                                chrome.storage.sync.set({'removed_extensions': stored_values['removed_extensions']});
+                                                chrome.storage.sync.set({
+                                                    'removed_extensions': stored_values['removed_extensions']
+                                                });
                                             }
                                         }
                                         if (failure_callback && updatestatus == 'noupdate' && !(appid in stored_values["removed_extensions"]))
@@ -96,21 +99,21 @@ function checkForUpdates(update_callback = null, failure_callback = null, comple
                                 }
                                 chrome.browserAction.getBadgeText({}, function (currentText) {
                                     if (currentText != '?') {
-                                        if (!currentText) {
-                                            if (updateCount)
-                                                chrome.browserAction.setBadgeText({
-                                                    text: '' + updateCount
-                                                });
-                                        } else
-                                            chrome.browserAction.setBadgeText({
-                                                text: parseInt(updateCount) + parseInt(currentText) + ''
-                                            });
+                                        let disp = (updateCount || '') + (parseInt(currentText) || '') + '';
+                                        chrome.browserAction.setBadgeText({
+                                            text: disp
+                                        });
+                                        chrome.storage.local.set({
+                                            "badge_display": disp
+                                        });
                                     }
                                 });
                             } else {
                                 if (failure_callback) {
                                     if (is_webstore)
-                                        failure_callback(false, {'name':'CWS Extensions'});
+                                        failure_callback(false, {
+                                            'name': 'CWS Extensions'
+                                        });
                                     else
                                         failure_callback(false, installed_versions[ext_id]);
                                 }
