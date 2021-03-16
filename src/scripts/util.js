@@ -99,15 +99,13 @@ function checkForUpdates(update_callback = null, failure_callback = null, comple
                                 }
                                 chrome.browserAction.getBadgeText({}, function (currentText) {
                                     if (currentText != '?') {
-                                        let disp = updateCount + (parseInt(currentText) || 0);
-                                        if (disp) {
-                                            chrome.browserAction.setBadgeText({
-                                                text: '' + disp
-                                            });
-                                            chrome.storage.local.set({
-                                                "badge_display": '' + disp
-                                            });
-                                        }
+                                        let disp = (updateCount || '') + (parseInt(currentText) || '') + '';
+                                        chrome.browserAction.setBadgeText({
+                                            text: disp
+                                        });
+                                        chrome.storage.local.set({
+                                            "badge_display": disp
+                                        });
                                     }
                                 });
                             } else {
