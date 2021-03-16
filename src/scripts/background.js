@@ -21,16 +21,8 @@ function handleContextClick(info, tab) {
 function updateBadge(modified_ext_id = null) {
     checkForUpdates();
 };
-chrome.browserAction.setBadgeBackgroundColor({
-    color: '#F00'
-});
-chrome.management.onInstalled.addListener(function (ext) {
-    updateBadge(ext.id);
-});
-chrome.management.onUninstalled.addListener(function (ext) {
-    updateBadge(ext.id);
-});
-chrome.runtime.onStartup.addListener(function () {
+
+function startupTasks() {
     chrome.storage.sync.get(default_options, function (settings) {
         chrome.storage.local.get({
             "badge_display": "",
@@ -45,6 +37,18 @@ chrome.runtime.onStartup.addListener(function () {
             });
         });
     });
+};
+chrome.browserAction.setBadgeBackgroundColor({
+    color: '#F00'
+});
+chrome.management.onInstalled.addListener(function (ext) {
+    updateBadge(ext.id);
+});
+chrome.management.onUninstalled.addListener(function (ext) {
+    updateBadge(ext.id);
+});
+chrome.runtime.onStartup.addListener(function () {
+    startupTasks();
 });
 chrome.alarms.onAlarm.addListener(function (alarm) {
     if (alarm.name == 'cws_check_extension_updates')
@@ -62,6 +66,7 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
         });
 });
 chrome.runtime.onInstalled.addListener(function () {
+    startupTasks();
     chrome.contextMenus.create({
         title: chrome.i18n.getMessage("contextMenu_updateAll"),
         id: 'updateAll',
