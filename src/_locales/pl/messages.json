@@ -44,7 +44,15 @@
         "message": "Nigdy nie sprawdzaj aktualizacji dla tego rozszerzenia",
         "description": ""
     },
-
+    "options_updateDelay": {
+        "message": "Sprawdzaj aktualizacje co $delayInMinutes$ minut",
+        "description": "delayInMinutes will be a field that can be edited by the user",
+        "placeholders": {
+            "delayInMinutes": {
+                "content": "$1"
+            }
+        }
+    },
     "popup_checkingForUpdates": {
         "message": "Sprawdzanie aktualizacji...",
         "description": ""
