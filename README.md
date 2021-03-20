@@ -18,7 +18,6 @@ This extension brings the following functionality to ungoogled-chromium (and oth
 [[Streamable Mirror](https://streamable.com/655nn)] (Thanks [@woolyss](https://github.com/woolyss) for creating & hosting this video.)
 #### Options Notes
 - Right click the badge and choose `Options` from the context menu or access them via `chrome://extensions`.
-- Automatic updates normally occur on browser startup, extension addition/removal, and once per hour.
 - "Web Store" extensions refer to any that were obtained from the [Chrome Web Store](https://chrome.google.com/webstore/category/extensions), despite displaying `Source: Not from Chrome Web Store` when checking extension details.
 #### If you wish to help with localization, follow these steps:
 1. Create a directory in `_locales` named any supported [locale code](https://developer.chrome.com/webstore/i18n?csw=1#localeTable).
@@ -26,3 +25,5 @@ This extension brings the following functionality to ungoogled-chromium (and oth
 3. Submit a PR or open an issue with your translation and I will merge it.
 #### If you are a chrome extension developer...
 and do not have your extension listed in the Chrome Web Store, you can still enable updates via chromium-web-store by hosting an [update manifest file](https://developer.chrome.com/apps/autoupdate#update_manifest); see [updates.xml](https://github.com/NeverDecaf/chromium-web-store/blob/master/updates.xml) in this repo for an example. You must also specify a url to access this file in your extension's `manifest.json` under the [`update_url`](https://developer.chrome.com/apps/autoupdate#update_url) field; again, see [manifest.json](https://github.com/NeverDecaf/chromium-web-store/blob/master/src/manifest.json) in this repo for an example.
+#### For deployment
+See #28 and `managed_storage.json`
