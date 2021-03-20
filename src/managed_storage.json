@@ -23,7 +23,7 @@
             "title": "Enable updates for non-Chrome Web Store extensions in extension options.",
             "description": "Default value is true",
             "type": "boolean"
-        }
+        },
         "update_period_in_minutes": {
             "title": "Update check interval in minutes.",
             "description": "Default is 60",
