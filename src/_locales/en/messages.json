@@ -53,6 +53,14 @@
             }
         }
     },
+    "options_importExportHeader": {
+        "message": "Import/Export",
+        "description": ""
+    },
+    "options_importExportInstallAllButton": {
+        "message": "Install All",
+        "description": ""
+    },
     "popup_checkingForUpdates": {
         "message": "Checking for updates...",
         "description": ""

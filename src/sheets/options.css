@@ -47,6 +47,13 @@ label.disabled {
     color: grey;
 }
 
+#import_export_list {
+    margin-left: 1rem;
+	height: 10em;
+    width: calc(100% - 2rem);
+    resize: vertical;
+}
+
 @media (prefers-color-scheme: dark) {
 body {
     background-color: #313131;
