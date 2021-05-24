@@ -19,6 +19,7 @@ This extension brings the following functionality to ungoogled-chromium (and oth
 #### Options Notes
 - Right click the badge and choose `Options` from the context menu or access them via `chrome://extensions`.
 - "Web Store" extensions refer to any that were obtained from the [Chrome Web Store](https://chrome.google.com/webstore/category/extensions), despite displaying `Source: Not from Chrome Web Store` when checking extension details.
+- Please read the note in [Release 1.4](https://github.com/NeverDecaf/chromium-web-store/releases/tag/v1.4.0) if you wish to use the import/export feature.
 #### If you wish to help with localization, follow these steps:
 1. Create a directory in `_locales` named any supported [locale code](https://developer.chrome.com/webstore/i18n?csw=1#localeTable).
 2. Copy `_locales/en/messages.json` to your newly created directory and edit the "message" fields as necessary, you don't need to change anything else.
