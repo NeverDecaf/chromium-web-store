@@ -32,8 +32,9 @@ function load_options() {
             maindiv.appendChild(div);
             default_options[ex.id] = false;
         });
+		let updateUrlNoScheme = googleUpdateUrl.replace(/https?:\/\//,"")
 		document.getElementById('import_export_list').value = e.map(ex => {
-			if (ex.updateUrl == googleUpdateUrl)
+			if (ex.updateUrl.replace(/https?:\/\//,"") == updateUrlNoScheme)
 				return ex.name+'|'+ex.id
 			return ex.name+'|'+ex.id+'|'+ex.updateUrl
 		}).join('\r\n');
