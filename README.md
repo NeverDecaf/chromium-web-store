@@ -26,4 +26,4 @@ This extension brings the following functionality to ungoogled-chromium (and oth
 #### If you are a chrome extension developer...
 and do not have your extension listed in the Chrome Web Store, you can still enable updates via chromium-web-store by hosting an [update manifest file](https://developer.chrome.com/apps/autoupdate#update_manifest); see [updates.xml](https://github.com/NeverDecaf/chromium-web-store/blob/master/updates.xml) in this repo for an example. You must also specify a url to access this file in your extension's `manifest.json` under the [`update_url`](https://developer.chrome.com/apps/autoupdate#update_url) field; again, see [manifest.json](https://github.com/NeverDecaf/chromium-web-store/blob/master/src/manifest.json) in this repo for an example.
 #### For deployment
-See #28 and `managed_storage.json`
+See [#28](https://github.com/NeverDecaf/chromium-web-store/issues/28) and [`managed_storage.json`](https://github.com/NeverDecaf/chromium-web-store/blob/master/src/managed_storage.json)
