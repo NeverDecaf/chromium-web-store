@@ -16,6 +16,10 @@
         "message": "Ignored extensions",
         "description": ""
     },
+    "options_importExportHeading": {
+        "message": "Import / Export",
+        "description": ""
+    },
     "options_autoUpdate": {
         "message": "Automatically check for extension updates",
         "description": ""
@@ -53,13 +57,18 @@
             }
         }
     },
-    "options_importExportHeader": {
-        "message": "Import/Export",
-        "description": ""
-    },
     "options_importExportInstallAllButton": {
         "message": "Install All",
         "description": ""
+    },
+    "options_importExportDescription": {
+        "message": "Save the text here to a file to export. To import paste that text here and press $installButton$",
+        "description": "installButton is the text on the button, defined in options_importExportInstallAllButton",
+        "placeholders": {
+            "installButton": {
+                "content": "$1"
+            }
+        }
     },
     "popup_checkingForUpdates": {
         "message": "Checking for updates...",

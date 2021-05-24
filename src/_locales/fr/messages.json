@@ -15,6 +15,10 @@
         "message": "Extensions ignorées",
         "description": ""
     },
+    "options_importExportHeading": {
+        "message": "Importer / Exporter",
+        "description": ""
+    },
     "options_autoUpdate": {
         "message": "Vérifier automatiquement les mises à jour des extensions",
         "description": ""
@@ -51,6 +55,10 @@
                 "content": "$1"
             }
         }
+    },
+    "options_importExportInstallAllButton": {
+        "message": "Tout installer",
+        "description": ""
     },
     "popup_checkingForUpdates": {
         "message": "Recherche de mises à jour...",

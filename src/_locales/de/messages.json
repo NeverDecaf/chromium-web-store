@@ -16,6 +16,10 @@
     "message": "Ignorierte Erweiterungen",
     "description": ""
   },
+  "options_importExportHeading": {
+    "message": "Import/Export",
+    "description": ""
+  },
   "options_autoUpdate": {
     "message": "Automatisch nach Erweiterungs-Aktualisierung suchen",
     "description": ""
@@ -52,6 +56,10 @@
         "content": "$1"
       }
     }
+  },
+  "options_importExportInstallAllButton": {
+    "message": "Alle installieren",
+    "description": ""
   },
   "popup_checkingForUpdates": {
     "message": "Prüfe auf Aktualisierungen...",

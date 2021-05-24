@@ -16,6 +16,10 @@
         "message": "Estensioni ignorate",
         "description": ""
     },
+    "options_importExportHeading": {
+        "message": "Importa / Esporta",
+        "description": ""
+    },
     "options_autoUpdate": {
         "message": "Controlla automaticamente se ci sono aggiornamenti delle estensioni",
         "description": ""
@@ -52,6 +56,10 @@
                 "content": "$1"
             }
         }
+    },
+    "options_importExportInstallAllButton": {
+        "message": "Installa tutto",
+        "description": ""
     },
     "popup_checkingForUpdates": {
         "message": "Controllando se ci sono aggiornamenti...",

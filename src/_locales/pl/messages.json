@@ -16,6 +16,10 @@
         "message": "Ignorowane rozszerzenia",
         "description": ""
     },
+    "options_importExportHeading": {
+        "message": "Import / Eksport",
+        "description": ""
+    },
     "options_autoUpdate": {
         "message": "Automatycznie sprawdzaj aktualizacje rozszerzeń",
         "description": ""
@@ -52,6 +56,10 @@
                 "content": "$1"
             }
         }
+    },
+    "options_importExportInstallAllButton": {
+        "message": "Zainstaluj wszystko",
+        "description": ""
     },
     "popup_checkingForUpdates": {
         "message": "Sprawdzanie aktualizacji...",

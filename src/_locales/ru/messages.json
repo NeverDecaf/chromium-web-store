@@ -16,6 +16,10 @@
         "message": "Исключенные расширения",
         "description": ""
     },
+    "options_importExportHeading": {
+        "message": "Импорт / Экспорт",
+        "description": ""
+    },
     "options_autoUpdate": {
         "message": "Автоматически проверять обновления расширений",
         "description": ""
@@ -52,6 +56,10 @@
                 "content": "$1"
             }
         }
+    },
+    "options_importExportInstallAllButton": {
+        "message": "Установить все",
+        "description": ""
     },
     "popup_checkingForUpdates": {
         "message": "Проверка обновлений...",
