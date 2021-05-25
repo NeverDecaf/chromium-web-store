@@ -46,7 +46,7 @@ ul li[data-enabled="false"] {
 }
 
 ul li:hover {
-    outline-color: rgb(77,144,254);
+    outline-color: #4d90fe;
     outline-style: auto;
     outline-width: 1px;
 }
@@ -86,7 +86,7 @@ li > a {
 }
 
 a:hover {
-    color:red;
+    color: #e60000;
 }
 
 .updatefailure,
@@ -99,7 +99,7 @@ a:hover {
 }
 
 #removedStatus {
-    box-shadow: 0 0 0 1px red, 0 0 2px 0 red;
+    box-shadow: 0 0 0 1px #e60000, 0 0 2px 0 #e60000;
 }
 
 .removedext,
@@ -115,6 +115,7 @@ svg {
     width: 20px;
     height: 20px;
 }
+
 .removedext svg,
 .updatefailure svg {
     width: 16px;
@@ -126,9 +127,40 @@ a:hover > svg {
 }
 
 @media (prefers-color-scheme: dark) {
-body,
-#app {
-    background-color: #313131;
-    color: #bfbfbf;
-}
+	body,
+	#app {
+		background-color: #313131;
+		color: #bfbfbf;
+	}
+
+	ul li[data-enabled="false"] {
+		background-color: initial;
+		color: #717171;
+		box-shadow: 0 0 0 1px #6d6d6d, 0 0 2px 0 rgba(89, 111, 144, 0.3);
+	}
+
+	ul li:hover {
+		outline: none;
+		filter: brightness(1.8);
+	}
+
+	ul li:hover img {
+		filter: brightness(.55555);
+	}
+
+	.removedext,
+	.removedext:hover,
+	.updatefailure,
+	.updatefailure:hover,
+	.removedext img,
+	.removedext:hover img,
+	.updatefailure img,
+	.updatefailure:hover img {
+		filter: none;
+	}
+
+	.updatefailure,
+	.updatefailure:hover {
+		color: #313131;
+	}
 }

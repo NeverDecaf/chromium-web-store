@@ -47,8 +47,22 @@ label.disabled {
     color: grey;
 }
 
+textarea {
+	margin-left: 1rem;
+    width: calc(100% - 2rem);
+    resize: vertical;
+}
+
+#import_export_list {
+    height: 20em;
+}
+
+#import_all_button {
+	margin-left: 1rem;
+}
+
 @media (prefers-color-scheme: dark) {
-body {
+body,textarea {
     background-color: #313131;
     color: #bfbfbf;
 }

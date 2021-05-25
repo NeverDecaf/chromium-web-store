@@ -32,7 +32,7 @@ function startupTasks() {
                 text: localstore.badge_display
             });
             chrome.alarms.create('cws_check_extension_updates', {
-                delayInMinutes: settings.update_period_in_minutes - Math.floor((Date.now() - localstore.last_scheduled_update) / 1000 / 60),
+                delayInMinutes: Math.max(1, settings.update_period_in_minutes - Math.floor((Date.now() - localstore.last_scheduled_update) / 1000 / 60)),
                 periodInMinutes: settings.update_period_in_minutes
             });
         });
