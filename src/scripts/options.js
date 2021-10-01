@@ -8,8 +8,8 @@ function load_options() {
         "update_period_in_minutes": 60
     };
     chrome.management.getAll(function (e) {
-		e = e.filter(ex => ex.updateUrl)
-		installed_extensions = e.map(ex => ex.id);
+        e = e.filter(ex => ex.updateUrl)
+        installed_extensions = e.map(ex => ex.id);
         e.forEach(function (ex) {
             label = document.createElement('label');
             label.setAttribute('title', chrome.i18n.getMessage("options_neverCheckTooltip"));
@@ -32,27 +32,27 @@ function load_options() {
             maindiv.appendChild(div);
             default_options[ex.id] = false;
         });
-		let updateUrlNoScheme = googleUpdateUrl.replace(/https?:\/\//,"")
-		document.getElementById('import_export_list').value = e.map(ex => {
-			if (ex.updateUrl.replace(/https?:\/\//,"") == updateUrlNoScheme)
-				return ex.name+'|'+ex.id
-			return ex.name+'|'+ex.id+'|'+ex.updateUrl
-		}).join('\r\n');
-		document.getElementById('import_all_button').onclick = () => {
-			let extList = [];
-			for (const m of document.getElementById('import_export_list').value.matchAll(/^(.*)\|([a-z]{32})(?:\||$)(.*)$/img)) {
-				if (installed_extensions.includes(m[2]))
-					continue
-				if (m[3])
-					extList.push({name:m[1], id:m[2], updateUrl:m[3], version:"0"})
-				else
-					extList.push({name:m[1], id:m[2], updateUrl:googleUpdateUrl, version:"0"})
-			}
-			checkForUpdates(function (updateCheck, installed_versions, appid, updatever, is_webstore) {
-				let crx_url = updateCheck.getAttribute('codebase');
-				promptInstall(crx_url, is_webstore);
-			},null,null,extList);
-		}
+        let updateUrlNoScheme = googleUpdateUrl.replace(/https?:\/\//,"")
+        document.getElementById('import_export_list').value = e.map(ex => {
+            if (ex.updateUrl.replace(/https?:\/\//,"") == updateUrlNoScheme)
+                return ex.name+'|'+ex.id
+            return ex.name+'|'+ex.id+'|'+ex.updateUrl
+        }).join('\r\n');
+        document.getElementById('import_all_button').onclick = () => {
+            let extList = [];
+            for (const m of document.getElementById('import_export_list').value.matchAll(/^(.*)\|([a-z]{32})(?:\||$)(.*)$/img)) {
+                if (installed_extensions.includes(m[2]))
+                    continue
+                if (m[3])
+                    extList.push({name:m[1], id:m[2], updateUrl:m[3], version:"0"})
+                else
+                    extList.push({name:m[1], id:m[2], updateUrl:googleUpdateUrl, version:"0"})
+            }
+            checkForUpdates(function (updateCheck, installed_versions, appid, updatever, is_webstore) {
+                let crx_url = updateCheck.getAttribute('codebase');
+                promptInstall(crx_url, is_webstore);
+            },null,null,extList);
+        }
         chrome.storage.sync.get(default_options, function (stored_values) {
             stored_values["ignored_extensions"] = [];
             chrome.storage.managed.get(stored_values, function (items) {

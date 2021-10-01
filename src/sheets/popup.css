@@ -127,40 +127,40 @@ a:hover > svg {
 }
 
 @media (prefers-color-scheme: dark) {
-	body,
-	#app {
-		background-color: #313131;
-		color: #bfbfbf;
-	}
+    body,
+    #app {
+        background-color: #313131;
+        color: #bfbfbf;
+    }
 
-	ul li[data-enabled="false"] {
-		background-color: initial;
-		color: #717171;
-		box-shadow: 0 0 0 1px #6d6d6d, 0 0 2px 0 rgba(89, 111, 144, 0.3);
-	}
+    ul li[data-enabled="false"] {
+        background-color: initial;
+        color: #717171;
+        box-shadow: 0 0 0 1px #6d6d6d, 0 0 2px 0 rgba(89, 111, 144, 0.3);
+    }
 
-	ul li:hover {
-		outline: none;
-		filter: brightness(1.8);
-	}
+    ul li:hover {
+        outline: none;
+        filter: brightness(1.8);
+    }
 
-	ul li:hover img {
-		filter: brightness(.55555);
-	}
+    ul li:hover img {
+        filter: brightness(.55555);
+    }
 
-	.removedext,
-	.removedext:hover,
-	.updatefailure,
-	.updatefailure:hover,
-	.removedext img,
-	.removedext:hover img,
-	.updatefailure img,
-	.updatefailure:hover img {
-		filter: none;
-	}
+    .removedext,
+    .removedext:hover,
+    .updatefailure,
+    .updatefailure:hover,
+    .removedext img,
+    .removedext:hover img,
+    .updatefailure img,
+    .updatefailure:hover img {
+        filter: none;
+    }
 
-	.updatefailure,
-	.updatefailure:hover {
-		color: #313131;
-	}
+    .updatefailure,
+    .updatefailure:hover {
+        color: #313131;
+    }
 }

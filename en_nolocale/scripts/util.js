@@ -31,7 +31,7 @@ function promptInstall(crx_url, is_webstore, extension_dl_ids) {
 
 function checkForUpdates(update_callback = null, failure_callback = null, completed_callback = null, custom_ext_list = []) {
     chrome.management.getAll(function (e) {
-		e.push(...custom_ext_list);
+        e.push(...custom_ext_list);
         let default_options = {
             "auto_update": true,
             "check_store_apps": true,

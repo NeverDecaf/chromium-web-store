@@ -48,7 +48,7 @@
         "message": "Nunca procurar atualizações para esta extensão",
         "description": ""
     },
-	"options_updateDelay": {
+    "options_updateDelay": {
         "message": "Procurar por atualizações a cada $delayInMinutes$ minutos",
         "description": "delayInMinutes will be a field that can be edited by the user",
         "placeholders": {
@@ -79,19 +79,17 @@
         }
     },
     "popup_removedExtensions": {
-	"message": "As extensões abaixo indicadas foram removidas da Chrome Web Store",
-	"description": "Will be shown above list of removed extensions."
+        "message": "As extensões abaixo indicadas foram removidas da Chrome Web Store",
+        "description": "Will be shown above list of removed extensions."
     },
     "popup_removedExtensionsTooltip": {
         "message": "As extensões podem ter sido removidas por violarem os Termos do Serviço.",
         "description": "Shown when hovering over popup_removedExtensions."
     },
-
     "contextMenu_updateAll": {
         "message": "Atualizar todas as extensões",
         "description": ""
     },
-	
     "webstore_addButton": {
         "message": "Adicionar ao Chromium",
         "description": ""

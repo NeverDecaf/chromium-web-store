@@ -7,6 +7,7 @@
         "message": "Active l'installation et la mise à jour semi-automatique des extensions installées depuis le Chrome Web Store (ou d'ailleurs) sur les navigateurs basés sur Chromium.",
         "description": "La description de l'extension, affichée dans le Chrome Web Store."
     },
+
     "options_updateHeading": {
         "message": "Options de mise à jour",
         "description": ""

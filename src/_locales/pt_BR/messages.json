@@ -48,7 +48,7 @@
         "message": "Nunca buscar por atualizações para esta extensão",
         "description": ""
     },
-	"options_updateDelay": {
+    "options_updateDelay": {
         "message": "Buscar por atualizações a cada $delayInMinutes$ minutos",
         "description": "delayInMinutes será um campo que pode ser editado pelo usuário",
         "placeholders": {
@@ -90,7 +90,6 @@
         "message": "Atualizar todas as extensões",
         "description": ""
     },
-	
     "webstore_addButton": {
         "message": "Adicionar ao Chromium",
         "description": ""

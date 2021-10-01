@@ -10,11 +10,11 @@
         "management",
         "https://clients2.google.com/service/*",
         "storage",
-		"alarms",
-		"contextMenus",
-		"downloads"
+        "alarms",
+        "contextMenus",
+        "downloads"
     ],
-	"optional_permissions": [ "https://*/", "http://*/" ],
+    "optional_permissions": [ "https://*/", "http://*/" ],
     "browser_action": {
         "default_icon": {
             "16": "assets/icon/icon_16.png",

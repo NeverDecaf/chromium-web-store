@@ -48,7 +48,7 @@ label.disabled {
 }
 
 textarea {
-	margin-left: 1rem;
+    margin-left: 1rem;
     width: calc(100% - 2rem);
     resize: vertical;
 }
@@ -58,7 +58,7 @@ textarea {
 }
 
 #import_all_button {
-	margin-left: 1rem;
+    margin-left: 1rem;
 }
 
 @media (prefers-color-scheme: dark) {
