@@ -26,14 +26,14 @@ open(os.path.join(ANDROID_SRC,'scripts/localize.js'),'w')
 
 for root, dirs, files in os.walk(ANDROID_SRC):
     # replace CSS and HTML files, as well as manifest.json:
-    for name in filter(lambda f: f.lower().endswith(('.css','manifest.json','.html')),files):  
+    for name in filter(lambda f: f.lower().endswith(('.css','manifest.json','.html')),files):
         with fileinput.FileInput(os.path.join(root, name), inplace=True) as file:
             for line in file:
                 for repl, msg in messages.items():
                     line = line.replace('__MSG_{}__'.format(repl), msg['message'])
                 print(line, end='')
     # replace Javascript files
-    for name in filter(lambda f: f.lower().endswith('.js'),files):  
+    for name in filter(lambda f: f.lower().endswith('.js'),files):
         with fileinput.FileInput(os.path.join(root, name), inplace=True) as file:
             for line in file:
                 paramstring = re.search('(?<=chrome\.i18n\.getMessage\()([^\)]*)',line)

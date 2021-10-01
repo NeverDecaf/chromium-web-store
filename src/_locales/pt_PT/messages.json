@@ -86,12 +86,10 @@
         "message": "As extensões podem ter sido removidas por violarem os Termos do Serviço.",
         "description": "Shown when hovering over popup_removedExtensions."
     },
-
     "contextMenu_updateAll": {
         "message": "Atualizar todas as extensões",
         "description": ""
     },
-	
     "webstore_addButton": {
         "message": "Adicionar ao Chromium",
         "description": ""
