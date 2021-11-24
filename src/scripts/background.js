@@ -16,6 +16,10 @@ function handleContextClick(info, tab) {
         chrome.tabs.sendMessage(tab.id, {
             action: "install"
         });
+	else if (info.menuItemId == 'cws')
+        chrome.tabs.create({
+            url: 'https://chrome.google.com/webstore/'
+        });
 };
 
 function updateBadge(modified_ext_id = null) {
@@ -73,14 +77,24 @@ chrome.runtime.onInstalled.addListener(function () {
         contexts: ["browser_action"]
     });
     chrome.contextMenus.create({
+        title: '🔗 Chrome Web Store',
+        id: 'cws',
+        contexts: ["browser_action"]
+    });
+    chrome.contextMenus.create({
         title: chrome.i18n.getMessage("webstore_addButton"),
         id: 'installExt',
-        documentUrlPatterns: ["https://chrome.google.com/webstore/detail/*"]
+        documentUrlPatterns: ["https://chrome.google.com/webstore/detail/*","https://addons.opera.com/*/extensions/details/*","https://microsoftedge.microsoft.com/addons/detail/*"]
     });
 });
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.downloadId) {
         extensionsDownloads[request.downloadId] = true;
+    }
+    if (request.newTabUrl) {
+        chrome.tabs.create({active: false}, tab => {
+            chrome.tabs.update(tab.id, {url: request.newTabUrl})
+        })
     }
 });
 chrome.downloads.onChanged.addListener((d) => {
