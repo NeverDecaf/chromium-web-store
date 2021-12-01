@@ -69,6 +69,7 @@ function checkForUpdates(update_callback = null, failure_callback = null, comple
                 let updateUrl = 'https://clients2.google.com/service/update2/crx?response=updatecheck&acceptformat=crx2,crx3&prodversion=' + chromeVersion;
                 let installed_versions = {};
                 let updateUrls = [];
+				Array.from(store_extensions.values()).forEach(x => delete x.updateUrl)
                 e.forEach(function (ex) {
                     if (ex.updateUrl && !settings[ex.id]) {
 						let is_from_store = false
@@ -136,11 +137,13 @@ function checkForUpdates(update_callback = null, failure_callback = null, comple
 								let disp = (updateCount || '') + (parseInt(currentText) || '') + '';
 								chrome.browserAction.setBadgeText({
 									text: disp
+								}, () => {
+									chrome.storage.local.set({
+										"badge_display": disp
+									}, () => {
+										resolve();
+									});
 								});
-								chrome.storage.local.set({
-									"badge_display": disp
-								});
-								resolve()
 							});
 						})
 						.catch(e => {
@@ -156,22 +159,22 @@ function checkForUpdates(update_callback = null, failure_callback = null, comple
 				}
                 chrome.browserAction.setBadgeText({
                     text: ''
-                });
-				
-				let promises = updateUrls.map(uurl => update_extension(uurl.url, uurl.id, uurl.name))
-				Promise.allSettled(promises)
-				.then(plist => {
-					if (plist.some(x => x.status == 'rejected')) {
-						chrome.browserAction.getBadgeText({}, function (currentText) {
-							if (!(parseInt(currentText) > 0))
-								chrome.browserAction.setBadgeText({
-									text: "?"
-								});
-						})
-					}
-					if (completed_callback)
-						completed_callback()
-				})
+                }, () => {
+					let promises = updateUrls.map(uurl => update_extension(uurl.url, uurl.id, uurl.name))
+					Promise.allSettled(promises)
+					.then(plist => {
+						if (plist.some(x => x.status == 'rejected')) {
+							chrome.browserAction.getBadgeText({}, function (currentText) {
+								if (!(parseInt(currentText) > 0))
+									chrome.browserAction.setBadgeText({
+										text: "?"
+									});
+							})
+						}
+						if (completed_callback)
+							completed_callback()
+					})
+				});
             });
         });
     });
