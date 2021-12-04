@@ -1,6 +1,7 @@
-const is_cws = /chrome.google.com\/webstore\//i
+const is_cws = /chrome.google.com\/webstore/i
 const is_ows = /addons.opera.com\/.*extensions/i
-const is_ews = /microsoftedge\.microsoft\.com\/addons\/detail\//i
+const is_ews = /microsoftedge\.microsoft\.com\/addons\//i
+const is_ews_addon_page = /microsoftedge\.microsoft\.com\/addons\/detail\//i
 const cws_re = /.*detail\/[^\/]*\/([a-z]{32})/i
 const ows_re = /.*details\/([^\/?#]+)/i
 const ews_re = /.*addons\/.+?\/([a-z]{32})/i
@@ -77,22 +78,24 @@ attachMainObserver = new MutationObserver(function (mutations, observer) {
 if (is_ews.test(window.location.href)) {
 	new MutationObserver(function (mutations, observer) {
     mutations.forEach(function (mutation) {
-		let btn = mutation.target.querySelector('button[disabled]')
-		if (btn) {
-			btn.classList.remove(btn.className.split(' ').sort().reverse()[0])
-			btn.removeAttribute('disabled')
-			btn.addEventListener('click',() => {
-				// normal methods fail because microsoft's official web store redirects you from HTTPS to an insecure HTTP url.
-				// instead use chrome.tabs to open the url in a new tab.
-				chrome.runtime.sendMessage({
-					newTabUrl: buildExtensionUrl(getExtensionId(window.location.href))
-				});
-			})
-			observer.disconnect();
+		if (is_ews_addon_page.test(window.location.href)) {
+			let btn = mutation.target.querySelector('button[disabled]')
+			if (btn) {
+				btn.classList.remove(btn.className.split(' ').sort().reverse()[0])
+				btn.removeAttribute('disabled')
+				btn.addEventListener('click',() => {
+					// normal methods fail because microsoft's official web store redirects you from HTTPS to an insecure HTTP url.
+					// instead use chrome.tabs to open the url in a new tab.
+					chrome.runtime.sendMessage({
+						newTabUrl: buildExtensionUrl(getExtensionId(window.location.href))
+					});
+				})
+			}
 		}
     });
 	}).observe(document.body, {
-		childList: true
+		childList: true,
+		subtree: true
 	});
 }
 if (is_cws.test(window.location.href)) {
