@@ -13,16 +13,16 @@ function getExtensionId(url) {
 }
 
 function buildExtensionUrl(extensionId) {
-	if (is_cws.test(window.location.href)) {
-		var chromeVersion = /Chrome\/([0-9.]+)/.exec(navigator.userAgent)[1];
-		return 'https://clients2.google.com/service/update2/crx?response=redirect&acceptformat=crx2,crx3&prodversion=' + chromeVersion + '&x=id%3D' + extensionId + '%26installsource%3Dondemand%26uc';
-	}
-	if (is_ows.test(window.location.href)) {
-		return 'https://addons.opera.com/extensions/download/' + extensionId + '/'
-	}
-	if (is_ews.test(window.location.href)) {
-		return 'https://edge.microsoft.com/extensionwebstorebase/v1/crx?response=redirect&x=id%3D' + extensionId + '%26installsource%3Dondemand%26uc'
-	}
+    if (is_cws.test(window.location.href)) {
+        var chromeVersion = /Chrome\/([0-9.]+)/.exec(navigator.userAgent)[1];
+        return 'https://clients2.google.com/service/update2/crx?response=redirect&acceptformat=crx2,crx3&prodversion=' + chromeVersion + '&x=id%3D' + extensionId + '%26installsource%3Dondemand%26uc';
+    }
+    if (is_ows.test(window.location.href)) {
+        return 'https://addons.opera.com/extensions/download/' + extensionId + '/'
+    }
+    if (is_ews.test(window.location.href)) {
+        return 'https://edge.microsoft.com/extensionwebstorebase/v1/crx?response=redirect&x=id%3D' + extensionId + '%26installsource%3Dondemand%26uc'
+    }
 }
 
 function createButton(newParent) {
@@ -54,7 +54,7 @@ function createButton(newParent) {
     });
     newParent.innerHTML = "";
     newParent.appendChild(button_div);
-	dlBtn = button_div
+    dlBtn = button_div
 }
 var modifyButtonObserver = new MutationObserver(function (mutations, observer) {
     mutations.forEach(function (mutation) {
@@ -76,79 +76,79 @@ attachMainObserver = new MutationObserver(function (mutations, observer) {
     observer.disconnect();
 });
 if (is_ews.test(window.location.href)) {
-	new MutationObserver(function (mutations, observer) {
+    new MutationObserver(function (mutations, observer) {
     mutations.forEach(function (mutation) {
-		if (is_ews_addon_page.test(window.location.href)) {
-			let btn = mutation.target.querySelector('button[disabled]')
-			if (btn) {
-				btn.classList.remove(btn.className.split(' ').sort().reverse()[0])
-				btn.removeAttribute('disabled')
-				btn.addEventListener('click',() => {
-					// normal methods fail because microsoft's official web store redirects you from HTTPS to an insecure HTTP url.
-					// instead use chrome.tabs to open the url in a new tab.
-					chrome.runtime.sendMessage({
-						newTabUrl: buildExtensionUrl(getExtensionId(window.location.href))
-					});
-				})
-			}
-		}
+        if (is_ews_addon_page.test(window.location.href)) {
+            let btn = mutation.target.querySelector('button[disabled]')
+            if (btn) {
+                btn.classList.remove(btn.className.split(' ').sort().reverse()[0])
+                btn.removeAttribute('disabled')
+                btn.addEventListener('click',() => {
+                    // normal methods fail because microsoft's official web store redirects you from HTTPS to an insecure HTTP url.
+                    // instead use chrome.tabs to open the url in a new tab.
+                    chrome.runtime.sendMessage({
+                        newTabUrl: buildExtensionUrl(getExtensionId(window.location.href))
+                    });
+                })
+            }
+        }
     });
-	}).observe(document.body, {
-		childList: true,
-		subtree: true
-	});
+    }).observe(document.body, {
+        childList: true,
+        subtree: true
+    });
 }
 if (is_cws.test(window.location.href)) {
-	attachMainObserver.observe(document.body, {
-		childList: true
-	});
+    attachMainObserver.observe(document.body, {
+        childList: true
+    });
 }
 if (is_ows.test(window.location.href)) {
-	let installDiv = document.body.querySelector('.sidebar .get-opera')
-	let sidebar = installDiv.parentElement
-	let wrapper = document.createElement('div')
-	wrapper.classList.add('wrapper-install')
-	dlBtn = document.createElement('a')
-	dlBtn.classList.add('btn-install')
-	dlBtn.classList.add('btn-with-plus')
-	dlBtn.innerHTML = chrome.i18n.getMessage("webstore_addButton")
-	sidebar.replaceChild(wrapper, installDiv)
-	wrapper.appendChild(dlBtn)
-	let url = buildExtensionUrl(getExtensionId(window.location.href))
-	function fetchExt() {
-		let filename = 'ext.crx'
-		fetch(url)
-		.then( r => {
-			r.headers.forEach(h => {
-				let v = /filename=([^ ]+)/.exec(h)
-				if (v) {
-					filename = v[1]
-					return
-				}
-			})
-			return r.blob()
-		})
-		.then( blob => {
-			// set mime type to prevent automatic install; reference: https://stackoverflow.com/questions/57834691/how-to-serve-crx-file-in-a-way-that-is-not-automatically-installed
-			blob = blob.slice(0, blob.size, "application/zip")
-			const blobURL = window.URL.createObjectURL(blob);
-			dlBtn.href = blobURL;
-			dlBtn.download = filename
-			dlBtn.click()
-		})
-	}
-	dlBtn.addEventListener('click', fetchExt, {once:true})
+    let installDiv = document.body.querySelector('.sidebar .get-opera')
+    let sidebar = installDiv.parentElement
+    let wrapper = document.createElement('div')
+    wrapper.classList.add('wrapper-install')
+    dlBtn = document.createElement('a')
+    dlBtn.classList.add('btn-install')
+    dlBtn.classList.add('btn-with-plus')
+    dlBtn.innerHTML = chrome.i18n.getMessage("webstore_addButton")
+    sidebar.replaceChild(wrapper, installDiv)
+    wrapper.appendChild(dlBtn)
+    let url = buildExtensionUrl(getExtensionId(window.location.href))
+    function fetchExt() {
+        let filename = 'ext.crx'
+        fetch(url)
+        .then( r => {
+            r.headers.forEach(h => {
+                let v = /filename=([^ ]+)/.exec(h)
+                if (v) {
+                    filename = v[1]
+                    return
+                }
+            })
+            return r.blob()
+        })
+        .then( blob => {
+            // set mime type to prevent automatic install; reference: https://stackoverflow.com/questions/57834691/how-to-serve-crx-file-in-a-way-that-is-not-automatically-installed
+            blob = blob.slice(0, blob.size, "application/zip")
+            const blobURL = window.URL.createObjectURL(blob);
+            dlBtn.href = blobURL;
+            dlBtn.download = filename
+            dlBtn.click()
+        })
+    }
+    dlBtn.addEventListener('click', fetchExt, {once:true})
 }
 window.onload = () => {
     chrome.runtime.onMessage.addListener(request => {
         if (request.action === "install") {
-			console.log('opening extension URL:',buildExtensionUrl(getExtensionId(window.location.href)))
-			if (is_ows.test(window.location.href)) {
-				dlBtn.click()
-			}
-			else if (is_cws.test(window.location.href) || is_ews.test(window.location.href)) {
-				window.open(buildExtensionUrl(getExtensionId(window.location.href)));
-			}
+            console.log('opening extension URL:',buildExtensionUrl(getExtensionId(window.location.href)))
+            if (is_ows.test(window.location.href)) {
+                dlBtn.click()
+            }
+            else if (is_cws.test(window.location.href) || is_ews.test(window.location.href)) {
+                window.open(buildExtensionUrl(getExtensionId(window.location.href)));
+            }
         }
     });
 };

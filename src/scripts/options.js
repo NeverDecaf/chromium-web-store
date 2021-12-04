@@ -18,10 +18,10 @@ function load_options() {
             input = document.createElement('input');
             input.setAttribute('type', 'checkbox');
             input.setAttribute('id', ex.id);
-			if (Array.from(store_extensions.keys()).some(x => x.test(ex.updateUrl) && store_extensions.get(x).ignore)) {
-				input.checked = true
-				input.disabled = true
-			}
+            if (Array.from(store_extensions.keys()).some(x => x.test(ex.updateUrl) && store_extensions.get(x).ignore)) {
+                input.checked = true
+                input.disabled = true
+            }
             img.setAttribute('alt', ex.name);
             if (ex.icons)
                 img.setAttribute('src', 'chrome://extension-icon/' + ex.id + '/' + ex.icons[0].size + '/0');
@@ -36,14 +36,14 @@ function load_options() {
             default_options[ex.id] = false;
         });
         document.getElementById('import_export_list').value = e.map(ex => {
-			for (const [re, updaterOptions] of store_extensions) {
-				if (re.test(ex.updateUrl)) {
-					if (!updaterOptions.ignore)
-						return ex.name+'|'+ex.id
-					else
-						return ex.name
-				}
-			}
+            for (const [re, updaterOptions] of store_extensions) {
+                if (re.test(ex.updateUrl)) {
+                    if (!updaterOptions.ignore)
+                        return ex.name+'|'+ex.id
+                    else
+                        return ex.name
+                }
+            }
             return ex.name+'|'+ex.id+'|'+ex.updateUrl
         }).join('\r\n');
         document.getElementById('import_all_button').onclick = () => {
@@ -71,8 +71,8 @@ function load_options() {
                 for (const [setting, value] of Object.entries(items)) {
                     let node = document.getElementById(setting);
                     if (node.type == 'checkbox') {
-						if (!node.checked)
-							node.checked = value;
+                        if (!node.checked)
+                            node.checked = value;
                         node.addEventListener("change", e => {
                             const checked = e.target.checked;
                             chrome.storage.sync.set({

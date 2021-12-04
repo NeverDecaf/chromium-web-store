@@ -16,7 +16,7 @@ function handleContextClick(info, tab) {
         chrome.tabs.sendMessage(tab.id, {
             action: "install"
         });
-	else if (info.menuItemId == 'cws')
+    else if (info.menuItemId == 'cws')
         chrome.tabs.create({
             url: 'https://chrome.google.com/webstore/'
         });

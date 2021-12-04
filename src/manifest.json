@@ -27,7 +27,7 @@
         "matches": ["https://chrome.google.com/webstore/*","https://addons.opera.com/*extensions/details/*", "https://microsoftedge.microsoft.com/addons/*"],
         "js": ["scripts/inject.js"],
         "run_at": "document_end"
-	}],
+    }],
     "background": {
         "scripts": ["scripts/util.js", "scripts/background.js"],
         "persistent": false
