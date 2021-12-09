@@ -1,0 +1,106 @@
+{
+    "extension_Name": {
+        "message": "Chromium Web Store",
+        "description": "扩展的标题，显示在 Chrome Web Store 中。"
+    },
+    "extension_Description": {
+        "message": "在基于 Chromium 的浏览器上启用对来自 Chrome Web Store (或其它地方)的扩展的安装和半自动更新。",
+        "description": "扩展的说明，显示在 Chrome Web Store 中。"
+    },
+
+    "options_updateHeading": {
+        "message": "更新选项",
+        "description": ""
+    },
+    "options_ignoredExtensionsHeading": {
+        "message": "忽略的扩展",
+        "description": ""
+    },
+    "options_importExportHeading": {
+        "message": "导入/导出",
+        "description": ""
+    },
+    "options_autoUpdate": {
+        "message": "自动检查扩展更新",
+        "description": ""
+    },
+    "options_autoUpdateTooltip": {
+        "message": "点击 Chromium Web Store 标记来执行手动检查",
+        "description": ""
+    },
+    "options_updateWebstore": {
+        "message": "检查 Chrome Web Store 扩展的更新",
+        "description": ""
+    },
+    "options_updateWebstoreTooltip": {
+        "message": "将会联系 Google 检查更新",
+        "description": ""
+    },
+    "options_updateNonWebstore": {
+        "message": "检查非 Chrome Web Store 扩展的更新",
+        "description": ""
+    },
+    "options_updateNonWebstoreTooltip": {
+        "message": "仅支持自动更新的扩展有效",
+        "description": ""
+    },
+    "options_neverCheckTooltip": {
+        "message": "从不检查这个扩展的更新",
+        "description": ""
+    },
+    "options_updateDelay": {
+        "message": "每隔 $delayInMinutes$ 分钟检查一个更新",
+        "description": "delayInMinutes 将是用户可以编辑的一个字段",
+        "placeholders": {
+            "delayInMinutes": {
+                "content": "$1"
+            }
+        }
+    },
+    "options_importExportInstallAllButton": {
+        "message": "安装全部",
+        "description": ""
+    },
+    "options_importExportDescription": {
+        "message": "保存这里的文本到一个用来导出的文件。 要导入则把文本粘贴到这里并按下 $installButton$",
+        "description": "installButton 是按钮上的文本，在 options_importExportInstallAllButton 中定义",
+        "placeholders": {
+            "installButton": {
+                "content": "$1"
+            }
+        }
+    },
+    "popup_checkingForUpdates": {
+        "message": "正在检查更新...",
+        "description": ""
+    },
+    "popup_allUpToDate": {
+        "message": "所有扩展都是最新的!",
+        "description": ""
+    },
+    "popup_updateFailed": {
+        "message": "$extName$ 更新失败",
+        "description": "extName 将是未能更新的扩展的名称。",
+        "placeholders": {
+            "extName": {
+                "content": "$1"
+            }
+        }
+    },
+    "popup_removedExtensions": {
+        "message": "下列扩展已从 Chrome Web Store 中移除",
+        "description": "将会显示在已移除扩展的列表上方。"
+    },
+    "popup_removedExtensionsTooltip": {
+        "message": "这些可能由于违反服务条款而被移除。",
+        "description": "当悬停在 popup_removedExtensions 时显示。"
+    },
+    "contextMenu_updateAll": {
+        "message": "更新所有扩展",
+        "description": ""
+    },
+    "webstore_addButton": {
+        "message": "添加到 Chromium",
+        "description": ""
+    }
+}
