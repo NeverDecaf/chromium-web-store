@@ -37,17 +37,14 @@ function buildExtensionUrl(extensionId) {
     }
 }
 
-function createButton(newParent) {
-    var button_div = document.createElement("div");
+function createButton(newParent, addBtn = true) {
+    const button_div = document.createElement("div");
     button_div.setAttribute("role", "button");
     button_div.setAttribute(
         "class",
         "dd-Va g-c-wb g-eg-ua-Uc-c-za g-c-Oc-td-jb-oa g-c"
     );
-    button_div.setAttribute(
-        "aria-label",
-        chrome.i18n.getMessage("webstore_addButton")
-    );
+
     button_div.setAttribute("tabindex", "0");
     button_div.setAttribute("style", "user-select: none;");
     var hf = document.createElement("div");
@@ -56,13 +53,45 @@ function createButton(newParent) {
     var x = document.createElement("div");
     x.setAttribute("class", "g-c-x");
     hf.appendChild(x);
-    var r = document.createElement("div");
+    const r = document.createElement("div");
     r.setAttribute("class", "g-c-R  webstore-test-button-label");
-    r.innerHTML = chrome.i18n.getMessage("webstore_addButton");
     x.appendChild(r);
+    button_div.toggleState = function (isInstall) {
+        isInstall
+            ? button_div.setAttribute("isInstallBtn", "")
+            : button_div.removeAttribute("isInstallBtn");
+        button_div.setAttribute(
+            "aria-label",
+            isInstall
+                ? chrome.i18n.getMessage("webstore_addButton")
+                : chrome.i18n.getMessage("webstore_removeButton")
+        );
+        r.innerHTML = isInstall
+            ? chrome.i18n.getMessage("webstore_addButton")
+            : chrome.i18n.getMessage("webstore_removeButton");
+    };
+    if (addBtn) button_div.setAttribute("isInstallBtn", "");
+    button_div.toggleState(addBtn);
     let dlurl = buildExtensionUrl(getExtensionId(window.location.href));
+    button_div.id = getExtensionId(window.location.href);
     button_div.addEventListener("click", function () {
-        window.open(dlurl);
+        if (button_div.hasAttribute("isInstallBtn")) {
+            chrome.runtime.sendMessage({
+                installExt: getExtensionId(window.location.href),
+            });
+            window.open(dlurl);
+        } else {
+            chrome.runtime.sendMessage(
+                {
+                    uninstallExt: getExtensionId(window.location.href),
+                },
+                (resp) => {
+                    if (resp.uninstalled) {
+                        button_div.toggleState(true);
+                    }
+                }
+            );
+        }
     });
     button_div.addEventListener("mouseover", function () {
         this.classList.add("g-c-l");
@@ -84,7 +113,16 @@ var modifyButtonObserver = new MutationObserver(function (mutations, observer) {
         ) {
             var container_div = document.querySelector(".h-e-f-Ra-c");
             if (container_div && null == container_div.firstChild) {
-                createButton(container_div);
+                chrome.runtime.sendMessage(
+                    {
+                        checkExtInstalledId: getExtensionId(
+                            window.location.href
+                        ),
+                    },
+                    (resp) => {
+                        createButton(container_div, !resp.installed);
+                    }
+                );
             }
         }
     });
@@ -167,22 +205,28 @@ if (is_ows.test(window.location.href)) {
     dlBtn.addEventListener("click", fetchExt, { once: true });
 }
 window.onload = () => {
-    chrome.runtime.onMessage.addListener((request) => {
-        if (request.action === "install") {
-            console.log(
-                "opening extension URL:",
-                buildExtensionUrl(getExtensionId(window.location.href))
-            );
-            if (is_ows.test(window.location.href)) {
-                dlBtn.click();
-            } else if (
-                is_cws.test(window.location.href) ||
-                is_ews.test(window.location.href)
-            ) {
-                window.open(
+    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+        switch (request.action) {
+            case "install":
+                console.log(
+                    "opening extension URL:",
                     buildExtensionUrl(getExtensionId(window.location.href))
                 );
-            }
+                if (is_ows.test(window.location.href)) {
+                    dlBtn.click();
+                } else if (
+                    is_cws.test(window.location.href) ||
+                    is_ews.test(window.location.href)
+                ) {
+                    window.open(
+                        buildExtensionUrl(getExtensionId(window.location.href))
+                    );
+                }
+                break;
+            case "extInstalled":
+                if (request.extId == getExtensionId(window.location.href))
+                    document.getElementById(request.extId).toggleState(false);
+                break;
         }
     });
 };

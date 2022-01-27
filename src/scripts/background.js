@@ -5,6 +5,7 @@ var default_options = {
     check_external_apps: true,
     update_period_in_minutes: 60,
 };
+const tabsAwaitingInstall = new Set();
 
 function handleContextClick(info, tab) {
     if (info.menuItemId == "updateAll")
@@ -65,6 +66,18 @@ chrome.browserAction.setBadgeBackgroundColor({
 });
 chrome.management.onInstalled.addListener(function (ext) {
     updateBadge(ext.id);
+    for (let tabid of tabsAwaitingInstall) {
+        chrome.tabs.sendMessage(
+            tabid,
+            {
+                action: "extInstalled",
+                extId: ext.id,
+            },
+            () => {
+                if (chrome.runtime.lastError) tabsAwaitingInstall.delete(tabid);
+            }
+        );
+    }
 });
 chrome.management.onUninstalled.addListener(function (ext) {
     updateBadge(ext.id);
@@ -117,6 +130,23 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         chrome.tabs.create({ active: false }, (tab) => {
             chrome.tabs.update(tab.id, { url: request.newTabUrl });
         });
+    }
+    if (request.checkExtInstalledId) {
+        chrome.management.get(request.checkExtInstalledId, (extinfo) => {
+            sendResponse({
+                installed: !(chrome.runtime.lastError && !extinfo),
+            });
+        });
+        return true;
+    }
+    if (request.uninstallExt) {
+        chrome.management.uninstall(request.uninstallExt, () => {
+            sendResponse({ uninstalled: !chrome.runtime.lastError });
+        });
+        return true;
+    }
+    if (request.installExt) {
+        tabsAwaitingInstall.add(sender.tab.id);
     }
 });
 chrome.downloads.onChanged.addListener((d) => {
