@@ -1,0 +1,110 @@
+{
+    "extension_Name": {
+        "message": "Chromium Web Store",
+        "description": "The title of the extension, displayed in the Chrome Web Store."
+    },
+    "extension_Description": {
+        "message": "Enables installation and semi-automatic updating for extensions from the Chrome Web Store (or elsewhere) on Chromium based browsers.",
+        "description": "The description of the extension, displayed in the Chrome Web Store."
+    },
+
+    "options_updateHeading": {
+        "message": "Update options",
+        "description": ""
+    },
+    "options_ignoredExtensionsHeading": {
+        "message": "Ignored extensions",
+        "description": ""
+    },
+    "options_importExportHeading": {
+        "message": "Import/Export",
+        "description": ""
+    },
+    "options_autoUpdate": {
+        "message": "Automatically check for extension updates",
+        "description": ""
+    },
+    "options_autoUpdateTooltip": {
+        "message": "Click the Chromium Web Store badge to perform a manual check",
+        "description": ""
+    },
+    "options_updateWebstore": {
+        "message": "Check for updates to Chrome Web Store extensions",
+        "description": ""
+    },
+    "options_updateWebstoreTooltip": {
+        "message": "Will contact Google to check for updates",
+        "description": ""
+    },
+    "options_updateNonWebstore": {
+        "message": "Check for updates to non-Chrome Web Store extensions",
+        "description": ""
+    },
+    "options_updateNonWebstoreTooltip": {
+        "message": "Only works if extension supports auto-updating",
+        "description": ""
+    },
+    "options_neverCheckTooltip": {
+        "message": "Never check for updates to this extension",
+        "description": ""
+    },
+    "options_updateDelay": {
+        "message": "Check for updates every $delayInMinutes$ minutes",
+        "description": "delayInMinutes will be a field that can be edited by the user",
+        "placeholders": {
+            "delayInMinutes": {
+                "content": "$1"
+            }
+        }
+    },
+    "options_importExportInstallAllButton": {
+        "message": "Install All",
+        "description": ""
+    },
+    "options_importExportDescription": {
+        "message": "Save the text here to a file to export. To import paste that text here and press $installButton$",
+        "description": "installButton is the text on the button, defined in options_importExportInstallAllButton",
+        "placeholders": {
+            "installButton": {
+                "content": "$1"
+            }
+        }
+    },
+    "popup_checkingForUpdates": {
+        "message": "Checking for updates...",
+        "description": ""
+    },
+    "popup_allUpToDate": {
+        "message": "All extensions are up to date!",
+        "description": ""
+    },
+    "popup_updateFailed": {
+        "message": "$extName$ Update Failed",
+        "description": "extName will be the name of the extension that failed to update.",
+        "placeholders": {
+            "extName": {
+                "content": "$1"
+            }
+        }
+    },
+    "popup_removedExtensions": {
+        "message": "The following extensions have been removed from the Chrome Web Store",
+        "description": "Will be shown above list of removed extensions."
+    },
+    "popup_removedExtensionsTooltip": {
+        "message": "These may have been removed due to a violation of the Terms of Service.",
+        "description": "Shown when hovering over popup_removedExtensions."
+    },
+    "contextMenu_updateAll": {
+        "message": "Update all extensions",
+        "description": ""
+    },
+    "webstore_addButton": {
+        "message": "Add to Chromium",
+        "description": ""
+    },
+    "webstore_removeButton": {
+        "message": "Remove from Chromium",
+        "description": ""
+    }
+}

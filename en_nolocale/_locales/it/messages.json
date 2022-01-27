@@ -1,0 +1,101 @@
+{
+    "extension_Name": {
+        "message": "Chromium Web Store",
+        "description": "Il titolo dell'estensione, mostrato nel Chrome Web Store."
+    },
+    "extension_Description": {
+        "message": "Permette di installare ed aggiornare in modo semiautomatico estensioni del Chrome Web Store",
+        "description": "La descrizione dell'estensione, mostrata nel Chrome Web Store."
+    },
+
+    "options_updateHeading": {
+        "message": "Opzioni di aggiornamento",
+        "description": ""
+    },
+    "options_ignoredExtensionsHeading": {
+        "message": "Estensioni ignorate",
+        "description": ""
+    },
+    "options_importExportHeading": {
+        "message": "Importa/Esporta",
+        "description": ""
+    },
+    "options_autoUpdate": {
+        "message": "Controlla automaticamente se ci sono aggiornamenti delle estensioni",
+        "description": ""
+    },
+    "options_autoUpdateTooltip": {
+        "message": "Clicca sul badge del Chromium Web Store per fare un controllo manuale degli aggiornamenti",
+        "description": ""
+    },
+    "options_updateWebstore": {
+        "message": "Controlla gli aggiornamenti per estensioni del Chrome Web Store",
+        "description": ""
+    },
+    "options_updateWebstoreTooltip": {
+        "message": "Contatterà Google per controllare gli aggiornamenti",
+        "description": ""
+    },
+    "options_updateNonWebstore": {
+        "message": "Controlla gli aggiornamenti per estensioni che non vengono dal Chrome Web Store",
+        "description": ""
+    },
+    "options_updateNonWebstoreTooltip": {
+        "message": "Funziona solo se l'estensione supporta l'auto-aggiornamento",
+        "description": ""
+    },
+    "options_neverCheckTooltip": {
+        "message": "Non controllare mai se ci sono aggiornamenti per questa estensione",
+        "description": ""
+    },
+    "options_updateDelay": {
+        "message": "Controlla se ci sono aggiornamenti ogni $delayInMinutes$ minuti",
+        "description": "delayInMinutes sarà un valore che può essere modificato dall'utente",
+        "placeholders": {
+            "delayInMinutes": {
+                "content": "$1"
+            }
+        }
+    },
+    "options_importExportInstallAllButton": {
+        "message": "Installa tutto",
+        "description": ""
+    },
+    "popup_checkingForUpdates": {
+        "message": "Controllando se ci sono aggiornamenti...",
+        "description": ""
+    },
+    "popup_allUpToDate": {
+        "message": "Tutte le estensioni sono aggiornate!",
+        "description": ""
+    },
+    "popup_updateFailed": {
+        "message": "L'aggiornamento di $extName$ non è riuscito",
+        "description": "extName sarà il nome dell'estensione che non è stato possibile aggiornare.",
+        "placeholders": {
+            "extName": {
+                "content": "$1"
+            }
+        }
+    },
+    "popup_removedExtensions": {
+        "message": "Le seguenti estensioni sono state rimosse dal Chrome Web Store",
+        "description": "Sarà mostrato sopra alla lista delle estensioni rimosse."
+    },
+    "popup_removedExtensionsTooltip": {
+        "message": "Queste potrebbero essere state rimosse per una violazione dei Termini di Servizio",
+        "description": "Mostrato quando si passa sopra a popup_removedExtensions"
+    },
+    "contextMenu_updateAll": {
+        "message": "Aggiorna tutte le estensioni",
+        "description": ""
+    },
+    "webstore_addButton": {
+        "message": "Aggiungi a Chromium",
+        "description": ""
+    },
+    "webstore_removeButton": {
+        "message": "Rimuovere da Chromium",
+        "description": ""
+    }
+}

@@ -1,0 +1,101 @@
+{
+    "extension_Name": {
+        "message": "Chromium Web Store",
+        "description": "Le nom de l'extension, affiché dans le Chrome Web Store."
+    },
+    "extension_Description": {
+        "message": "Active l'installation et la mise à jour semi-automatique des extensions installées depuis le Chrome Web Store (ou d'ailleurs) sur les navigateurs basés sur Chromium.",
+        "description": "La description de l'extension, affichée dans le Chrome Web Store."
+    },
+
+    "options_updateHeading": {
+        "message": "Options de mise à jour",
+        "description": ""
+    },
+    "options_ignoredExtensionsHeading": {
+        "message": "Extensions ignorées",
+        "description": ""
+    },
+    "options_importExportHeading": {
+        "message": "Importer/Exporter",
+        "description": ""
+    },
+    "options_autoUpdate": {
+        "message": "Vérifier automatiquement les mises à jour des extensions",
+        "description": ""
+    },
+    "options_autoUpdateTooltip": {
+        "message": "Cliquez sur le badge Chromium Web Store pour lancer une vérification manuelle",
+        "description": ""
+    },
+    "options_updateWebstore": {
+        "message": "Rechercher des mises à jour pour les extensions installées depuis le Chrome Web Store",
+        "description": ""
+    },
+    "options_updateWebstoreTooltip": {
+        "message": "Contactera Google pour rechercher des mises à jour",
+        "description": ""
+    },
+    "options_updateNonWebstore": {
+        "message": "Recherche des mises à jour pour les extensions installées hors du Chrome Web Store",
+        "description": ""
+    },
+    "options_updateNonWebstoreTooltip": {
+        "message": "Ne fonctionne que si l'extension supporte les mises à jour automatiques",
+        "description": ""
+    },
+    "options_neverCheckTooltip": {
+        "message": "Ne jamais rechercher de mise à jour pour cette extension",
+        "description": ""
+    },
+    "options_updateDelay": {
+        "message": "Rechercher les mises à jour toutes les $delayInMinutes$ minutes",
+        "description": "delayInMinutes est le champ qui peut être édité par l'utilisateur",
+        "placeholders": {
+            "delayInMinutes": {
+                "content": "$1"
+            }
+        }
+    },
+    "options_importExportInstallAllButton": {
+        "message": "Tout installer",
+        "description": ""
+    },
+    "popup_checkingForUpdates": {
+        "message": "Recherche de mises à jour...",
+        "description": ""
+    },
+    "popup_allUpToDate": {
+        "message": "Toutes les extensions sont à jour!",
+        "description": ""
+    },
+    "popup_updateFailed": {
+        "message": "La mise à jour de $extName$ a échouée",
+        "description": "extName sera le nom de l'extension qui a échoué à être mis à jour.",
+        "placeholders": {
+            "extName": {
+                "content": "$1"
+            }
+        }
+    },
+    "popup_removedExtensions": {
+        "message": "Les extensions suivantes ont été retirées du Chrome Web Store",
+        "description": "Sera affiché au dessus de la liste des extensions retirées."
+    },
+    "popup_removedExtensionsTooltip": {
+        "message": "Ces extensions peuvent avoir été retirées à cause d'une violation des conditions générales d'utilisation.",
+        "description": "Affiché en survolant popup_removedExtensions."
+    },
+    "contextMenu_updateAll": {
+        "message": "Mettre à jour toutes les extensions",
+        "description": ""
+    },
+    "webstore_addButton": {
+        "message": "Ajouter à Chromium",
+        "description": ""
+    },
+    "webstore_removeButton": {
+        "message": "Supprimer de Chromium",
+        "description": ""
+    }
+}
