@@ -93,5 +93,9 @@
     "webstore_addButton": {
         "message": "Ajouter à Chromium",
         "description": ""
+    },
+    "webstore_removeButton": {
+        "message": "Supprimer de Chromium",
+        "description": ""
     }
 }

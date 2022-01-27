@@ -102,5 +102,9 @@
     "webstore_addButton": {
         "message": "添加到 Chromium",
         "description": ""
+    },
+    "webstore_removeButton": {
+        "message": "從 Chromium 中刪除",
+        "description": ""
     }
 }
