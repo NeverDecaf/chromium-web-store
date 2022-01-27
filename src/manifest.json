@@ -24,7 +24,7 @@
         "default_popup": "popup.html"
     },
     "content_scripts": [{
-        "matches": ["https://chrome.google.com/webstore/*","https://addons.opera.com/*extensions/details/*", "https://microsoftedge.microsoft.com/addons/*"],
+        "matches": ["https://chrome.google.com/webstore*","https://addons.opera.com/*extensions/details/*", "https://microsoftedge.microsoft.com/addons/*"],
         "js": ["scripts/inject.js"],
         "run_at": "document_end"
     }],
