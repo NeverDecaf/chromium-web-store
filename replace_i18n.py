@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 ### Replaces all usages of i18n for compatibility with android where locales are not loaded correctly in ungoogled-chromium
-### Very crude implementation and may break without warning
-### Important: If using placeholders in chrome.i18n.getMessage, the variable name used in your js MUST be the same as the name used in messages.json
+### Very crude implementation and may break WITHOUT WARNING
+### Important: If using placeholders in chrome.i18n.getMessage, the order of the placeholder args must exactly match the order of the placeholders in the string. For example: i18.getMessage("this $1$ example $2$",var1, var2)
 import shutil
 import json
 import os
@@ -34,20 +34,20 @@ for root, dirs, files in os.walk(ANDROID_SRC):
                 print(line, end='')
     # replace Javascript files
     for name in filter(lambda f: f.lower().endswith('.js'),files):
-        with fileinput.FileInput(os.path.join(root, name), inplace=True) as file:
-            for line in file:
-                paramstring = re.search('(?<=chrome\.i18n\.getMessage\()([^\)]*)',line)
-                if paramstring: # contained func
-                    params = re.findall('([^,]+)',paramstring.group(1))
-                    replacement = '"{}"'.format(messages[params[0].strip('\'"')]['message'])
-                    if len(params) > 1:
-                        # replace placeholders
-                        for placeholder in params[1:]:
-                            ph = placeholder.strip()
-                            replacement = replacement.replace('${}$'.format(ph),'"+{}+"'.format(ph))
-                    print(re.sub('chrome\.i18n\.getMessage\([^\)]*\)',replacement,line), end='')
-                else:
-                    print(line, end='')
+        with open(os.path.join(root, name),'r') as f:
+            contents = f.read()
+        def replf(match):
+            params = re.findall('([^,]+)',match.group(1))
+            params = [a.strip() for a in params]
+            replacement = '"{}"'.format(messages[params[0].strip('\'"')]['message'])
+            if len(params) > 1:
+                # replace placeholders
+                for placeholder in params[1:]:
+                    ph = placeholder.strip()
+                    replacement = re.sub('\$[^\$]+\$','"+{}+"'.format(ph),replacement,count = 1)
+            return replacement
+        with open(os.path.join(root, name),'w') as f:
+            f.write(re.sub('chrome\.i18n\.getMessage\(([^\)]*)\)',replf,contents))
 
 # edit the manifest:
 # 1. remove default_locale
