@@ -49,7 +49,7 @@
         "description": ""
     },
     "options_updateDelay": {
-        "message": "每隔 $delayInMinutes$ 分钟检查一个更新",
+        "message": "每隔 $delayInMinutes$ 分钟检查一次更新",
         "description": "delayInMinutes 将是用户可以编辑的一个字段",
         "placeholders": {
             "delayInMinutes": {
@@ -104,7 +104,7 @@
         "description": ""
     },
     "webstore_removeButton": {
-        "message": "從 Chromium 中刪除",
+        "message": "从 Chromium 中删除",
         "description": ""
     }
 }
