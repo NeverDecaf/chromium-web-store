@@ -1,0 +1,110 @@
+{
+    "extension_Name": {
+        "message": "Chromium Web Store",
+        "description": "The title of the extension, displayed in the Chrome Web Store."
+    },
+    "extension_Description": {
+        "message": "Permite instalar y actualizar de forma semiautomática las extensiones de Chrome Web Store (o de otros sitios) en navegadores basados en Chromium.",
+        "description": "The description of the extension, displayed in the Chrome Web Store."
+    },
+
+    "options_updateHeading": {
+        "message": "Opciones de actualización",
+        "description": ""
+    },
+    "options_ignoredExtensionsHeading": {
+        "message": "Extensiones ignoradas",
+        "description": ""
+    },
+    "options_importExportHeading": {
+        "message": "Importar/Exportar",
+        "description": ""
+    },
+    "options_autoUpdate": {
+        "message": "Buscar automáticamente actualizaciones de las extensiones",
+        "description": ""
+    },
+    "options_autoUpdateTooltip": {
+        "message": "Haz clic en el icono de Chromium Web Store para comprobar las actualizaciones manualmente",
+        "description": ""
+    },
+    "options_updateWebstore": {
+        "message": "Comprobar actualizaciones de las extensiones de Chrome Web Store",
+        "description": ""
+    },
+    "options_updateWebstoreTooltip": {
+        "message": "La comprobación de actualizaciones contactará con Google",
+        "description": ""
+    },
+    "options_updateNonWebstore": {
+        "message": "Comprobar actualizaciones de extensiones ajenas a Chrome Web Store",
+        "description": ""
+    },
+    "options_updateNonWebstoreTooltip": {
+        "message": "Solo funcionará si la extensión es compatible con las actualizaciones automáticas",
+        "description": ""
+    },
+    "options_neverCheckTooltip": {
+        "message": "No buscar actualizaciones para esta extensión",
+        "description": ""
+    },
+    "options_updateDelay": {
+        "message": "Buscar actualizaciones cada $delayInMinutes$ minutos",
+        "description": "delayInMinutes will be a field that can be edited by the user",
+        "placeholders": {
+            "delayInMinutes": {
+                "content": "$1"
+            }
+        }
+    },
+    "options_importExportInstallAllButton": {
+        "message": "Instalar todo",
+        "description": ""
+    },
+    "options_importExportDescription": {
+        "message": "Guarda este texto en un archivo exportado. Para importar un texto, pega aquí el texto que contiene y pulsa $installButton$",
+        "description": "installButton is the text on the button, defined in options_importExportInstallAllButton",
+        "placeholders": {
+            "installButton": {
+                "content": "$1"
+            }
+        }
+    },
+    "popup_checkingForUpdates": {
+        "message": "Buscando actualizaciones...",
+        "description": ""
+    },
+    "popup_allUpToDate": {
+        "message": "¡Todas las extensiones están actualizadas!",
+        "description": ""
+    },
+    "popup_updateFailed": {
+        "message": "No se pudo actualizar $extName$",
+        "description": "extName will be the name of the extension that failed to update.",
+        "placeholders": {
+            "extName": {
+                "content": "$1"
+            }
+        }
+    },
+    "popup_removedExtensions": {
+        "message": "Estas extensiones fueron eliminadas de Chrome Web Store",
+        "description": "Will be shown above list of removed extensions."
+    },
+    "popup_removedExtensionsTooltip": {
+        "message": "Puede que se eliminaran por incumplir los términos del servicio.",
+        "description": "Shown when hovering over popup_removedExtensions."
+    },
+    "contextMenu_updateAll": {
+        "message": "Actualizar todas las extensiones",
+        "description": ""
+    },
+    "webstore_addButton": {
+        "message": "Añadir a Chromium",
+        "description": ""
+    },
+    "webstore_removeButton": {
+        "message": "Quitar de Chromium",
+        "description": ""
+    }
+}
