@@ -12,7 +12,8 @@
         "storage",
         "alarms",
         "contextMenus",
-        "downloads"
+        "downloads",
+        "notifications"
     ],
     "optional_permissions": ["https://*/", "http://*/"],
     "browser_action": {
