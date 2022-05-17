@@ -1,3 +1,4 @@
+importScripts("./util.js");
 var extensionsDownloads = {};
 var default_options = {
     auto_update: true,
@@ -41,7 +42,7 @@ function startupTasks() {
                 last_scheduled_update: 0,
             },
             (localstore) => {
-                chrome.browserAction.setBadgeText({
+                chrome.action.setBadgeText({
                     text: localstore.badge_display,
                 });
                 chrome.alarms.create("cws_check_extension_updates", {
@@ -61,7 +62,7 @@ function startupTasks() {
         );
     });
 }
-chrome.browserAction.setBadgeBackgroundColor({
+chrome.action.setBadgeBackgroundColor({
     color: "#F00",
 });
 chrome.management.onInstalled.addListener(function (ext) {

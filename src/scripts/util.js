@@ -200,14 +200,14 @@ function checkForUpdates(
                                             );
                                     }
                                 }
-                                chrome.browserAction.getBadgeText(
+                                chrome.action.getBadgeText(
                                     {},
                                     function (currentText) {
                                         let disp =
                                             (updateCount || "") +
                                             (parseInt(currentText) || "") +
                                             "";
-                                        chrome.browserAction.setBadgeText(
+                                        chrome.action.setBadgeText(
                                             {
                                                 text: disp,
                                             },
@@ -241,7 +241,7 @@ function checkForUpdates(
                             });
                     });
                 }
-                chrome.browserAction.setBadgeText(
+                chrome.action.setBadgeText(
                     {
                         text: "",
                     },
@@ -251,11 +251,11 @@ function checkForUpdates(
                         );
                         Promise.allSettled(promises).then((plist) => {
                             if (plist.some((x) => x.status == "rejected")) {
-                                chrome.browserAction.getBadgeText(
+                                chrome.action.getBadgeText(
                                     {},
                                     function (currentText) {
                                         if (!(parseInt(currentText) > 0))
-                                            chrome.browserAction.setBadgeText({
+                                            chrome.action.setBadgeText({
                                                 text: "?",
                                             });
                                     }
