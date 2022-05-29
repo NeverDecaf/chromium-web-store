@@ -136,7 +136,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         chrome.downloads.download(
             {
                 url: request.manualInstallDownloadUrl,
-                saveAs: true, // required to suppress warning: "Apps, extensions and user scripts cannot be added from this website"
+                // saveAs: true is currently bugged and causes this method to do nothing.
+                // saveAs: true, // required to suppress warning: "Apps, extensions and user scripts cannot be added from this website"
             },
             (dlid) => {
                 manualInstallExtensionsDownloading.add(dlid);
