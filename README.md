@@ -4,9 +4,9 @@ This extension brings the following functionality to ungoogled-chromium (and oth
 - Automatically checks for updates to your installed extensions and displays them on the badge.
 ![Example Image](https://raw.githubusercontent.com/NeverDecaf/chromium-web-store/master/sample2.PNG)
 # Read this first
-- **To avoid the restriction like `CRX_REQUIRED_PROOF_MISSING` of the downloaded .CRX, you must:**
-  - for `ungoogled-chromium`: change the flag `chrome://flags/#extension-mime-request-handling` to `Always prompt for install` if you are using `ungoogled-chromium`.
-  - for others: extension options > Advanced > enable `Manually Install`
+- **If you are using `ungoogled-chromium`**: You **must** change the flag `chrome://flags/#extension-mime-request-handling` to `Always prompt for install`.
+- **If you are NOT using `ungoogled-chromium`**: You **must** **check** the option: Extension Options (chrome://extensions/?options=ocaahdebbfolfmndjeplogmgcagdmblk) > Advanced > `Manually Install`
+- If you are seeing `CRX_REQUIRED_PROOF_MISSING` or `Apps, extensions and user scripts cannot be added from this website` errors, please be sure you have followed the corresponding bullet point above before opening an issue.
 - Some extensions may not update until you restart your browser, see [#4](https://github.com/NeverDecaf/chromium-web-store/issues/4).
 #### Usage
 - Pin the Chromium Web Store badge in your browser's toolbar. (Badges are hidden by default)
