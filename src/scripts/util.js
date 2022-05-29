@@ -92,30 +92,14 @@ function promptInstall(
             return;
         }
         if (settings.manually_install) {
-            // download the crx file without prompting for install.
-            chrome.downloads.download(
-                {
-                    url: crx_url,
-                    saveAs: true, // required to suppress warning: "Apps, extensions and user scripts cannot be added from this website"
-                },
-                (dlid) => {
-                    chrome.runtime.sendMessage({
-                        manualInstallDownloadId: dlid,
-                    });
-                }
-            );
+            chrome.runtime.sendMessage({
+                manualInstallDownloadUrl: crx_url,
+            });
             return;
         } else {
-            chrome.downloads.download(
-                {
-                    url: crx_url,
-                },
-                (dlid) => {
-                    chrome.runtime.sendMessage({
-                        nonWebstoreDownloadId: dlid,
-                    });
-                }
-            );
+            chrome.runtime.sendMessage({
+                nonWebstoreDownloadUrl: crx_url,
+            });
             return;
         }
     });
