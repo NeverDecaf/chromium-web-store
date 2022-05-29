@@ -64,6 +64,7 @@ function checkForUpdates(
             check_store_apps: true,
             check_external_apps: true,
             removed_extensions: {},
+            manually_install: false,
         };
         e.forEach(function (ex) {
             default_options[ex.id] = false;

@@ -5,6 +5,7 @@ function load_options() {
         check_store_apps: true,
         check_external_apps: true,
         update_period_in_minutes: 60,
+        manually_install: false,
     };
     chrome.management.getAll(function (e) {
         e = e.filter((ex) => ex.updateUrl);
