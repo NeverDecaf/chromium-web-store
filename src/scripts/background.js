@@ -1,12 +1,5 @@
 importScripts("./util.js");
-var extensionsDownloads = {};
-var default_options = {
-    auto_update: true,
-    check_store_apps: true,
-    check_external_apps: true,
-    update_period_in_minutes: 60,
-    manually_install: false,
-};
+const nonWebstoreExtensionsDownloading = new Set();
 const tabsAwaitingInstall = new Set();
 
 function handleContextClick(info, tab) {
@@ -19,7 +12,7 @@ function handleContextClick(info, tab) {
             is_webstore
         ) {
             let crx_url = updateCheck.getAttribute("codebase");
-            promptInstall(crx_url, is_webstore, extensionsDownloads);
+            promptInstall(crx_url, is_webstore);
         });
     else if (info.menuItemId == "installExt")
         chrome.tabs.sendMessage(tab.id, {
@@ -36,7 +29,7 @@ function updateBadge(modified_ext_id = null) {
 }
 
 function startupTasks() {
-    chrome.storage.sync.get(default_options, function (settings) {
+    chrome.storage.sync.get(DEFAULT_MANAGEMENT_OPTIONS, function (settings) {
         chrome.storage.local.get(
             {
                 badge_display: "",
@@ -89,18 +82,21 @@ chrome.runtime.onStartup.addListener(function () {
 });
 chrome.alarms.onAlarm.addListener(function (alarm) {
     if (alarm.name == "cws_check_extension_updates")
-        chrome.storage.sync.get(default_options, function (settings) {
-            if (settings.auto_update) {
-                updateBadge();
-                chrome.storage.local.set({
-                    last_scheduled_update: Date.now(),
-                });
-                chrome.alarms.create("cws_check_extension_updates", {
-                    delayInMinutes: settings.update_period_in_minutes,
-                    periodInMinutes: settings.update_period_in_minutes,
-                });
+        chrome.storage.sync.get(
+            DEFAULT_MANAGEMENT_OPTIONS,
+            function (settings) {
+                if (settings.auto_update) {
+                    updateBadge();
+                    chrome.storage.local.set({
+                        last_scheduled_update: Date.now(),
+                    });
+                    chrome.alarms.create("cws_check_extension_updates", {
+                        delayInMinutes: settings.update_period_in_minutes,
+                        periodInMinutes: settings.update_period_in_minutes,
+                    });
+                }
             }
-        });
+        );
 });
 chrome.runtime.onInstalled.addListener(function () {
     startupTasks();
@@ -125,37 +121,12 @@ chrome.runtime.onInstalled.addListener(function () {
     });
 });
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    if (request.downloadId) {
-        extensionsDownloads[request.downloadId] = true;
+    if (request.nonWebstoreDownloadId) {
+        nonWebstoreExtensionsDownloading.add(request.nonWebstoreDownloadId);
     }
     if (request.newTabUrl) {
-        chrome.storage.sync.get(default_options, function (settings) {
-            if (settings.manually_install) {
-                chrome.downloads.download(
-                    {
-                        url: request.newTabUrl,
-                        saveAs: true,
-                    },
-                    () => {
-                        chrome.tabs.create({
-                            url: "about:extensions",
-                        });
-                        chrome.notifications.create("manually_install", {
-                            type: "basic",
-                            iconUrl: "assets/icon/icon_128.png",
-                            title: chrome.i18n.getMessage(
-                                "notify_manuallyInstall_title"
-                            ),
-                            message: chrome.i18n.getMessage(
-                                "notify_manuallyInstall_message"
-                            ),
-                        });
-                    }
-                );
-            } else
-                chrome.tabs.create({ active: false }, (tab) => {
-                    chrome.tabs.update(tab.id, { url: request.newTabUrl });
-                });
+        chrome.tabs.create({ active: false }, (tab) => {
+            chrome.tabs.update(tab.id, { url: request.newTabUrl });
         });
     }
     if (request.checkExtInstalledId) {
@@ -177,16 +148,24 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 });
 chrome.downloads.onChanged.addListener((d) => {
-    if (d.endTime && extensionsDownloads[d.id]) {
-        delete extensionsDownloads[d.id];
-        chrome.downloads.search(
-            {
-                id: d.id,
-            },
-            (di) => {
-                chrome.tabs.create({
-                    url: "file:///" + di[0].filename,
-                });
+    // open non-cws CRX files after downloading them, enables one-click install in ungoogled chromium.
+    if (d.endTime && nonWebstoreExtensionsDownloading.has(d.id)) {
+        nonWebstoreExtensionsDownloading.delete(d.id);
+        chrome.storage.sync.get(
+            DEFAULT_MANAGEMENT_OPTIONS,
+            function (settings) {
+                if (!settings.manually_install) {
+                    chrome.downloads.search(
+                        {
+                            id: d.id,
+                        },
+                        (di) => {
+                            chrome.tabs.create({
+                                url: "file:///" + di[0].filename,
+                            });
+                        }
+                    );
+                }
             }
         );
     }

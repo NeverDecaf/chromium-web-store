@@ -31,7 +31,7 @@
         },
         "manually_install": {
             "title": "Manually install extensions.",
-            "description": "Default value is false",
+            "description": "Default value is false, set to true if not using ungoogled chromium",
             "type": "boolean"
         }
     }

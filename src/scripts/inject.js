@@ -152,7 +152,6 @@ if (is_ews.test(window.location.href)) {
                                 getExtensionId(window.location.href)
                             ),
                             true,
-                            undefined,
                             WEBSTORE.edge
                         );
                     });
@@ -187,8 +186,8 @@ if (is_ows.test(window.location.href)) {
             promptInstall(
                 buildExtensionUrl(getExtensionId(window.location.href)),
                 true,
-                undefined,
-                WEBSTORE.opera
+                WEBSTORE.opera,
+                dlBtn
             ),
         { once: true }
     );
