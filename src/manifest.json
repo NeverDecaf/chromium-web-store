@@ -11,8 +11,7 @@
         "storage",
         "alarms",
         "contextMenus",
-        "downloads",
-        "notifications"
+        "downloads"
     ],
     "host_permissions": ["https://clients2.google.com/service/*", "<all_urls>"],
     "action": {

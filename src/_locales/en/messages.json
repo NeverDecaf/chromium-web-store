@@ -61,12 +61,12 @@
         "message": "Advanced",
         "description": ""
     },
-    "options_manuallyInstallTooltip":{
-        "message": "Avoid the 'CRX_REQUIRED_PROOF_MISSING' restriction of Chrome to third-party extensions source",
+    "options_manuallyInstallTooltip": {
+        "message": "Toggle this option if you are getting 'CRX_REQUIRED_PROOF_MISSING' errors",
         "description": ""
     },
-    "options_manuallyInstall":{
-        "message": "ManuallyInstall",
+    "options_manuallyInstall": {
+        "message": "Always download CRX files",
         "description": ""
     },
     "options_importExportInstallAllButton": {
@@ -119,12 +119,12 @@
         "message": "Remove from Chromium",
         "description": ""
     },
-    "notify_manuallyInstall_title":{
-        "message": "Extension downloaded! Please manually install:",
+    "notify_manuallyInstall_title": {
+        "message": "Extension downloaded! Please install manually:",
         "description": ""
     },
-    "notify_manuallyInstall_message":{
-        "message": "1. enable developer mode\n2. drag .crx into page",
+    "notify_manuallyInstall_message": {
+        "message": "1. Enable Developer mode (top right)\n2. Drag .crx from downloads bar onto extensions page",
         "description": ""
     }
 }
