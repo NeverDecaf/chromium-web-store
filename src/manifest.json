@@ -30,7 +30,7 @@
                 "https://addons.opera.com/*extensions/details/*",
                 "https://microsoftedge.microsoft.com/addons/*"
             ],
-            "js": ["scripts/inject.js"],
+            "js": ["scripts/util.js", "scripts/inject.js"],
             "run_at": "document_end"
         }
     ],

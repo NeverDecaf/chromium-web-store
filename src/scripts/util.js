@@ -1,6 +1,7 @@
 const chromeVersion = /Chrome\/([0-9.]+)/.exec(navigator.userAgent)[1];
 const store_extensions = new Map();
 const googleUpdateUrl = "https://clients2.google.com/service/update2/crx";
+const WEBSTORE = { chrome: 0, edge: 1, opera: 2 };
 store_extensions.set(/clients2\.google\.com\/service\/update2\/crx/, {
     baseUrl:
         "https://clients2.google.com/service/update2/crx?response=updatecheck&acceptformat=crx2,crx3&prodversion=",
@@ -35,15 +36,54 @@ function version_is_newer(current, available) {
     return false;
 }
 
-function promptInstall(crx_url, is_webstore, extension_dl_ids) {
-    if (is_webstore) window.open(crx_url, "_blank");
-    else
+function promptInstall(
+    crx_url,
+    is_webstore,
+    extension_dl_ids,
+    browser = WEBSTORE.chrome
+) {
+    if (is_webstore) {
+        switch (browser) {
+            case WEBSTORE.edge:
+                // normal methods fail because microsoft's official web store redirects you from HTTPS to an insecure HTTP url.
+                // instead use chrome.tabs to open the url in a new tab.
+                chrome.runtime.sendMessage({
+                    newTabUrl: crx_url,
+                });
+                break;
+            case WEBSTORE.opera:
+                let filename = "ext.crx";
+                fetch(crx_url)
+                    .then((r) => {
+                        r.headers.forEach((h) => {
+                            let v = /filename=([^ ]+)/.exec(h);
+                            if (v) {
+                                filename = v[1];
+                                return;
+                            }
+                        });
+                        return r.blob();
+                    })
+                    .then((blob) => {
+                        // set mime type to prevent automatic install; reference: https://stackoverflow.com/questions/57834691/how-to-serve-crx-file-in-a-way-that-is-not-automatically-installed
+                        blob = blob.slice(0, blob.size, "application/zip");
+                        const blobURL = window.URL.createObjectURL(blob);
+                        dlBtn.href = blobURL;
+                        dlBtn.download = filename;
+                        dlBtn.click();
+                    });
+                break;
+            default:
+                window.open(crx_url, "_blank");
+                break;
+        }
+    } else
         chrome.downloads.download(
             {
                 url: crx_url,
             },
             (dlid) => {
-                if (extension_dl_ids !== undefined) extension_dl_ids[dlid] = 1;
+                if (extension_dl_ids) extension_dl_ids[dlid] = 1;
                 chrome.runtime.sendMessage({
                     downloadId: dlid,
                 });

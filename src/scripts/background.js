@@ -50,12 +50,12 @@ function startupTasks() {
                     delayInMinutes: Math.max(
                         1,
                         settings.update_period_in_minutes -
-                        Math.floor(
-                            (Date.now() -
-                                localstore.last_scheduled_update) /
-                            1000 /
-                            60
-                        )
+                            Math.floor(
+                                (Date.now() -
+                                    localstore.last_scheduled_update) /
+                                    1000 /
+                                    60
+                            )
                     ),
                     periodInMinutes: settings.update_period_in_minutes,
                 });
@@ -131,20 +131,27 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.newTabUrl) {
         chrome.storage.sync.get(default_options, function (settings) {
             if (settings.manually_install) {
-                chrome.downloads.download({
-                    url: request.newTabUrl,
-                    saveAs: true
-                }, () => {
-                    chrome.tabs.create({
-                        url: 'about:extensions'
-                    });
-                    chrome.notifications.create('manually_install', {
-                        type: 'basic',
-                        iconUrl: "assets/icon/icon_128.png",
-                        title: chrome.i18n.getMessage('notify_manuallyInstall_title'),
-                        message: chrome.i18n.getMessage("notify_manuallyInstall_message")
-                    });
-                })
+                chrome.downloads.download(
+                    {
+                        url: request.newTabUrl,
+                        saveAs: true,
+                    },
+                    () => {
+                        chrome.tabs.create({
+                            url: "about:extensions",
+                        });
+                        chrome.notifications.create("manually_install", {
+                            type: "basic",
+                            iconUrl: "assets/icon/icon_128.png",
+                            title: chrome.i18n.getMessage(
+                                "notify_manuallyInstall_title"
+                            ),
+                            message: chrome.i18n.getMessage(
+                                "notify_manuallyInstall_message"
+                            ),
+                        });
+                    }
+                );
             } else
                 chrome.tabs.create({ active: false }, (tab) => {
                     chrome.tabs.update(tab.id, { url: request.newTabUrl });
