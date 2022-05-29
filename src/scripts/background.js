@@ -1,7 +1,8 @@
 importScripts("./util.js");
 const nonWebstoreExtensionsDownloading = new Set();
+const manualInstallExtensionsDownloading = new Set();
 const tabsAwaitingInstall = new Set();
-
+const extensionsTabId = {};
 function handleContextClick(info, tab) {
     if (info.menuItemId == "updateAll")
         checkForUpdates(function (
@@ -124,6 +125,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.nonWebstoreDownloadId) {
         nonWebstoreExtensionsDownloading.add(request.nonWebstoreDownloadId);
     }
+    if (request.manualInstallDownloadId) {
+        manualInstallExtensionsDownloading.add(request.manualInstallDownloadId);
+    }
     if (request.newTabUrl) {
         chrome.tabs.create({ active: false }, (tab) => {
             chrome.tabs.update(tab.id, { url: request.newTabUrl });
@@ -168,6 +172,36 @@ chrome.downloads.onChanged.addListener((d) => {
                 }
             }
         );
+    }
+    if (d.endTime && manualInstallExtensionsDownloading.has(d.id)) {
+        manualInstallExtensionsDownloading.delete(d.id);
+        // open chrome://extensions tab for easy drag-and-drop
+        chrome.tabs.get(extensionsTabId?.id ?? 0, (tab) => {
+            if (!chrome.runtime.lastError)
+                chrome.tabs.highlight({
+                    tabs: tab.index,
+                    windowId: tab.windowId,
+                });
+            else
+                chrome.tabs.create(
+                    {
+                        url: "chrome://extensions/",
+                    },
+                    (tab) => {
+                        extensionsTabId.id = tab.id;
+                    }
+                );
+        });
+        // chrome.notifications.create("manually_install", {
+        //     type: "basic",
+        //     iconUrl: "assets/icon/icon_128.png",
+        //     title: chrome.i18n.getMessage(
+        //         "notify_manuallyInstall_title"
+        //     ),
+        //     message: chrome.i18n.getMessage(
+        //         "notify_manuallyInstall_message"
+        //     ),
+        // });
     }
 });
 chrome.contextMenus.onClicked.addListener(handleContextClick);

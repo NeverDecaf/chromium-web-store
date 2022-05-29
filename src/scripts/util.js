@@ -10,6 +10,7 @@ const DEFAULT_MANAGEMENT_OPTIONS = {
     removed_extensions: {},
     manually_install: false,
 };
+
 store_extensions.set(/clients2\.google\.com\/service\/update2\/crx/, {
     baseUrl:
         "https://clients2.google.com/service/update2/crx?response=updatecheck&acceptformat=crx2,crx3&prodversion=",
@@ -48,7 +49,7 @@ function promptInstall(
     crx_url,
     is_webstore,
     browser = WEBSTORE.chrome,
-    btn = {}
+    btn = null
 ) {
     chrome.storage.sync.get(DEFAULT_MANAGEMENT_OPTIONS, function (settings) {
         if (is_webstore && !settings.manually_install) {
@@ -92,23 +93,17 @@ function promptInstall(
         }
         if (settings.manually_install) {
             // download the crx file without prompting for install.
-            chrome.downloads.download({
-                url: crx_url,
-                saveAs: true, // required to suppress warning: "Apps, extensions and user scripts cannot be added from this website"
-            });
-            // chrome.tabs.create({
-            //     url: "about:extensions",
-            // });
-            // chrome.notifications.create("manually_install", {
-            //     type: "basic",
-            //     iconUrl: "assets/icon/icon_128.png",
-            //     title: chrome.i18n.getMessage(
-            //         "notify_manuallyInstall_title"
-            //     ),
-            //     message: chrome.i18n.getMessage(
-            //         "notify_manuallyInstall_message"
-            //     ),
-            // });
+            chrome.downloads.download(
+                {
+                    url: crx_url,
+                    saveAs: true, // required to suppress warning: "Apps, extensions and user scripts cannot be added from this website"
+                },
+                (dlid) => {
+                    chrome.runtime.sendMessage({
+                        manualInstallDownloadId: dlid,
+                    });
+                }
+            );
             return;
         } else {
             chrome.downloads.download(
@@ -121,6 +116,7 @@ function promptInstall(
                     });
                 }
             );
+            return;
         }
     });
 }

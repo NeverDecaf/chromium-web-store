@@ -5,7 +5,7 @@ This extension brings the following functionality to ungoogled-chromium (and oth
 ![Example Image](https://raw.githubusercontent.com/NeverDecaf/chromium-web-store/master/sample2.PNG)
 # Read this first
 - **If you are using `ungoogled-chromium`**: You **must** change the flag `chrome://flags/#extension-mime-request-handling` to `Always prompt for install`.
-- **If you are NOT using `ungoogled-chromium`**: You **must** **check** the option: Extension Options (chrome://extensions/?options=ocaahdebbfolfmndjeplogmgcagdmblk) > Advanced > `Manually Install`
+- **If you are NOT using `ungoogled-chromium`**: Ensure the following option is **checked**: Extension Options (chrome://extensions/?options=ocaahdebbfolfmndjeplogmgcagdmblk) > Advanced > `Manually Install`
 - If you are seeing `CRX_REQUIRED_PROOF_MISSING` or `Apps, extensions and user scripts cannot be added from this website` errors, please be sure you have followed the corresponding bullet point above before opening an issue.
 - Some extensions may not update until you restart your browser, see [#4](https://github.com/NeverDecaf/chromium-web-store/issues/4).
 #### Usage
