@@ -106,12 +106,12 @@ chrome.runtime.onInstalled.addListener(function () {
     chrome.contextMenus.create({
         title: chrome.i18n.getMessage("contextMenu_updateAll"),
         id: "updateAll",
-        contexts: ["browser_action"],
+        contexts: ["action"],
     });
     chrome.contextMenus.create({
         title: "🔗 Chrome Web Store",
         id: "cws",
-        contexts: ["browser_action"],
+        contexts: ["action"],
     });
     chrome.contextMenus.create({
         title: chrome.i18n.getMessage("webstore_addButton"),
