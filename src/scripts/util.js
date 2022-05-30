@@ -45,12 +45,7 @@ function version_is_newer(current, available) {
     return false;
 }
 
-function promptInstall(
-    crx_url,
-    is_webstore,
-    browser = WEBSTORE.chrome,
-    btn = null
-) {
+function promptInstall(crx_url, is_webstore, browser = WEBSTORE.chrome) {
     chrome.storage.sync.get(DEFAULT_MANAGEMENT_OPTIONS, function (settings) {
         if (is_webstore && !settings.manually_install) {
             switch (browser) {
@@ -62,31 +57,16 @@ function promptInstall(
                     });
                     break;
                 case WEBSTORE.opera:
-                    let filename = "ext.crx";
-                    fetch(crx_url)
-                        .then((r) => {
-                            r.headers.forEach((h) => {
-                                let v = /filename=([^ ]+)/.exec(h);
-                                if (v) {
-                                    filename = v[1];
-                                    return;
-                                }
-                            });
-                            return r.blob();
-                        })
-                        .then((blob) => {
-                            // set mime type to prevent automatic install; reference: https://stackoverflow.com/questions/57834691/how-to-serve-crx-file-in-a-way-that-is-not-automatically-installed
-                            blob = blob.slice(0, blob.size, "application/zip");
-                            const blobURL = window.URL.createObjectURL(blob);
-                            if (btn) {
-                                btn.href = blobURL;
-                                btn.download = filename;
-                                btn.click();
-                            }
-                        });
+                    // use the same method as manual install, since opera crxs are not compatible with chromium.
+                    chrome.runtime.sendMessage({
+                        manualInstallDownloadUrl: crx_url,
+                    });
                     break;
                 default:
-                    window.open(crx_url, "_blank");
+                    // copy the edge method instead of window.open(,_blank) so this works in the service worker
+                    chrome.runtime.sendMessage({
+                        newTabUrl: crx_url,
+                    });
                     break;
             }
             return;
@@ -175,79 +155,71 @@ function checkForUpdates(
                                     return Promise.reject();
                                 } else return r.text();
                             })
-                            .then((txt) =>
-                                new window.DOMParser().parseFromString(
-                                    txt,
-                                    "text/xml"
-                                )
-                            )
+                            .then((txt) => {
+                                let xml = fromXML(txt);
+                                if (xml.gupdate.app["@appid"]) {
+                                    // its a single ext, put into array of size 1
+                                    xml.gupdate.app = [xml.gupdate.app];
+                                }
+                                return xml;
+                            })
                             .then((data) => {
-                                let updates = data.getElementsByTagName("app");
                                 let updateCount = 0;
-                                for (let i = 0; i < updates.length; i++) {
+                                for (extinfo of data?.gupdate?.app ?? []) {
+                                    if (!extinfo.updatecheck) continue;
+                                    let updatever =
+                                        extinfo.updatecheck["@version"];
+                                    let appid = extinfo["@appid"];
+                                    let updatestatus =
+                                        extinfo.updatecheck["@status"];
                                     if (
-                                        (updateCheck =
-                                            updates[i].querySelector("*"))
-                                    ) {
-                                        let updatever =
-                                            updateCheck.getAttribute("version");
-                                        let appid =
-                                            updates[i].getAttribute("appid");
-                                        let updatestatus =
-                                            updateCheck.getAttribute("status");
-                                        if (
-                                            (updatestatus == "ok" ||
-                                                !is_webstore) &&
-                                            updatever &&
-                                            installed_versions[appid] !==
-                                                undefined &&
-                                            version_is_newer(
-                                                installed_versions[appid]
-                                                    .version,
-                                                updatever
-                                            )
-                                        ) {
-                                            updateCount++;
-                                            if (update_callback)
-                                                update_callback(
-                                                    updateCheck,
-                                                    installed_versions,
-                                                    appid,
-                                                    updatever,
-                                                    is_webstore
-                                                );
-                                            if (
-                                                appid in
-                                                stored_values[
-                                                    "removed_extensions"
-                                                ]
-                                            ) {
-                                                delete stored_values[
-                                                    "removed_extensions"
-                                                ][appid];
-                                                chrome.storage.sync.set({
-                                                    removed_extensions:
-                                                        stored_values[
-                                                            "removed_extensions"
-                                                        ],
-                                                });
-                                            }
-                                        }
-                                        if (
-                                            failure_callback &&
-                                            updatestatus == "noupdate" &&
-                                            !(
-                                                appid in
-                                                stored_values[
-                                                    "removed_extensions"
-                                                ]
-                                            )
+                                        (updatestatus == "ok" ||
+                                            !is_webstore) &&
+                                        updatever &&
+                                        installed_versions[appid] !==
+                                            undefined &&
+                                        version_is_newer(
+                                            installed_versions[appid].version,
+                                            updatever
                                         )
-                                            failure_callback(
-                                                true,
-                                                installed_versions[appid]
+                                    ) {
+                                        updateCount++;
+                                        if (update_callback)
+                                            update_callback(
+                                                updateCheck,
+                                                installed_versions,
+                                                appid,
+                                                updatever,
+                                                is_webstore
                                             );
+                                        if (
+                                            appid in
+                                            stored_values["removed_extensions"]
+                                        ) {
+                                            delete stored_values[
+                                                "removed_extensions"
+                                            ][appid];
+                                            chrome.storage.sync.set({
+                                                removed_extensions:
+                                                    stored_values[
+                                                        "removed_extensions"
+                                                    ],
+                                            });
+                                        }
                                     }
+                                    if (
+                                        failure_callback &&
+                                        updatestatus == "noupdate" &&
+                                        !(
+                                            appid in
+                                            stored_values["removed_extensions"]
+                                        )
+                                    )
+                                        failure_callback(
+                                            true,
+                                            installed_versions[appid]
+                                        );
+                                    // }
                                 }
                                 chrome.action.getBadgeText(
                                     {},

@@ -1,4 +1,4 @@
-importScripts("./util.js");
+importScripts("./util.js", "./from-xml.min.js");
 const nonWebstoreExtensionsDownloading = new Set();
 const manualInstallExtensionsDownloading = new Set();
 const tabsAwaitingInstall = new Set();

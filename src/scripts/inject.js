@@ -186,8 +186,7 @@ if (is_ows.test(window.location.href)) {
             promptInstall(
                 buildExtensionUrl(getExtensionId(window.location.href)),
                 true,
-                WEBSTORE.opera,
-                dlBtn
+                WEBSTORE.opera
             ),
         { once: true }
     );
