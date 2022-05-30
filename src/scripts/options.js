@@ -89,7 +89,7 @@ function load_options() {
                     updatever,
                     is_webstore
                 ) {
-                    let crx_url = updateCheck.getAttribute("codebase");
+                    let crx_url = updateCheck["@codebase"];
                     promptInstall(crx_url, is_webstore);
                 },
                 null,

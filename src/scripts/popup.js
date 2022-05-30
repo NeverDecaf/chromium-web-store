@@ -71,8 +71,8 @@ checkForUpdates(
             );
             li.appendChild(storepage);
         }
-        li.setAttribute("crx_url", updateCheck.getAttribute("codebase"));
-        let crx_url = updateCheck.getAttribute("codebase");
+        li.setAttribute("crx_url", updateCheck["@codebase"]);
+        let crx_url = updateCheck["@codebase"];
         li.addEventListener("click", function (evt) {
             if (evt.target.tagName != "A") promptInstall(crx_url, is_webstore);
         });

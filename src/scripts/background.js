@@ -1,4 +1,4 @@
-importScripts("./util.js", "./from-xml.min.js");
+importScripts("./util.js");
 const nonWebstoreExtensionsDownloading = new Set();
 const manualInstallExtensionsDownloading = new Set();
 const tabsAwaitingInstall = new Set();
@@ -12,7 +12,7 @@ function handleContextClick(info, tab) {
             updatever,
             is_webstore
         ) {
-            let crx_url = updateCheck.getAttribute("codebase");
+            let crx_url = updateCheck["@codebase"];
             promptInstall(crx_url, is_webstore);
         });
     else if (info.menuItemId == "installExt")
