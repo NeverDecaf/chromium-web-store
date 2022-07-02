@@ -121,7 +121,7 @@ chrome.runtime.onInstalled.addListener(function () {
         ],
     });
 });
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+const msgHandler = function (request, sender, sendResponse) {
     if (request.nonWebstoreDownloadUrl) {
         chrome.downloads.download(
             {
@@ -133,16 +133,22 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         );
     }
     if (request.manualInstallDownloadUrl) {
-        chrome.downloads.download(
-            {
-                url: request.manualInstallDownloadUrl,
-                // saveAs: true is currently bugged and causes this method to do nothing.
-                // saveAs: true, // required to suppress warning: "Apps, extensions and user scripts cannot be added from this website"
-            },
-            (dlid) => {
-                manualInstallExtensionsDownloading.add(dlid);
-            }
-        );
+        // chrome.downloads.download is currently bugged in manifest v3. see: https://bugs.chromium.org/p/chromium/issues/detail?id=1246717
+        // if this is ever fixed, a large chunk of code can be removed/simplified.
+        // chrome.downloads.download(
+        //     {
+        //         url: request.manualInstallDownloadUrl,
+        //         saveAs: true, // required to suppress warning: "Apps, extensions and user scripts cannot be added from this website"
+        //     },
+        //     (dlid) => {
+        //         manualInstallExtensionsDownloading.add(dlid);
+        //     }
+        // );
+        chrome.scripting.executeScript({
+            target: { tabId: sender.tab.id },
+            func: directDownloadCrx,
+            args: [request.manualInstallDownloadUrl],
+        });
     }
     if (request.newTabUrl) {
         chrome.tabs.create({ active: false }, (tab) => {
@@ -166,9 +172,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.installExt) {
         tabsAwaitingInstall.add(sender.tab.id);
     }
-});
+};
+chrome.runtime.onMessage.addListener(msgHandler);
 chrome.downloads.onChanged.addListener((d) => {
     // open non-cws CRX files after downloading them, enables one-click install in ungoogled chromium.
+    // in later versions ~v103+ of ungoogled chromium this is no longer needed as the install prompt will be displayed with the initial download.
+    // however, the only downside is if you press "cancel" on the initial install prompt, the prompt will be displayed a second time.
     if (d.endTime && nonWebstoreExtensionsDownloading.has(d.id)) {
         nonWebstoreExtensionsDownloading.delete(d.id);
         chrome.storage.sync.get(

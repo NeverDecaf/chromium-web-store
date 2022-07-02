@@ -180,15 +180,12 @@ if (is_ows.test(window.location.href)) {
     dlBtn.innerHTML = chrome.i18n.getMessage("webstore_addButton");
     sidebar.replaceChild(wrapper, installDiv);
     wrapper.appendChild(dlBtn);
-    dlBtn.addEventListener(
-        "click",
-        () =>
-            promptInstall(
-                buildExtensionUrl(getExtensionId(window.location.href)),
-                true,
-                WEBSTORE.opera
-            ),
-        { once: true }
+    dlBtn.addEventListener("click", () =>
+        promptInstall(
+            buildExtensionUrl(getExtensionId(window.location.href)),
+            true,
+            WEBSTORE.opera
+        )
     );
 }
 window.onload = () => {

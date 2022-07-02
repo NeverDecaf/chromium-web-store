@@ -49,25 +49,34 @@ function version_is_newer(current, available) {
 
 function promptInstall(crx_url, is_webstore, browser = WEBSTORE.chrome) {
     chrome.storage.sync.get(DEFAULT_MANAGEMENT_OPTIONS, function (settings) {
+        // if inside service worker, no need to send messages, just call the handler directly.
+        var msgHandler =
+            msgHandler ||
+            function () {
+                // if we are in the popup.html context, we can directly call the manual install hack:
+                // more specifically, this hack cannot be run from background.js as it requires a tab (id), which popup.html does not have.
+                return location.hash == "#is_cws_popup" &&
+                    arguments[0].manualInstallDownloadUrl
+                    ? directDownloadCrx(arguments[0].manualInstallDownloadUrl)
+                    : chrome.runtime.sendMessage(...arguments);
+            };
         if (is_webstore && !settings.manually_install) {
             switch (browser) {
                 case WEBSTORE.edge:
                     // normal methods fail because microsoft's official web store redirects you from HTTPS to an insecure HTTP url.
                     // instead use chrome.tabs to open the url in a new tab.
-                    chrome.runtime.sendMessage({
+                    msgHandler({
                         newTabUrl: crx_url,
                     });
                     break;
                 case WEBSTORE.opera:
-                    // use the same method as manual install, since opera crxs are not compatible with chromium.
-                    // this will be broken until chrome.downloads.download with saveAs: true is fixed.
-                    chrome.runtime.sendMessage({
+                    msgHandler({
                         manualInstallDownloadUrl: crx_url,
                     });
                     break;
                 default:
                     // copy the edge method instead of window.open(,_blank) so this works in the service worker
-                    chrome.runtime.sendMessage({
+                    msgHandler({
                         newTabUrl: crx_url,
                     });
                     break;
@@ -75,12 +84,12 @@ function promptInstall(crx_url, is_webstore, browser = WEBSTORE.chrome) {
             return;
         }
         if (settings.manually_install) {
-            chrome.runtime.sendMessage({
+            msgHandler({
                 manualInstallDownloadUrl: crx_url,
             });
             return;
         } else {
-            chrome.runtime.sendMessage({
+            msgHandler({
                 nonWebstoreDownloadUrl: crx_url,
             });
             return;
@@ -298,4 +307,31 @@ function checkForUpdates(
             });
         });
     });
+}
+
+// This is a hacky fix for the fact that chrome.download.downloads does not work with saveAs: true
+// This is needed to prevent the errors: CRX_HEADER_INVALID and "Apps, extensions and user scripts cannot be added from this website"
+function directDownloadCrx(crx_url) {
+    let filename = "ext.crx";
+    fetch(crx_url)
+        .then((r) => {
+            Array.from(r.headers).some((h) => {
+                let v = /filename=([^ ]+)/.exec(h);
+                if (v) {
+                    filename = v[1];
+                    return true;
+                }
+            });
+            return r.blob();
+        })
+        .then((blob) => {
+            // set mime type to prevent automatic install; reference: https://stackoverflow.com/questions/57834691/how-to-serve-crx-file-in-a-way-that-is-not-automatically-installed
+            // newer versions of chromium appear to ignore the mime type, instead we must change the file extension given in <a>.download (or just do both)
+            blob = blob.slice(0, blob.size, "application/octet-stream");
+            const blobURL = window.URL.createObjectURL(blob);
+            let link = document.createElement("a");
+            link.href = blobURL;
+            link.download = filename.replace(/\.[^/.]+$/, ".zip");
+            link.click();
+        });
 }
