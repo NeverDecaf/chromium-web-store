@@ -1,7 +1,6 @@
 const is_cws = /chrome.google.com\/webstore/i;
 const is_ows = /addons.opera.com\/.*extensions/i;
 const is_ews = /microsoftedge\.microsoft\.com\/addons\//i;
-const is_ews_addon_page = /microsoftedge\.microsoft\.com\/addons\/detail\//i;
 const cws_re = /.*detail\/[^\/]*\/([a-z]{32})/i;
 const ows_re = /.*details\/([^\/?#]+)/i;
 const ews_re = /.*addons\/.+?\/([a-z]{32})/i;
@@ -139,25 +138,27 @@ attachMainObserver = new MutationObserver(function (mutations, observer) {
 if (is_ews.test(window.location.href)) {
     new MutationObserver(function (mutations, observer) {
         mutations.forEach(function (mutation) {
-            if (is_ews_addon_page.test(window.location.href)) {
-                let btn = mutation.target.querySelector("button[disabled]");
-                if (btn) {
+            mutation.target
+                .querySelectorAll('button[id^="getOrRemoveButton-"][disabled]')
+                .forEach((btn) => {
                     btn.classList.remove(
-                        btn.className.split(" ").sort().reverse()[0]
+                        btn.className
+                            .split(" ")
+                            .sort(
+                                (a, b) =>
+                                    parseInt(b.slice(1)) - parseInt(a.slice(1))
+                            )[btn.name == "GetButton" ? 1 : 0]
                     );
                     btn.removeAttribute("disabled");
                     btn.addEventListener("click", () => {
                         promptInstall(
-                            buildExtensionUrl(
-                                getExtensionId(window.location.href)
-                            ),
+                            buildExtensionUrl(btn.id.split("-")[1]),
                             true,
                             WEBSTORE.edge
                         );
                     });
                     dlBtn = btn;
-                }
-            }
+                });
         });
     }).observe(document.body, {
         childList: true,
