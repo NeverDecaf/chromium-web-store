@@ -58,7 +58,7 @@ function startupTasks() {
     });
 }
 chrome.action.setBadgeBackgroundColor({
-    color: "#F00",
+    color: "#FE0000",
 });
 chrome.management.onInstalled.addListener(function (ext) {
     updateBadge(ext.id);
