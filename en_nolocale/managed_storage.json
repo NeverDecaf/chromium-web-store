@@ -28,6 +28,11 @@
             "title": "Update check interval in minutes.",
             "description": "Default is 60",
             "type": "integer"
+        },
+        "manually_install": {
+            "title": "Manually install extensions.",
+            "description": "Default value is false, set to true if not using ungoogled chromium",
+            "type": "boolean"
         }
     }
 }

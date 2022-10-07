@@ -1,6 +1,18 @@
 const chromeVersion = /Chrome\/([0-9.]+)/.exec(navigator.userAgent)[1];
 const store_extensions = new Map();
 const googleUpdateUrl = "https://clients2.google.com/service/update2/crx";
+const WEBSTORE = { chrome: 0, edge: 1, opera: 2 };
+const DEFAULT_MANAGEMENT_OPTIONS = {
+    auto_update: true,
+    check_store_apps: true,
+    check_external_apps: true,
+    update_period_in_minutes: 60,
+    removed_extensions: {},
+    manually_install: false,
+};
+var fromXML;
+// prettier-ignore
+!function(r){var t={"&amp;":"&","&lt;":"<","&gt;":">","&apos;":"'","&quot;":'"'};function n(r){return r&&r.replace(/^\s+|\s+$/g,"")}function s(r){return r.replace(/(&(?:lt|gt|amp|apos|quot|#(?:\d{1,6}|x[0-9a-fA-F]{1,5}));)/g,(function(r){if("#"===r[1]){var n="x"===r[2]?parseInt(r.substr(3),16):parseInt(r.substr(2),10);if(n>-1)return String.fromCharCode(n)}return t[r]||r}))}function e(r,t){if("string"==typeof r)return r;var u=r.r;if(u)return u;var a,o=function(r,t){if(r.t){for(var e,u,a=r.t.split(/([^\s='"]+(?:\s*=\s*(?:'[\S\s]*?'|"[\S\s]*?"|[^\s'"]*))?)/),o=a.length,i=0;i<o;i++){var l=n(a[i]);if(l){e||(e={});var c=l.indexOf("=");if(c<0)l="@"+l,u=null;else{u=l.substr(c+1).replace(/^\s+/,""),l="@"+l.substr(0,c).replace(/\s+$/,"");var p=u[0];p!==u[u.length-1]||"'"!==p&&'"'!==p||(u=u.substr(1,u.length-2)),u=s(u)}t&&(u=t(l,u)),f(e,l,u)}}return e}}(r,t),i=r.f,l=i.length;if(o||l>1)a=o||{},i.forEach((function(r){"string"==typeof r?f(a,"#",r):f(a,r.n,e(r,t))}));else if(l){var c=i[0];if(a=e(c,t),c.n){var p={};p[c.n]=a,a=p}}else a=r.c?null:"";return t&&(a=t(r.n||"",a)),a}function f(r,t,n){if(void 0!==n){var s=r[t];s instanceof Array?s.push(n):r[t]=t in r?[s,n]:n}}r.fromXML=fromXML=function(r,t){return e(function(r){for(var t=String.prototype.split.call(r,/<([^!<>?](?:'[\S\s]*?'|"[\S\s]*?"|[^'"<>])*|!(?:--[\S\s]*?--|\[[^\[\]'"<>]+\[[\S\s]*?]]|DOCTYPE[^\[<>]*?\[[\S\s]*?]|(?:ENTITY[^"<>]*?"[\S\s]*?")?[\S\s]*?)|\?[\S\s]*?\?)>/),e=t.length,f={f:[]},u=f,a=[],o=0;o<e;){var i=t[o++];i&&v(i);var l=t[o++];l&&c(l)}return f;function c(r){var t=r.length,n=r[0];if("/"===n)for(var s=r.replace(/^\/|[\s\/].*$/g,"").toLowerCase();a.length;){var e=u.n&&u.n.toLowerCase();if(u=a.pop(),e===s)break}else if("?"===n)p({n:"?",r:r.substr(1,t-2)});else if("!"===n)"[CDATA["===r.substr(1,7)&&"]]"===r.substr(-2)?v(r.substr(8,t-10)):p({n:"!",r:r.substr(1)});else{var f=function(r){var t={f:[]},n=(r=r.replace(/\s*\/?$/,"")).search(/[\s='"\/]/);n<0?t.n=r:(t.n=r.substr(0,n),t.t=r.substr(n));return t}(r);p(f),"/"===r[t-1]?f.c=1:(a.push(u),u=f)}}function p(r){u.f.push(r)}function v(r){(r=n(r))&&p(s(r))}}(r),t)}}("object"==typeof exports&&exports||{});
 store_extensions.set(/clients2\.google\.com\/service\/update2\/crx/, {
     baseUrl:
         "https://clients2.google.com/service/update2/crx?response=updatecheck&acceptformat=crx2,crx3&prodversion=",
@@ -35,20 +47,43 @@ function version_is_newer(current, available) {
     return false;
 }
 
-function promptInstall(crx_url, is_webstore, extension_dl_ids) {
-    if (is_webstore) window.open(crx_url, "_blank");
-    else
-        chrome.downloads.download(
-            {
-                url: crx_url,
-            },
-            (dlid) => {
-                if (extension_dl_ids !== undefined) extension_dl_ids[dlid] = 1;
-                chrome.runtime.sendMessage({
-                    downloadId: dlid,
-                });
+function promptInstall(crx_url, is_webstore, browser = WEBSTORE.chrome) {
+    chrome.storage.sync.get(DEFAULT_MANAGEMENT_OPTIONS, function (settings) {
+        if (is_webstore && !settings.manually_install) {
+            switch (browser) {
+                case WEBSTORE.edge:
+                    // normal methods fail because microsoft's official web store redirects you from HTTPS to an insecure HTTP url.
+                    // instead use chrome.tabs to open the url in a new tab.
+                    chrome.runtime.sendMessage({
+                        newTabUrl: crx_url,
+                    });
+                    break;
+                case WEBSTORE.opera:
+                    chrome.runtime.sendMessage({
+                        manualInstallDownloadUrl: crx_url,
+                    });
+                    break;
+                default:
+                    // copy the edge method instead of window.open(,_blank) so this works in the service worker
+                    chrome.runtime.sendMessage({
+                        newTabUrl: crx_url,
+                    });
+                    break;
             }
-        );
+            return;
+        }
+        if (settings.manually_install) {
+            chrome.runtime.sendMessage({
+                manualInstallDownloadUrl: crx_url,
+            });
+            return;
+        } else {
+            chrome.runtime.sendMessage({
+                nonWebstoreDownloadUrl: crx_url,
+            });
+            return;
+        }
+    });
 }
 
 function checkForUpdates(
@@ -59,12 +94,7 @@ function checkForUpdates(
 ) {
     chrome.management.getAll(function (e) {
         e.push(...custom_ext_list);
-        let default_options = {
-            auto_update: true,
-            check_store_apps: true,
-            check_external_apps: true,
-            removed_extensions: {},
-        };
+        let default_options = { ...DEFAULT_MANAGEMENT_OPTIONS };
         e.forEach(function (ex) {
             default_options[ex.id] = false;
         });
@@ -126,88 +156,80 @@ function checkForUpdates(
                                     return Promise.reject();
                                 } else return r.text();
                             })
-                            .then((txt) =>
-                                new window.DOMParser().parseFromString(
-                                    txt,
-                                    "text/xml"
-                                )
-                            )
-                            .then((data) => {
-                                let updates = data.getElementsByTagName("app");
-                                let updateCount = 0;
-                                for (let i = 0; i < updates.length; i++) {
-                                    if (
-                                        (updateCheck =
-                                            updates[i].querySelector("*"))
-                                    ) {
-                                        let updatever =
-                                            updateCheck.getAttribute("version");
-                                        let appid =
-                                            updates[i].getAttribute("appid");
-                                        let updatestatus =
-                                            updateCheck.getAttribute("status");
-                                        if (
-                                            (updatestatus == "ok" ||
-                                                !is_webstore) &&
-                                            updatever &&
-                                            installed_versions[appid] !==
-                                                undefined &&
-                                            version_is_newer(
-                                                installed_versions[appid]
-                                                    .version,
-                                                updatever
-                                            )
-                                        ) {
-                                            updateCount++;
-                                            if (update_callback)
-                                                update_callback(
-                                                    updateCheck,
-                                                    installed_versions,
-                                                    appid,
-                                                    updatever,
-                                                    is_webstore
-                                                );
-                                            if (
-                                                appid in
-                                                stored_values[
-                                                    "removed_extensions"
-                                                ]
-                                            ) {
-                                                delete stored_values[
-                                                    "removed_extensions"
-                                                ][appid];
-                                                chrome.storage.sync.set({
-                                                    removed_extensions:
-                                                        stored_values[
-                                                            "removed_extensions"
-                                                        ],
-                                                });
-                                            }
-                                        }
-                                        if (
-                                            failure_callback &&
-                                            updatestatus == "noupdate" &&
-                                            !(
-                                                appid in
-                                                stored_values[
-                                                    "removed_extensions"
-                                                ]
-                                            )
-                                        )
-                                            failure_callback(
-                                                true,
-                                                installed_versions[appid]
-                                            );
-                                    }
+                            .then((txt) => {
+                                let xml = fromXML(txt);
+                                if (xml.gupdate.app["@appid"]) {
+                                    // its a single ext, put into array of size 1
+                                    xml.gupdate.app = [xml.gupdate.app];
                                 }
-                                chrome.browserAction.getBadgeText(
+                                return xml;
+                            })
+                            .then((data) => {
+                                let updateCount = 0;
+                                for (extinfo of data?.gupdate?.app ?? []) {
+                                    if (!extinfo.updatecheck) continue;
+                                    let updatever =
+                                        extinfo.updatecheck["@version"];
+                                    let appid = extinfo["@appid"];
+                                    let updatestatus =
+                                        extinfo.updatecheck["@status"];
+                                    if (
+                                        (updatestatus == "ok" ||
+                                            !is_webstore) &&
+                                        updatever &&
+                                        installed_versions[appid] !==
+                                            undefined &&
+                                        version_is_newer(
+                                            installed_versions[appid].version,
+                                            updatever
+                                        )
+                                    ) {
+                                        updateCount++;
+                                        if (update_callback)
+                                            update_callback(
+                                                extinfo.updatecheck,
+                                                installed_versions,
+                                                appid,
+                                                updatever,
+                                                is_webstore
+                                            );
+                                        if (
+                                            appid in
+                                            stored_values["removed_extensions"]
+                                        ) {
+                                            delete stored_values[
+                                                "removed_extensions"
+                                            ][appid];
+                                            chrome.storage.sync.set({
+                                                removed_extensions:
+                                                    stored_values[
+                                                        "removed_extensions"
+                                                    ],
+                                            });
+                                        }
+                                    }
+                                    if (
+                                        failure_callback &&
+                                        updatestatus == "noupdate" &&
+                                        !(
+                                            appid in
+                                            stored_values["removed_extensions"]
+                                        )
+                                    )
+                                        failure_callback(
+                                            true,
+                                            installed_versions[appid]
+                                        );
+                                    // }
+                                }
+                                chrome.action.getBadgeText(
                                     {},
                                     function (currentText) {
                                         let disp =
                                             (updateCount || "") +
                                             (parseInt(currentText) || "") +
                                             "";
-                                        chrome.browserAction.setBadgeText(
+                                        chrome.action.setBadgeText(
                                             {
                                                 text: disp,
                                             },
@@ -226,6 +248,12 @@ function checkForUpdates(
                                 );
                             })
                             .catch((e) => {
+                                console.log(
+                                    `Error updating extension [${
+                                        ext_id || ext_name
+                                    }]:`,
+                                    e
+                                );
                                 if (failure_callback) {
                                     if (ext_id)
                                         failure_callback(
@@ -241,21 +269,22 @@ function checkForUpdates(
                             });
                     });
                 }
-                chrome.browserAction.setBadgeText(
+                chrome.action.setBadgeText(
                     {
                         text: "",
                     },
                     () => {
-                        let promises = updateUrls.map((uurl) =>
-                            update_extension(uurl.url, uurl.id, uurl.name)
-                        );
+                        let promises = updateUrls.map((uurl) => {
+                            if (uurl.url)
+                                update_extension(uurl.url, uurl.id, uurl.name);
+                        });
                         Promise.allSettled(promises).then((plist) => {
                             if (plist.some((x) => x.status == "rejected")) {
-                                chrome.browserAction.getBadgeText(
+                                chrome.action.getBadgeText(
                                     {},
                                     function (currentText) {
                                         if (!(parseInt(currentText) > 0))
-                                            chrome.browserAction.setBadgeText({
+                                            chrome.action.setBadgeText({
                                                 text: "?",
                                             });
                                     }

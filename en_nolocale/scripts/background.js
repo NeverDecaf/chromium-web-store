@@ -1,12 +1,8 @@
-var extensionsDownloads = {};
-var default_options = {
-    auto_update: true,
-    check_store_apps: true,
-    check_external_apps: true,
-    update_period_in_minutes: 60,
-};
+importScripts("./util.js");
+const nonWebstoreExtensionsDownloading = new Set();
+const manualInstallExtensionsDownloading = new Set();
 const tabsAwaitingInstall = new Set();
-
+const extensionsTabId = {};
 function handleContextClick(info, tab) {
     if (info.menuItemId == "updateAll")
         checkForUpdates(function (
@@ -16,8 +12,8 @@ function handleContextClick(info, tab) {
             updatever,
             is_webstore
         ) {
-            let crx_url = updateCheck.getAttribute("codebase");
-            promptInstall(crx_url, is_webstore, extensionsDownloads);
+            let crx_url = updateCheck["@codebase"];
+            promptInstall(crx_url, is_webstore);
         });
     else if (info.menuItemId == "installExt")
         chrome.tabs.sendMessage(tab.id, {
@@ -34,14 +30,14 @@ function updateBadge(modified_ext_id = null) {
 }
 
 function startupTasks() {
-    chrome.storage.sync.get(default_options, function (settings) {
+    chrome.storage.sync.get(DEFAULT_MANAGEMENT_OPTIONS, function (settings) {
         chrome.storage.local.get(
             {
                 badge_display: "",
                 last_scheduled_update: 0,
             },
             (localstore) => {
-                chrome.browserAction.setBadgeText({
+                chrome.action.setBadgeText({
                     text: localstore.badge_display,
                 });
                 chrome.alarms.create("cws_check_extension_updates", {
@@ -61,8 +57,8 @@ function startupTasks() {
         );
     });
 }
-chrome.browserAction.setBadgeBackgroundColor({
-    color: "#F00",
+chrome.action.setBadgeBackgroundColor({
+    color: "#FE0000",
 });
 chrome.management.onInstalled.addListener(function (ext) {
     updateBadge(ext.id);
@@ -87,30 +83,33 @@ chrome.runtime.onStartup.addListener(function () {
 });
 chrome.alarms.onAlarm.addListener(function (alarm) {
     if (alarm.name == "cws_check_extension_updates")
-        chrome.storage.sync.get(default_options, function (settings) {
-            if (settings.auto_update) {
-                updateBadge();
-                chrome.storage.local.set({
-                    last_scheduled_update: Date.now(),
-                });
-                chrome.alarms.create("cws_check_extension_updates", {
-                    delayInMinutes: settings.update_period_in_minutes,
-                    periodInMinutes: settings.update_period_in_minutes,
-                });
+        chrome.storage.sync.get(
+            DEFAULT_MANAGEMENT_OPTIONS,
+            function (settings) {
+                if (settings.auto_update) {
+                    updateBadge();
+                    chrome.storage.local.set({
+                        last_scheduled_update: Date.now(),
+                    });
+                    chrome.alarms.create("cws_check_extension_updates", {
+                        delayInMinutes: settings.update_period_in_minutes,
+                        periodInMinutes: settings.update_period_in_minutes,
+                    });
+                }
             }
-        });
+        );
 });
 chrome.runtime.onInstalled.addListener(function () {
     startupTasks();
     chrome.contextMenus.create({
         title: "Update all extensions",
         id: "updateAll",
-        contexts: ["browser_action"],
+        contexts: ["action"],
     });
     chrome.contextMenus.create({
         title: "🔗 Chrome Web Store",
         id: "cws",
-        contexts: ["browser_action"],
+        contexts: ["action"],
     });
     chrome.contextMenus.create({
         title: "Add to Chromium",
@@ -122,9 +121,27 @@ chrome.runtime.onInstalled.addListener(function () {
         ],
     });
 });
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    if (request.downloadId) {
-        extensionsDownloads[request.downloadId] = true;
+const msgHandler = function (request, sender, sendResponse) {
+    if (request.nonWebstoreDownloadUrl) {
+        chrome.downloads.download(
+            {
+                url: request.nonWebstoreDownloadUrl,
+            },
+            (dlid) => {
+                nonWebstoreExtensionsDownloading.add(dlid);
+            }
+        );
+    }
+    if (request.manualInstallDownloadUrl) {
+        chrome.downloads.download(
+            {
+                url: request.manualInstallDownloadUrl,
+                saveAs: true, // required to suppress warning: "Apps, extensions and user scripts cannot be added from this website"
+            },
+            (dlid) => {
+                manualInstallExtensionsDownloading.add(dlid);
+            }
+        );
     }
     if (request.newTabUrl) {
         chrome.tabs.create({ active: false }, (tab) => {
@@ -148,20 +165,35 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.installExt) {
         tabsAwaitingInstall.add(sender.tab.id);
     }
-});
+};
+chrome.runtime.onMessage.addListener(msgHandler);
 chrome.downloads.onChanged.addListener((d) => {
-    if (d.endTime && extensionsDownloads[d.id]) {
-        delete extensionsDownloads[d.id];
-        chrome.downloads.search(
-            {
-                id: d.id,
-            },
-            (di) => {
-                chrome.tabs.create({
-                    url: "file:///" + di[0].filename,
+    // open chrome://extensions if user has "Always download CRX files" checked, for easy drag-and-drop installation
+    if (d.endTime && manualInstallExtensionsDownloading.has(d.id)) {
+        manualInstallExtensionsDownloading.delete(d.id);
+        chrome.tabs.get(extensionsTabId?.id ?? 0, (tab) => {
+            if (!chrome.runtime.lastError)
+                chrome.tabs.highlight({
+                    tabs: tab.index,
+                    windowId: tab.windowId,
                 });
-            }
-        );
+            else
+                chrome.tabs.create(
+                    {
+                        url: "chrome://extensions/",
+                    },
+                    (tab) => {
+                        extensionsTabId.id = tab.id;
+                    }
+                );
+        });
+        // chrome.notifications.create("manually_install", {
+        //     type: "basic",
+        //     iconUrl: "assets/icon/icon_128.png",
+        //     title: "Extension downloaded! Please install manually:",
+        //     message: "1. Enable Developer mode (top right)
+2. Drag .crx from downloads bar onto extensions page",
+        // });
     }
 });
 chrome.contextMenus.onClicked.addListener(handleContextClick);
