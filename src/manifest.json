@@ -13,7 +13,8 @@
         "contextMenus",
         "downloads"
     ],
-    "host_permissions": ["https://clients2.google.com/service/*", "<all_urls>"],
+    "host_permissions": ["https://clients2.google.com/service/*"],
+    "optional_host_permissions": ["<all_urls>"],
     "action": {
         "default_icon": {
             "16": "assets/icon/icon_16.png",
