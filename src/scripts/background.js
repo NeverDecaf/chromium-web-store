@@ -168,35 +168,9 @@ const msgHandler = function (request, sender, sendResponse) {
 };
 chrome.runtime.onMessage.addListener(msgHandler);
 chrome.downloads.onChanged.addListener((d) => {
-    // open non-cws CRX files after downloading them, enables one-click install in ungoogled chromium.
-    // in later versions ~v103+ of ungoogled chromium this is no longer needed as the install prompt will be displayed with the initial download.
-    // however, the only downside is if you press "cancel" on the initial install prompt, the prompt will be displayed a second time.
-    // there is now a much worse downside: if you ACCEPT the initial prompt, the 2nd attempt will open a new tab explaining that the file no longer exists,
-    // as chrome auto deletes crx files as soon as they are installed. This also interrupts the FIRST install for some reason, meaning you cannot install the extension at all
-    // unless you cancel the first prompt then accept the second.
-    if (d.endTime && nonWebstoreExtensionsDownloading.has(d.id)) {
-        nonWebstoreExtensionsDownloading.delete(d.id);
-        chrome.storage.sync.get(
-            DEFAULT_MANAGEMENT_OPTIONS,
-            function (settings) {
-                if (!settings.manually_install) {
-                    chrome.downloads.search(
-                        {
-                            id: d.id,
-                        },
-                        (di) => {
-                            chrome.tabs.create({
-                                url: "file:///" + di[0].filename,
-                            });
-                        }
-                    );
-                }
-            }
-        );
-    }
+    // open chrome://extensions if user has "Always download CRX files" checked, for easy drag-and-drop installation
     if (d.endTime && manualInstallExtensionsDownloading.has(d.id)) {
         manualInstallExtensionsDownloading.delete(d.id);
-        // open chrome://extensions tab for easy drag-and-drop
         chrome.tabs.get(extensionsTabId?.id ?? 0, (tab) => {
             if (!chrome.runtime.lastError)
                 chrome.tabs.highlight({
@@ -216,12 +190,8 @@ chrome.downloads.onChanged.addListener((d) => {
         // chrome.notifications.create("manually_install", {
         //     type: "basic",
         //     iconUrl: "assets/icon/icon_128.png",
-        //     title: chrome.i18n.getMessage(
-        //         "notify_manuallyInstall_title"
-        //     ),
-        //     message: chrome.i18n.getMessage(
-        //         "notify_manuallyInstall_message"
-        //     ),
+        //     title: chrome.i18n.getMessage("notify_manuallyInstall_title"),
+        //     message: chrome.i18n.getMessage("notify_manuallyInstall_message"),
         // });
     }
 });
