@@ -133,22 +133,15 @@ const msgHandler = function (request, sender, sendResponse) {
         );
     }
     if (request.manualInstallDownloadUrl) {
-        // chrome.downloads.download is currently bugged in manifest v3. see: https://bugs.chromium.org/p/chromium/issues/detail?id=1246717
-        // if this is ever fixed, a large chunk of code can be removed/simplified.
-        // chrome.downloads.download(
-        //     {
-        //         url: request.manualInstallDownloadUrl,
-        //         saveAs: true, // required to suppress warning: "Apps, extensions and user scripts cannot be added from this website"
-        //     },
-        //     (dlid) => {
-        //         manualInstallExtensionsDownloading.add(dlid);
-        //     }
-        // );
-        chrome.scripting.executeScript({
-            target: { tabId: sender.tab.id },
-            func: directDownloadCrx,
-            args: [request.manualInstallDownloadUrl],
-        });
+        chrome.downloads.download(
+            {
+                url: request.manualInstallDownloadUrl,
+                saveAs: true, // required to suppress warning: "Apps, extensions and user scripts cannot be added from this website"
+            },
+            (dlid) => {
+                manualInstallExtensionsDownloading.add(dlid);
+            }
+        );
     }
     if (request.newTabUrl) {
         chrome.tabs.create({ active: false }, (tab) => {
