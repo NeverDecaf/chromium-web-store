@@ -171,6 +171,9 @@ chrome.downloads.onChanged.addListener((d) => {
     // open non-cws CRX files after downloading them, enables one-click install in ungoogled chromium.
     // in later versions ~v103+ of ungoogled chromium this is no longer needed as the install prompt will be displayed with the initial download.
     // however, the only downside is if you press "cancel" on the initial install prompt, the prompt will be displayed a second time.
+    // there is now a much worse downside: if you ACCEPT the initial prompt, the 2nd attempt will open a new tab explaining that the file no longer exists,
+    // as chrome auto deletes crx files as soon as they are installed. This also interrupts the FIRST install for some reason, meaning you cannot install the extension at all
+    // unless you cancel the first prompt then accept the second.
     if (d.endTime && nonWebstoreExtensionsDownloading.has(d.id)) {
         nonWebstoreExtensionsDownloading.delete(d.id);
         chrome.storage.sync.get(
