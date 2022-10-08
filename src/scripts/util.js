@@ -274,10 +274,12 @@ function checkForUpdates(
                         text: "",
                     },
                     () => {
-                        let promises = updateUrls.map((uurl) => {
-                            if (uurl.url)
-                                update_extension(uurl.url, uurl.id, uurl.name);
-                        });
+                        let promises = updateUrls
+                            .filter((x) => x.url)
+                            .map((uurl) =>
+                                update_extension(uurl.url, uurl.id, uurl.name)
+                            );
+                        console.log(promises);
                         Promise.allSettled(promises).then((plist) => {
                             if (plist.some((x) => x.status == "rejected")) {
                                 chrome.action.getBadgeText(
