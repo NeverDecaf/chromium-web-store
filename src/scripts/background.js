@@ -13,7 +13,7 @@ function handleContextClick(info, tab) {
             is_webstore
         ) {
             let crx_url = updateCheck["@codebase"];
-            promptInstall(crx_url, is_webstore);
+            promptInstall(crx_url, is_webstore, WEBSTORE.chrome, msgHandler);
         });
     else if (info.menuItemId == "installExt")
         chrome.tabs.sendMessage(tab.id, {

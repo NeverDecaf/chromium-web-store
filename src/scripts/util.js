@@ -47,25 +47,31 @@ function version_is_newer(current, available) {
     return false;
 }
 
-function promptInstall(crx_url, is_webstore, browser = WEBSTORE.chrome) {
+function promptInstall(
+    crx_url,
+    is_webstore,
+    browser = WEBSTORE.chrome,
+    custom_msg_handler = undefined
+) {
     chrome.storage.sync.get(DEFAULT_MANAGEMENT_OPTIONS, function (settings) {
+        var msgHandler = custom_msg_handler || chrome.runtime.sendMessage;
         if (is_webstore && !settings.manually_install) {
             switch (browser) {
                 case WEBSTORE.edge:
                     // normal methods fail because microsoft's official web store redirects you from HTTPS to an insecure HTTP url.
                     // instead use chrome.tabs to open the url in a new tab.
-                    chrome.runtime.sendMessage({
+                    msgHandler({
                         newTabUrl: crx_url,
                     });
                     break;
                 case WEBSTORE.opera:
-                    chrome.runtime.sendMessage({
+                    msgHandler({
                         manualInstallDownloadUrl: crx_url,
                     });
                     break;
                 default:
                     // copy the edge method instead of window.open(,_blank) so this works in the service worker
-                    chrome.runtime.sendMessage({
+                    msgHandler({
                         newTabUrl: crx_url,
                     });
                     break;
@@ -73,12 +79,12 @@ function promptInstall(crx_url, is_webstore, browser = WEBSTORE.chrome) {
             return;
         }
         if (settings.manually_install) {
-            chrome.runtime.sendMessage({
+            msgHandler({
                 manualInstallDownloadUrl: crx_url,
             });
             return;
         } else {
-            chrome.runtime.sendMessage({
+            msgHandler({
                 nonWebstoreDownloadUrl: crx_url,
             });
             return;
@@ -279,7 +285,6 @@ function checkForUpdates(
                             .map((uurl) =>
                                 update_extension(uurl.url, uurl.id, uurl.name)
                             );
-                        console.log(promises);
                         Promise.allSettled(promises).then((plist) => {
                             if (plist.some((x) => x.status == "rejected")) {
                                 chrome.action.getBadgeText(
