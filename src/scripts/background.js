@@ -15,11 +15,16 @@ function handleContextClick(info, tab) {
             let crx_url = updateCheck["@codebase"];
             promptInstall(crx_url, is_webstore, WEBSTORE.chrome, msgHandler);
         });
-    else if (info.menuItemId == "installExt")
-        chrome.tabs.sendMessage(tab.id, {
-            action: "install",
+    else if (info.menuItemId == "installExt") {
+        let store = WEBSTORE.chrome;
+        [...WEBSTORE_MAP.keys()].some((k) => {
+            if (k.test(tab.url)) {
+                store = WEBSTORE_MAP.get(k);
+                return true;
+            }
         });
-    else if (info.menuItemId == "cws")
+        promptInstall(buildExtensionUrl(tab.url), true, store, msgHandler);
+    } else if (info.menuItemId == "cws")
         chrome.tabs.create({
             url: "https://chrome.google.com/webstore/",
         });

@@ -34,6 +34,18 @@ store_extensions.set(/extension-updates\.opera\.com\/api\/omaha\/update/, {
     ignore: true,
 });
 
+const is_cws = /chrome.google.com\/webstore/i;
+const is_ows = /addons.opera.com\/.*extensions/i;
+const is_ews = /microsoftedge\.microsoft\.com\/addons\//i;
+const cws_re = /.*detail\/[^\/]*\/([a-z]{32})/i;
+const ows_re = /.*details\/([^\/?#]+)/i;
+const ews_re = /.*addons\/.+?\/([a-z]{32})/i;
+
+const WEBSTORE_MAP = new Map();
+WEBSTORE_MAP.set(is_cws, WEBSTORE.chrome);
+WEBSTORE_MAP.set(is_ews, WEBSTORE.edge);
+WEBSTORE_MAP.set(is_ows, WEBSTORE.opera);
+
 function version_is_newer(current, available) {
     let current_subvs = current.split(".");
     let available_subvs = available.split(".");
@@ -45,6 +57,39 @@ function version_is_newer(current, available) {
         else if (ver_diff < 0) return false;
     }
     return false;
+}
+
+function getExtensionId(url) {
+    return (cws_re.exec(url) ||
+        ows_re.exec(url) ||
+        ews_re.exec(url) || [undefined, undefined])[1];
+}
+
+function buildExtensionUrl(href, extensionId = undefined) {
+    extensionId = extensionId || getExtensionId(href);
+    if (extensionId == undefined) return;
+    if (is_cws.test(href)) {
+        var chromeVersion = /Chrome\/([0-9.]+)/.exec(navigator.userAgent)[1];
+        return (
+            "https://clients2.google.com/service/update2/crx?response=redirect&acceptformat=crx2,crx3&prodversion=" +
+            chromeVersion +
+            "&x=id%3D" +
+            extensionId +
+            "%26installsource%3Dondemand%26uc"
+        );
+    }
+    if (is_ows.test(href)) {
+        return (
+            "https://addons.opera.com/extensions/download/" + extensionId + "/"
+        );
+    }
+    if (is_ews.test(href)) {
+        return (
+            "https://edge.microsoft.com/extensionwebstorebase/v1/crx?response=redirect&x=id%3D" +
+            extensionId +
+            "%26installsource%3Dondemand%26uc"
+        );
+    }
 }
 
 function promptInstall(
@@ -65,12 +110,13 @@ function promptInstall(
                     });
                     break;
                 case WEBSTORE.opera:
+                    // Opera extensions will always error with CRX_HEADER_INVALID, they must be "load unpacked"
                     msgHandler({
                         manualInstallDownloadUrl: crx_url,
                     });
                     break;
                 default:
-                    // copy the edge method instead of window.open(,_blank) so this works in the service worker
+                    // copy the edge method instead of window.open(,_blank) so this works in the service worker (mv3)
                     msgHandler({
                         newTabUrl: crx_url,
                     });
@@ -254,7 +300,7 @@ function checkForUpdates(
                                 );
                             })
                             .catch((e) => {
-                                console.log(
+                                console.error(
                                     `Error updating extension [${
                                         ext_id || ext_name
                                     }]:`,

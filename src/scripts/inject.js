@@ -1,40 +1,4 @@
-const is_cws = /chrome.google.com\/webstore/i;
-const is_ows = /addons.opera.com\/.*extensions/i;
-const is_ews = /microsoftedge\.microsoft\.com\/addons\//i;
-const cws_re = /.*detail\/[^\/]*\/([a-z]{32})/i;
-const ows_re = /.*details\/([^\/?#]+)/i;
-const ews_re = /.*addons\/.+?\/([a-z]{32})/i;
-
 var dlBtn;
-
-function getExtensionId(url) {
-    return (cws_re.exec(url) || ows_re.exec(url) || ews_re.exec(url))[1];
-}
-
-function buildExtensionUrl(extensionId) {
-    if (is_cws.test(window.location.href)) {
-        var chromeVersion = /Chrome\/([0-9.]+)/.exec(navigator.userAgent)[1];
-        return (
-            "https://clients2.google.com/service/update2/crx?response=redirect&acceptformat=crx2,crx3&prodversion=" +
-            chromeVersion +
-            "&x=id%3D" +
-            extensionId +
-            "%26installsource%3Dondemand%26uc"
-        );
-    }
-    if (is_ows.test(window.location.href)) {
-        return (
-            "https://addons.opera.com/extensions/download/" + extensionId + "/"
-        );
-    }
-    if (is_ews.test(window.location.href)) {
-        return (
-            "https://edge.microsoft.com/extensionwebstorebase/v1/crx?response=redirect&x=id%3D" +
-            extensionId +
-            "%26installsource%3Dondemand%26uc"
-        );
-    }
-}
 
 function createButton(newParent, addBtn = true) {
     const button_div = document.createElement("div");
@@ -71,7 +35,7 @@ function createButton(newParent, addBtn = true) {
     };
     if (addBtn) button_div.setAttribute("isInstallBtn", "");
     button_div.toggleState(addBtn);
-    let dlurl = buildExtensionUrl(getExtensionId(window.location.href));
+    let dlurl = buildExtensionUrl(window.location.href);
     button_div.id = getExtensionId(window.location.href);
     button_div.addEventListener("click", function () {
         if (button_div.hasAttribute("isInstallBtn")) {
@@ -152,7 +116,10 @@ if (is_ews.test(window.location.href)) {
                     btn.removeAttribute("disabled");
                     btn.addEventListener("click", () => {
                         promptInstall(
-                            buildExtensionUrl(btn.id.split("-")[1]),
+                            buildExtensionUrl(
+                                window.location.href,
+                                btn.id.split("-")[1]
+                            ),
                             true,
                             WEBSTORE.edge
                         );
@@ -170,7 +137,10 @@ if (is_cws.test(window.location.href)) {
         childList: true,
     });
 }
-if (is_ows.test(window.location.href)) {
+if (
+    is_ows.test(window.location.href) &&
+    document.body.querySelector("#feedback-container") //built-ins don't have a feedback section
+) {
     let installDiv = document.body.querySelector(".sidebar .get-opera");
     let sidebar = installDiv.parentElement;
     let wrapper = document.createElement("div");
@@ -183,7 +153,7 @@ if (is_ows.test(window.location.href)) {
     wrapper.appendChild(dlBtn);
     dlBtn.addEventListener("click", () =>
         promptInstall(
-            buildExtensionUrl(getExtensionId(window.location.href)),
+            buildExtensionUrl(window.location.href),
             true,
             WEBSTORE.opera
         )
@@ -192,13 +162,6 @@ if (is_ows.test(window.location.href)) {
 window.onload = () => {
     chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         switch (request.action) {
-            case "install":
-                console.log(
-                    "opening extension URL:",
-                    buildExtensionUrl(getExtensionId(window.location.href))
-                );
-                if (dlBtn) dlBtn.click();
-                break;
             case "extInstalled":
                 if (request.extId == getExtensionId(window.location.href))
                     document.getElementById(request.extId).toggleState(false);
