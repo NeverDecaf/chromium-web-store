@@ -22,13 +22,17 @@ This extension brings the following functionality to ungoogled-chromium (and oth
 -   This method will work for non-webstore extensions as well if they support it, including chromium web store itself. (See the section at the bottom of this readme if you are an extension developer and don't have your extension listed in the chrome web store.)
 
 #### Installation
+1. Go to `chrome://flags` and search for the `#extension-mime-request-handling` flag and set it to `Always prompt for install`.
+2. Download the .crx from [Releases](https://github.com/NeverDecaf/chromium-web-store/releases/latest), you should be prompted to install the extension.
 
+If the above steps do not work for you, try one of the following alternative methods:
+
+#### Installation (Alternative #1)
 1. Go to `chrome://extensions` and enable developer mode (toggle in top right).
 2. Download the .crx from [Releases](https://github.com/NeverDecaf/chromium-web-store/releases/latest) and drag-and-drop it onto the `chrome://extensions` page.
 
-#### If drag-and-dropping does not work, try this workaround:
-
-1. Download the .crx from releases and extract the contents to a folder.
+#### Installation (Alternative #2)
+1. Download the .crx from [Releases](https://github.com/NeverDecaf/chromium-web-store/releases/latest) and extract the contents to a folder.
 2. Visit `chrome://extensions/` and turn on developer mode (toggle in top right).
 3. Click `Load unpacked` and select the directory you extracted the crx to.
 
