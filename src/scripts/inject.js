@@ -5,7 +5,7 @@ function createButton(newParent, addBtn = true) {
     button_div.setAttribute("role", "button");
     button_div.setAttribute(
         "class",
-        "dd-Va g-c-wb g-eg-ua-Uc-c-za g-c-Oc-td-jb-oa g-c"
+        "dd-Va g-c-wb g-eg-ua-Uc-c-za g-c-Oc-td-jb-oa g-c",
     );
 
     button_div.setAttribute("tabindex", "0");
@@ -27,7 +27,7 @@ function createButton(newParent, addBtn = true) {
             "aria-label",
             isInstall
                 ? chrome.i18n.getMessage("webstore_addButton")
-                : chrome.i18n.getMessage("webstore_removeButton")
+                : chrome.i18n.getMessage("webstore_removeButton"),
         );
         r.innerHTML = isInstall
             ? chrome.i18n.getMessage("webstore_addButton")
@@ -52,7 +52,7 @@ function createButton(newParent, addBtn = true) {
                     if (resp.uninstalled) {
                         button_div.toggleState(true);
                     }
-                }
+                },
             );
         }
     });
@@ -65,6 +65,40 @@ function createButton(newParent, addBtn = true) {
     newParent.innerHTML = "";
     newParent.appendChild(button_div);
     dlBtn = button_div;
+}
+function modifyNewCWSButton(button_div, addBtn = true) {
+    button_div.removeAttribute("disabled");
+    const label = button_div.querySelector("span.UywwFc-vQzf8d");
+    button_div.toggleState = function (isInstall) {
+        isInstall
+            ? button_div.setAttribute("isInstallBtn", "true")
+            : button_div.setAttribute("isInstallBtn", "false");
+        label.innerHTML = isInstall
+            ? chrome.i18n.getMessage("webstore_addButton")
+            : chrome.i18n.getMessage("webstore_removeButton");
+    };
+    button_div.toggleState(addBtn);
+    let dlurl = buildExtensionUrl(window.location.href);
+    button_div.id = getExtensionId(window.location.href);
+    button_div.addEventListener("click", function () {
+        if (button_div.getAttribute("isInstallBtn") == "true") {
+            chrome.runtime.sendMessage({
+                installExt: getExtensionId(window.location.href),
+            });
+            promptInstall(dlurl, true);
+        } else {
+            chrome.runtime.sendMessage(
+                {
+                    uninstallExt: getExtensionId(window.location.href),
+                },
+                (resp) => {
+                    if (resp.uninstalled) {
+                        button_div.toggleState(true);
+                    }
+                },
+            );
+        }
+    });
 }
 var modifyButtonObserver = new MutationObserver(function (mutations, observer) {
     mutations.forEach(function (mutation) {
@@ -79,12 +113,12 @@ var modifyButtonObserver = new MutationObserver(function (mutations, observer) {
                 chrome.runtime.sendMessage(
                     {
                         checkExtInstalledId: getExtensionId(
-                            window.location.href
+                            window.location.href,
                         ),
                     },
                     (resp) => {
                         createButton(container_div, !resp.installed);
-                    }
+                    },
                 );
             }
         }
@@ -99,6 +133,27 @@ attachMainObserver = new MutationObserver(function (mutations, observer) {
     });
     observer.disconnect();
 });
+var modifyButtonObserverNew = new MutationObserver(function (
+    mutations,
+    observer,
+) {
+    mutations.forEach(function (mutation) {
+        const btn = mutation.target.querySelector(
+            "button.UywwFc-LgbsSe-OWXEXe-dgl2Hf",
+        );
+        if (btn && !btn.hasAttribute("isInstallBtn")) {
+            btn.setAttribute("isInstallBtn", "true");
+            chrome.runtime.sendMessage(
+                {
+                    checkExtInstalledId: getExtensionId(window.location.href),
+                },
+                (resp) => {
+                    modifyNewCWSButton(btn, !resp.installed);
+                },
+            );
+        }
+    });
+});
 if (is_ews.test(window.location.href)) {
     new MutationObserver(function (mutations, observer) {
         mutations.forEach(function (mutation) {
@@ -110,18 +165,18 @@ if (is_ews.test(window.location.href)) {
                             .split(" ")
                             .sort(
                                 (a, b) =>
-                                    parseInt(b.slice(1)) - parseInt(a.slice(1))
-                            )[btn.name == "GetButton" ? 1 : 0]
+                                    parseInt(b.slice(1)) - parseInt(a.slice(1)),
+                            )[btn.name == "GetButton" ? 1 : 0],
                     );
                     btn.removeAttribute("disabled");
                     btn.addEventListener("click", () => {
                         promptInstall(
                             buildExtensionUrl(
                                 window.location.href,
-                                btn.id.split("-")[1]
+                                btn.id.split("-")[1],
                             ),
                             true,
-                            WEBSTORE.edge
+                            WEBSTORE.edge,
                         );
                     });
                     dlBtn = btn;
@@ -134,6 +189,11 @@ if (is_ews.test(window.location.href)) {
 }
 if (is_cws.test(window.location.href)) {
     attachMainObserver.observe(document.body, {
+        childList: true,
+    });
+}
+if (is_ncws.test(window.location.href)) {
+    modifyButtonObserverNew.observe(document.body, {
         childList: true,
     });
 }
@@ -155,8 +215,8 @@ if (
         promptInstall(
             buildExtensionUrl(window.location.href),
             true,
-            WEBSTORE.opera
-        )
+            WEBSTORE.opera,
+        ),
     );
 }
 window.onload = () => {

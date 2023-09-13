@@ -10,7 +10,7 @@ function handleContextClick(info, tab) {
             installed_versions,
             appid,
             updatever,
-            is_webstore
+            is_webstore,
         ) {
             let crx_url = updateCheck["@codebase"];
             promptInstall(crx_url, is_webstore, WEBSTORE.chrome, msgHandler);
@@ -53,12 +53,12 @@ function startupTasks() {
                                 (Date.now() -
                                     localstore.last_scheduled_update) /
                                     1000 /
-                                    60
-                            )
+                                    60,
+                            ),
                     ),
                     periodInMinutes: settings.update_period_in_minutes,
                 });
-            }
+            },
         );
     });
 }
@@ -76,7 +76,7 @@ chrome.management.onInstalled.addListener(function (ext) {
             },
             () => {
                 if (chrome.runtime.lastError) tabsAwaitingInstall.delete(tabid);
-            }
+            },
         );
     }
 });
@@ -101,7 +101,7 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
                         periodInMinutes: settings.update_period_in_minutes,
                     });
                 }
-            }
+            },
         );
 });
 chrome.runtime.onInstalled.addListener(function () {
@@ -121,6 +121,7 @@ chrome.runtime.onInstalled.addListener(function () {
         id: "installExt",
         documentUrlPatterns: [
             "https://chrome.google.com/webstore/detail/*",
+            "https://chromewebstore.google.com/detail/*",
             "https://addons.opera.com/*/extensions/details/*",
             "https://microsoftedge.microsoft.com/addons/detail/*",
         ],
@@ -134,7 +135,7 @@ const msgHandler = function (request, sender, sendResponse) {
             },
             (dlid) => {
                 nonWebstoreExtensionsDownloading.add(dlid);
-            }
+            },
         );
     }
     if (request.manualInstallDownloadUrl) {
@@ -145,7 +146,7 @@ const msgHandler = function (request, sender, sendResponse) {
             },
             (dlid) => {
                 manualInstallExtensionsDownloading.add(dlid);
-            }
+            },
         );
     }
     if (request.newTabUrl) {
@@ -189,7 +190,7 @@ chrome.downloads.onChanged.addListener((d) => {
                     },
                     (tab) => {
                         extensionsTabId.id = tab.id;
-                    }
+                    },
                 );
         });
         // chrome.notifications.create("manually_install", {

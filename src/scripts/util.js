@@ -1,7 +1,7 @@
 const chromeVersion = /Chrome\/([0-9.]+)/.exec(navigator.userAgent)[1];
 const store_extensions = new Map();
 const googleUpdateUrl = "https://clients2.google.com/service/update2/crx";
-const WEBSTORE = { chrome: 0, edge: 1, opera: 2 };
+const WEBSTORE = { chrome: 0, edge: 1, opera: 2, chromenew: 3 };
 const DEFAULT_MANAGEMENT_OPTIONS = {
     auto_update: true,
     check_store_apps: true,
@@ -35,9 +35,11 @@ store_extensions.set(/extension-updates\.opera\.com\/api\/omaha\/update/, {
 });
 
 const is_cws = /chrome.google.com\/webstore/i;
+const is_ncws = /chromewebstore.google.com\//i;
 const is_ows = /addons.opera.com\/.*extensions/i;
 const is_ews = /microsoftedge\.microsoft\.com\/addons\//i;
 const cws_re = /.*detail\/[^\/]*\/([a-z]{32})/i;
+const ncws_re = /.*detail\/[^\/]*\/([a-z]{32})/i;
 const ows_re = /.*details\/([^\/?#]+)/i;
 const ews_re = /.*addons\/.+?\/([a-z]{32})/i;
 
@@ -45,6 +47,7 @@ const WEBSTORE_MAP = new Map();
 WEBSTORE_MAP.set(is_cws, WEBSTORE.chrome);
 WEBSTORE_MAP.set(is_ews, WEBSTORE.edge);
 WEBSTORE_MAP.set(is_ows, WEBSTORE.opera);
+WEBSTORE_MAP.set(is_ncws, WEBSTORE.chromenew);
 
 function version_is_newer(current, available) {
     let current_subvs = current.split(".");
@@ -61,6 +64,7 @@ function version_is_newer(current, available) {
 
 function getExtensionId(url) {
     return (cws_re.exec(url) ||
+        ncws_re.exec(url) ||
         ows_re.exec(url) ||
         ews_re.exec(url) || [undefined, undefined])[1];
 }
@@ -68,7 +72,7 @@ function getExtensionId(url) {
 function buildExtensionUrl(href, extensionId = undefined) {
     extensionId = extensionId || getExtensionId(href);
     if (extensionId == undefined) return;
-    if (is_cws.test(href)) {
+    if (is_cws.test(href) || is_ncws.test(href)) {
         var chromeVersion = /Chrome\/([0-9.]+)/.exec(navigator.userAgent)[1];
         return (
             "https://clients2.google.com/service/update2/crx?response=redirect&acceptformat=crx2,crx3&prodversion=" +
@@ -96,7 +100,7 @@ function promptInstall(
     crx_url,
     is_webstore,
     browser = WEBSTORE.chrome,
-    custom_msg_handler = undefined
+    custom_msg_handler = undefined,
 ) {
     chrome.storage.sync.get(DEFAULT_MANAGEMENT_OPTIONS, function (settings) {
         var msgHandler = custom_msg_handler || chrome.runtime.sendMessage;
@@ -142,7 +146,7 @@ function checkForUpdates(
     update_callback = null,
     failure_callback = null,
     completed_callback = null,
-    custom_ext_list = []
+    custom_ext_list = [],
 ) {
     chrome.management.getAll(function (e) {
         e.push(...custom_ext_list);
@@ -164,7 +168,7 @@ function checkForUpdates(
                 let installed_versions = {};
                 let updateUrls = [];
                 Array.from(store_extensions.values()).forEach(
-                    (x) => delete x.updateUrl
+                    (x) => delete x.updateUrl,
                 );
                 e.forEach(function (ex) {
                     if (ex.updateUrl && !settings[ex.id]) {
@@ -199,7 +203,7 @@ function checkForUpdates(
                     }
                 function update_extension(ext_url, ext_id, ext_name) {
                     let is_webstore = Array.from(store_extensions.keys()).some(
-                        (x) => x.test(ext_url)
+                        (x) => x.test(ext_url),
                     );
                     return new Promise((resolve, reject) => {
                         fetch(ext_url)
@@ -233,7 +237,7 @@ function checkForUpdates(
                                             undefined &&
                                         version_is_newer(
                                             installed_versions[appid].version,
-                                            updatever
+                                            updatever,
                                         )
                                     ) {
                                         updateCount++;
@@ -243,7 +247,7 @@ function checkForUpdates(
                                                 installed_versions,
                                                 appid,
                                                 updatever,
-                                                is_webstore
+                                                is_webstore,
                                             );
                                         if (
                                             appid in
@@ -270,7 +274,7 @@ function checkForUpdates(
                                     )
                                         failure_callback(
                                             true,
-                                            installed_versions[appid]
+                                            installed_versions[appid],
                                         );
                                     // }
                                 }
@@ -292,11 +296,11 @@ function checkForUpdates(
                                                     },
                                                     () => {
                                                         resolve();
-                                                    }
+                                                    },
                                                 );
-                                            }
+                                            },
                                         );
-                                    }
+                                    },
                                 );
                             })
                             .catch((e) => {
@@ -304,13 +308,13 @@ function checkForUpdates(
                                     `Error updating extension [${
                                         ext_id || ext_name
                                     }]:`,
-                                    e
+                                    e,
                                 );
                                 if (failure_callback) {
                                     if (ext_id)
                                         failure_callback(
                                             false,
-                                            installed_versions[ext_id]
+                                            installed_versions[ext_id],
                                         );
                                     else
                                         failure_callback(false, {
@@ -329,7 +333,7 @@ function checkForUpdates(
                         let promises = updateUrls
                             .filter((x) => x.url)
                             .map((uurl) =>
-                                update_extension(uurl.url, uurl.id, uurl.name)
+                                update_extension(uurl.url, uurl.id, uurl.name),
                             );
                         Promise.allSettled(promises).then((plist) => {
                             if (plist.some((x) => x.status == "rejected")) {
@@ -340,12 +344,12 @@ function checkForUpdates(
                                             chrome.action.setBadgeText({
                                                 text: "?",
                                             });
-                                    }
+                                    },
                                 );
                             }
                             if (completed_callback) completed_callback();
                         });
-                    }
+                    },
                 );
             });
         });
