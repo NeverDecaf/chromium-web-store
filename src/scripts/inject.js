@@ -141,6 +141,8 @@ var modifyButtonObserverNew = new MutationObserver(function (
         const btn = mutation.target.querySelector(
             "button.UywwFc-LgbsSe-OWXEXe-dgl2Hf",
         );
+        const header = mutation.target.querySelector(".KgGEHd");
+        header && header.setAttribute("target", "_top");
         if (btn && !btn.hasAttribute("isInstallBtn")) {
             btn.setAttribute("isInstallBtn", "true");
             chrome.runtime.sendMessage(
@@ -192,7 +194,17 @@ if (is_cws.test(window.location.href)) {
         childList: true,
     });
 }
+function injectCSS(cssCode) {
+    var style = document.createElement("style");
+    style.textContent = cssCode;
+    document.head.appendChild(style);
+}
 if (is_ncws.test(window.location.href)) {
+    injectCSS(`
+      div[jscontroller="o2G9me"].gSrP5d#c2[jsaction="rcuQ6b:npT2md;KKVPLd:KrIKWc;JIbuQc:M4KNod"] {
+        display: none;
+      }
+    `);
     modifyButtonObserverNew.observe(document.body, {
         childList: true,
     });
