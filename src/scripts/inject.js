@@ -133,29 +133,6 @@ attachMainObserver = new MutationObserver(function (mutations, observer) {
     });
     observer.disconnect();
 });
-var modifyButtonObserverNew = new MutationObserver(function (
-    mutations,
-    observer,
-) {
-    mutations.forEach(function (mutation) {
-        const btn = mutation.target.querySelector(
-            "button.UywwFc-LgbsSe-OWXEXe-dgl2Hf",
-        );
-        const header = mutation.target.querySelector(".KgGEHd");
-        header && header.setAttribute("target", "_top");
-        if (btn && !btn.hasAttribute("isInstallBtn")) {
-            btn.setAttribute("isInstallBtn", "true");
-            chrome.runtime.sendMessage(
-                {
-                    checkExtInstalledId: getExtensionId(window.location.href),
-                },
-                (resp) => {
-                    modifyNewCWSButton(btn, !resp.installed);
-                },
-            );
-        }
-    });
-});
 if (is_ews.test(window.location.href)) {
     new MutationObserver(function (mutations, observer) {
         mutations.forEach(function (mutation) {
@@ -194,21 +171,14 @@ if (is_cws.test(window.location.href)) {
         childList: true,
     });
 }
-function injectCSS(cssCode) {
-    var style = document.createElement("style");
-    style.textContent = cssCode;
-    document.head.appendChild(style);
+function injectScript(file_path, tag) {
+    var node = document.getElementsByTagName(tag)[0];
+    var script = document.createElement("script");
+    script.setAttribute("type", "text/javascript");
+    script.setAttribute("src", file_path);
+    node.appendChild(script);
 }
-if (is_ncws.test(window.location.href)) {
-    injectCSS(`
-      div[jscontroller="o2G9me"].gSrP5d#c2[jsaction="rcuQ6b:npT2md;KKVPLd:KrIKWc;JIbuQc:M4KNod"] {
-        display: none;
-      }
-    `);
-    modifyButtonObserverNew.observe(document.body, {
-        childList: true,
-    });
-}
+
 if (
     is_ows.test(window.location.href) &&
     document.body.querySelector("#feedback-container") //built-ins don't have a feedback section
@@ -241,3 +211,16 @@ window.onload = () => {
         }
     });
 };
+if (is_ncws.test(window.location.href)) {
+    chrome.storage.sync.get(
+        { webstore_integration: true },
+        function (stored_values) {
+            if (stored_values.webstore_integration) {
+                injectScript(
+                    chrome.runtime.getURL("scripts/chromeApi.js"),
+                    "head",
+                );
+            }
+        },
+    );
+}

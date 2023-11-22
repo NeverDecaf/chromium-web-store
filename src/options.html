@@ -6,37 +6,75 @@
     </head>
     <body>
         <div id="app">
-            <h2 data-localize="__MSG_options_updateHeading__">Update Options</h2>
+            <h2 data-localize="__MSG_options_updateHeading__">
+                Update Options
+            </h2>
             <div>
                 <label title="__MSG_options_autoUpdateTooltip__">
-                    <input type="checkbox" id="auto_update"/> <span data-localize="__MSG_options_autoUpdate__">Automatically check for extension updates</span>
+                    <input type="checkbox" id="auto_update" />
+                    <span data-localize="__MSG_options_autoUpdate__"
+                        >Automatically check for extension updates</span
+                    >
                 </label>
                 <label class="sub">
-                    <span data-localize="__MSG_options_updateDelay__" data-param1="<input id='update_period_in_minutes' type='number' value='60'/>">Check for updates every <input id='update_period_in_minutes' type='number' value='60'/> minutes</span>
+                    <span
+                        data-localize="__MSG_options_updateDelay__"
+                        data-param1="<input id='update_period_in_minutes' type='number' value='60'/>"
+                        >Check for updates every
+                        <input
+                            id="update_period_in_minutes"
+                            type="number"
+                            value="60"
+                        />
+                        minutes</span
+                    >
                 </label>
             </div>
             <div>
                 <label title="__MSG_options_updateWebstoreTooltip__">
-                    <input type="checkbox" id="check_store_apps"/> <span data-localize="__MSG_options_updateWebstore__">Check for updates to web store extensions</span>
+                    <input type="checkbox" id="check_store_apps" />
+                    <span data-localize="__MSG_options_updateWebstore__"
+                        >Check for updates to web store extensions</span
+                    >
                 </label>
             </div>
             <div>
                 <label title="__MSG_options_updateNonWebstoreTooltip__">
-                    <input type="checkbox" id="check_external_apps"/> <span data-localize="__MSG_options_updateNonWebstore__">Check for updates to non-web store extensions</span>
+                    <input type="checkbox" id="check_external_apps" />
+                    <span data-localize="__MSG_options_updateNonWebstore__"
+                        >Check for updates to non-web store extensions</span
+                    >
                 </label>
             </div>
-            <h2 data-localize="__MSG_options_ignoredExtensionsHeading__">Ignored Extensions</h2>
-            <div id='updatetoggle'></div>
+            <h2 data-localize="__MSG_options_ignoredExtensionsHeading__">
+                Ignored Extensions
+            </h2>
+            <div id="updatetoggle"></div>
             <h2 data-localize="__MSG_options_advanced__">Advanced</h2>
             <div>
                 <label title="__MSG_options_manuallyInstallTooltip__">
-                    <input type="checkbox" id="manually_install" /> <span data-localize="__MSG_options_manuallyInstall__">Always download CRX files</span>
+                    <input type="checkbox" id="manually_install" />
+                    <span data-localize="__MSG_options_manuallyInstall__"
+                        >Always download CRX files</span
+                    > </label
+                ><br />
+                <label title="__MSG_options_webstoreIntegrationTooltip__">
+                    <input type="checkbox" id="webstore_integration" />
+                    <span data-localize="__MSG_options_webstoreIntegration__"
+                        >Enable Web Store Integration</span
+                    >
                 </label>
             </div>
-            <h2 data-localize="__MSG_options_importExportHeading__">Import / Export</h2>
+            <h2 data-localize="__MSG_options_importExportHeading__">
+                Import / Export
+            </h2>
             <div>
                 <textarea id="import_export_list"></textarea>
-                <input type="button" value="__MSG_options_importExportInstallAllButton__" id="import_all_button"></input>
+                <input
+                    type="button"
+                    value="__MSG_options_importExportInstallAllButton__"
+                    id="import_all_button"
+                />
             </div>
         </div>
         <script src="scripts/util.js"></script>

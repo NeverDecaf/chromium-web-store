@@ -69,6 +69,14 @@
         "message": "Always download CRX files",
         "description": ""
     },
+    "options_webstoreIntegrationTooltip": {
+        "message": "Enable Install/Uninstall buttons on the Chrome Web Store. (Could expose information about which extensions you have installed to Google.)",
+        "description": ""
+    },
+    "options_webstoreIntegration": {
+        "message": "Enable Chrome Web Store Integration",
+        "description": ""
+    },
     "options_importExportInstallAllButton": {
         "message": "Install All",
         "description": ""

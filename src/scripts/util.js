@@ -9,6 +9,7 @@ const DEFAULT_MANAGEMENT_OPTIONS = {
     update_period_in_minutes: 60,
     removed_extensions: {},
     manually_install: false,
+    webstore_integration: true,
 };
 var fromXML;
 // prettier-ignore
@@ -39,7 +40,7 @@ const is_ncws = /chromewebstore.google.com\//i;
 const is_ows = /addons.opera.com\/.*extensions/i;
 const is_ews = /microsoftedge\.microsoft\.com\/addons\//i;
 const cws_re = /.*detail\/[^\/]*\/([a-z]{32})/i;
-const ncws_re = /.*detail\/[^\/]*\/([a-z]{32})/i;
+const ncws_re = /.*detail(?:\/[^\/]+)?\/([a-z]{32})/i;
 const ows_re = /.*details\/([^\/?#]+)/i;
 const ews_re = /.*addons\/.+?\/([a-z]{32})/i;
 
