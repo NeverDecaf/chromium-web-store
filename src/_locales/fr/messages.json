@@ -57,9 +57,38 @@
             }
         }
     },
+    "options_advanced": {
+	"message": "Avancé",
+	"decriptions": ""
+    },
+    "options_manuallyInstallTooltip": {
+        "message": "Changez cette option si vous avez des erreurs 'CRX_REQUIRED_PROOF_MISSING'",
+        "description": ""
+    },
+    "options_manuallyInstall": {
+        "message": "Toujours télécharger les fichiers CRX",
+        "description": ""
+    },
+    "options_webstoreIntegrationTooltip": {
+        "message": "Activer les boutons Ajouter/Supprimer dans le Chrome Web Store. (Peut exposer les informations sur quel extensions vous avez installer à Google.)",
+        "description": ""
+    },
+    "options_webstoreIntegration": {
+        "message": "Activer l'integration au Chrome Web Store",
+        "description": ""
+    },
     "options_importExportInstallAllButton": {
         "message": "Tout installer",
         "description": ""
+    },
+    "options_importExportDescription": {
+        "message": "Sauvegardez le texte ici dans un fichier à exporter. Pour importer, collez le texte ici et appuyez sur $installButton",
+        "description": "installButton est le texte sur le bouton, défini dans options_importExportInstallAllButton",
+        "placeholders": {
+            "installButton": {
+                "content": "$1"
+            }
+        }
     },
     "popup_checkingForUpdates": {
         "message": "Recherche de mises à jour...",
@@ -96,6 +125,14 @@
     },
     "webstore_removeButton": {
         "message": "Supprimer de Chromium",
+        "description": ""
+    },
+    "notify_manuallyInstall_title": {
+        "message": "Extension téléchargées! Merci d'installer manuellement:",
+        "description": ""
+    },
+    "notify_manuallyInstall_message": {
+        "message": "1. Activez le mode développeur (En haut à droite)\n2. Glissez .crx depuis la bar de téléchargements dans la page extensions",
         "description": ""
     }
 }
