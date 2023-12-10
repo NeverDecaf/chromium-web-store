@@ -12,7 +12,7 @@ update_status.setAttribute("id", "updateStatus");
 removed_text.innerHTML = chrome.i18n.getMessage("popup_removedExtensions");
 removed_status.setAttribute(
     "title",
-    chrome.i18n.getMessage("popup_removedExtensionsTooltip")
+    chrome.i18n.getMessage("popup_removedExtensionsTooltip"),
 );
 removed_status.appendChild(removed_text);
 removed_status.setAttribute("id", "removedStatus");
@@ -28,7 +28,7 @@ checkForUpdates(
         let li = document.createElement("li");
         li.setAttribute(
             "data-enabled",
-            installed_versions[appid].enabled ? "true" : "false"
+            installed_versions[appid].enabled ? "true" : "false",
         );
         let img = document.createElement("img");
         img.setAttribute("alt", installed_versions[appid].name);
@@ -39,12 +39,12 @@ checkForUpdates(
                     appid +
                     "/" +
                     installed_versions[appid].icons[0].size +
-                    "/0"
+                    "/0",
             );
         else
             img.setAttribute(
                 "src",
-                "chrome://extension-icon/" + appid + "/16/0"
+                "chrome://extension-icon/" + appid + "/16/0",
             );
         li.appendChild(img);
         span = document.createElement("span");
@@ -52,7 +52,7 @@ checkForUpdates(
         li.appendChild(span);
         li.setAttribute(
             "title",
-            installed_versions[appid].version + " ⇒ " + updatever
+            installed_versions[appid].version + " ⇒ " + updatever,
         );
         storepage = document.createElement("a");
         storepage.setAttribute("target", "_blank");
@@ -61,13 +61,13 @@ checkForUpdates(
         if (is_webstore) {
             storepage.setAttribute(
                 "href",
-                "https://chrome.google.com/webstore/detail/" + appid
+                "https://chrome.google.com/webstore/detail/" + appid,
             );
             li.appendChild(storepage);
         } else if (installed_versions[appid].homepageUrl) {
             storepage.setAttribute(
                 "href",
-                installed_versions[appid].homepageUrl
+                installed_versions[appid].homepageUrl,
             );
             li.appendChild(storepage);
         }
@@ -92,12 +92,12 @@ checkForUpdates(
                         extData.id +
                         "/" +
                         extData.icons[0].size +
-                        "/0"
+                        "/0",
                 );
             else
                 img.setAttribute(
                     "src",
-                    "chrome://extension-icon/ocaahdebbfolfmndjeplogmgcagdmblk/16/0"
+                    `chrome://extension-icon/${chrome.runtime.id}/16/0`,
                 );
             li.appendChild(img);
         }
@@ -131,13 +131,13 @@ checkForUpdates(
                                 .length == 0
                         )
                             removed_status.classList.add("hidden");
-                    }
+                    },
                 );
             };
         } else {
             span.innerHTML = chrome.i18n.getMessage(
                 "popup_updateFailed",
-                extData.name
+                extData.name,
             );
             appcontainer.appendChild(li);
             if (extData.updateUrl) {
@@ -158,12 +158,12 @@ checkForUpdates(
                                 });
                             };
                         }
-                    }
+                    },
                 );
             }
         }
     },
     function () {
         update_text.innerHTML = chrome.i18n.getMessage("popup_allUpToDate");
-    }
+    },
 );

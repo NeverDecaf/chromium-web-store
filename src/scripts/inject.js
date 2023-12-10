@@ -175,6 +175,7 @@ function injectScript(file_path, tag) {
     var node = document.getElementsByTagName(tag)[0];
     var script = document.createElement("script");
     script.setAttribute("type", "text/javascript");
+    script.setAttribute("extension_id", chrome.runtime.id);
     script.setAttribute("src", file_path);
     node.appendChild(script);
 }

@@ -1,8 +1,7 @@
 // https://source.chromium.org/chromium/chromium/src/+/main:chrome/common/extensions/api/webstore_private.json
 const ncws_re = /.*detail(?:\/[^\/]+)?\/([a-z]{32})/i; // copied from util.js since it's out of context
 const THIS_EXT_ID = ncws_re.exec(window.location.href)[1];
-const EXT_ID = "ocaahdebbfolfmndjeplogmgcagdmblk"; // need to hardcode this so it's available immediately. (chrome.runtime.id will be undefined in this context)
-
+const EXT_ID = document.currentScript.getAttribute("extension_id");
 const port = chrome.runtime.connect(EXT_ID, { name: "windowchromeport" });
 const CALLBACKS = [];
 port.onMessage.addListener((msg, port) => {
