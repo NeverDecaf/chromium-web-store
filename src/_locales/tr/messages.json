@@ -25,7 +25,7 @@
         "description": ""
     },
     "options_autoUpdateTooltip": {
-        "message": "Manuel kontrol yapmak için Chromium Web Mağazası amblemine tıklayın",
+        "message": "Elle kontrol yapmak için Chromium Web Mağazası rozetine tıklayın",
         "description": ""
     },
     "options_updateWebstore": {
@@ -56,6 +56,26 @@
                 "content": "$1"
             }
         }
+    },
+    "options_advanced": {
+        "message": "Gelişmiş",
+        "description": ""
+    },
+    "options_manuallyInstallTooltip": {
+        "message": "Eğer 'CRX_REQUIRED_PROOF_MISSING' hataları alıyorsanız, bu seçeneği etkinleştirin",
+        "description": ""
+    },
+    "options_manuallyInstall": {
+        "message": "CRX dosyalarını her zaman indir",
+        "description": ""
+    },
+    "options_webstoreIntegrationTooltip": {
+        "message": "Chrome Web Mağazası'nda Yükle/Kaldır düğmelerini etkinleştir. (Google'a hangi uzantıları yüklediğinize dair bilgileri ifşa edebilir.)",
+        "description": ""
+    },
+    "options_webstoreIntegration": {
+        "message": "Chrome Web Store Bağlantısını Etkinleştir",
+        "description": ""
     },
     "options_importExportInstallAllButton": {
         "message": "Hepsini Yükle",
@@ -105,6 +125,14 @@
     },
     "webstore_removeButton": {
         "message": "Chromium'dan kaldır",
+        "description": ""
+    },
+    "notify_manuallyInstall_title": {
+        "message": "Eklenti indirildi! Lütfen elle yükleyin:",
+        "description": ""
+    },
+    "notify_manuallyInstall_message": {
+        "message": "1. Geliştirici Modu'nu etkinleştirin (sağ üstten) \n2. İndirilenler'den .crx dosyasını Uzantılar sayfasına sürükleyin",
         "description": ""
     }
 }
