@@ -1,110 +1,134 @@
 {
-    "extension_Name": {
-        "message": "Chromium Nettmarked",
-        "description": "The title of the extension, displayed in the Chrome Web Store."
-    },
-    "extension_Description": {
-        "message": "Aktiverer installasjon og halvautomatisk oppdatering for utvidelser fra Chrome Nettmarked (eller andre steder) for Chromium-baserte nettlesere.",
-        "description": "The description of the extension, displayed in the Chrome Web Store."
-    },
-
-    "options_updateHeading": {
-        "message": "Oppdateringsalternativer",
-        "description": ""
-    },
-    "options_ignoredExtensionsHeading": {
-        "message": "Ignorerte utvidelser",
-        "description": ""
-    },
-    "options_importExportHeading": {
-        "message": "Importer/Eksporter",
-        "description": ""
-    },
-    "options_autoUpdate": {
-        "message": "Se etter utvidelsesoppdateringer automatisk",
-        "description": ""
-    },
-    "options_autoUpdateTooltip": {
-        "message": "Klikk på Chromium Nettmarked-merket for å utføre en manuell sjekk",
-        "description": ""
-    },
-    "options_updateWebstore": {
-        "message": "Se etter oppdateringer for Chrome Nettmarked-utvidelser",
-        "description": ""
-    },
-    "options_updateWebstoreTooltip": {
-        "message": "Vil kontakte Google for å se etter oppdateringer",
-        "description": ""
-    },
-    "options_updateNonWebstore": {
-        "message": "Se etter oppdateringer for utvidelser som ikke er fra Chrome Nettmarked",
-        "description": ""
-    },
-    "options_updateNonWebstoreTooltip": {
-        "message": "Fungerer bare hvis utvidelsen støtter auto-oppdatering",
-        "description": ""
-    },
-    "options_neverCheckTooltip": {
-        "message": "Se aldri etter oppdateringer for denne utvidelsen",
-        "description": ""
-    },
-    "options_updateDelay": {
-        "message": "Se etter oppdateringer hvert $delayInMinutes$ minutt",
-        "description": "delayInMinutes will be a field that can be edited by the user",
-        "placeholders": {
-            "delayInMinutes": {
-                "content": "$1"
-            }
-        }
-    },
-    "options_importExportInstallAllButton": {
-        "message": "Installer alle",
-        "description": ""
-    },
-    "options_importExportDescription": {
-        "message": "Lagre teksten her til en fil for eksport. For å importere: lim inn teksten her og trykk $installButton$",
-        "description": "installButton is the text on the button, defined in options_importExportInstallAllButton",
-        "placeholders": {
-            "installButton": {
-                "content": "$1"
-            }
-        }
-    },
-    "popup_checkingForUpdates": {
-        "message": "Ser etter oppdateringer...",
-        "description": ""
-    },
-    "popup_allUpToDate": {
-        "message": "Alle utvidelser er oppdatert!",
-        "description": ""
-    },
-    "popup_updateFailed": {
-        "message": "$extName$ Oppdatering mislyktes",
-        "description": "extName will be the name of the extension that failed to update.",
-        "placeholders": {
-            "extName": {
-                "content": "$1"
-            }
-        }
-    },
-    "popup_removedExtensions": {
-        "message": "Følgende utvidelser er fjernet fra Chrome Nettmarked",
-        "description": "Will be shown above list of removed extensions."
-    },
-    "popup_removedExtensionsTooltip": {
-        "message": "Disse kan ha blitt fjernet på grunn av brudd på vilkårene for bruk.",
-        "description": "Shown when hovering over popup_removedExtensions."
-    },
-    "contextMenu_updateAll": {
-        "message": "Oppdater alle utvidelser",
-        "description": ""
-    },
-    "webstore_addButton": {
-        "message": "Legg til i Chromium",
-        "description": ""
-    },
-    "webstore_removeButton": {
-        "message": "Fjern fra Chromium",
-        "description": ""
+  "extension_Name": {
+    "message": "Chromium Nettmarked",
+    "description": "The title of the extension, displayed in the Chrome Web Store."
+  },
+  "extension_Description": {
+    "message": "Aktiverer installasjon og halvautomatisk oppdatering for utvidelser fra Chrome Nettmarked (eller andre steder) for Chromium-baserte nettlesere.",
+    "description": "The description of the extension, displayed in the Chrome Web Store."
+  },
+  "options_updateHeading": {
+    "message": "Oppdateringsalternativer",
+    "description": ""
+  },
+  "options_ignoredExtensionsHeading": {
+    "message": "Ignorerte utvidelser",
+    "description": ""
+  },
+  "options_importExportHeading": {
+    "message": "Importer/Eksporter",
+    "description": ""
+  },
+  "options_autoUpdate": {
+    "message": "Se etter utvidelsesoppdateringer automatisk",
+    "description": ""
+  },
+  "options_autoUpdateTooltip": {
+    "message": "Klikk på Chromium Nettmarked-merket for å utføre en manuell sjekk",
+    "description": ""
+  },
+  "options_updateWebstore": {
+    "message": "Se etter oppdateringer for Chrome Nettmarked-utvidelser",
+    "description": ""
+  },
+  "options_updateWebstoreTooltip": {
+    "message": "Vil kontakte Google for å se etter oppdateringer",
+    "description": ""
+  },
+  "options_updateNonWebstore": {
+    "message": "Se etter oppdateringer for utvidelser som ikke er fra Chrome Nettmarked",
+    "description": ""
+  },
+  "options_updateNonWebstoreTooltip": {
+    "message": "Fungerer bare hvis utvidelsen støtter auto-oppdatering",
+    "description": ""
+  },
+  "options_neverCheckTooltip": {
+    "message": "Se aldri etter oppdateringer for denne utvidelsen",
+    "description": ""
+  },
+  "options_updateDelay": {
+    "message": "Se etter oppdateringer hvert $delayInMinutes$ minutt",
+    "description": "delayInMinutes will be a field that can be edited by the user",
+    "placeholders": {
+      "delayInMinutes": {
+        "content": "$1"
+      }
     }
+  },
+  "options_importExportInstallAllButton": {
+    "message": "Installer alle",
+    "description": ""
+  },
+  "options_importExportDescription": {
+    "message": "Lagre teksten her til en fil for eksport. For å importere: lim inn teksten her og trykk $installButton$",
+    "description": "installButton is the text on the button, defined in options_importExportInstallAllButton",
+    "placeholders": {
+      "installButton": {
+        "content": "$1"
+      }
+    }
+  },
+  "popup_checkingForUpdates": {
+    "message": "Ser etter oppdateringer...",
+    "description": ""
+  },
+  "popup_allUpToDate": {
+    "message": "Alle utvidelser er oppdatert!",
+    "description": ""
+  },
+  "popup_updateFailed": {
+    "message": "$extName$ Oppdatering mislyktes",
+    "description": "extName will be the name of the extension that failed to update.",
+    "placeholders": {
+      "extName": {
+        "content": "$1"
+      }
+    }
+  },
+  "popup_removedExtensions": {
+    "message": "Følgende utvidelser er fjernet fra Chrome Nettmarked",
+    "description": "Will be shown above list of removed extensions."
+  },
+  "popup_removedExtensionsTooltip": {
+    "message": "Disse kan ha blitt fjernet på grunn av brudd på vilkårene for bruk.",
+    "description": "Shown when hovering over popup_removedExtensions."
+  },
+  "contextMenu_updateAll": {
+    "message": "Oppdater alle utvidelser",
+    "description": ""
+  },
+  "webstore_addButton": {
+    "message": "Legg til i Chromium",
+    "description": ""
+  },
+  "webstore_removeButton": {
+    "message": "Fjern fra Chromium",
+    "description": ""
+  },
+  "options_webstoreIntegrationTooltip": {
+    "message": "Aktiver Installer/Avinstaller-knapper på Chrome Nettmarked. (Kan avsløre informasjon om hvilke utvidelser du har installert for Google.)",
+    "description": "MTL"
+  },
+  "options_manuallyInstall": {
+    "message": "Last alltid ned CRX-filer",
+    "description": "MTL"
+  },
+  "options_advanced": { "message": "Avansert", "description": "MTL" },
+  "notify_manuallyInstall_title": {
+    "message": "Utvidelsen er lastet ned! Vennligst installer manuelt:",
+    "description": "MTL"
+  },
+  "notify_manuallyInstall_message": {
+    "message": "1. Aktiver utviklermodus (øverst til høyre)\n2. Dra .crx fra nedlastingslinjen til utvidelsessiden",
+    "description": "MTL"
+  },
+  "options_manuallyInstallTooltip": {
+    "message": "Slå på dette alternativet hvis du får 'CRX_REQUIRED_PROOF_MISSING'-feil",
+    "description": "MTL"
+  },
+  "options_webstoreIntegration": {
+    "message": "Aktiver Chrome Nettmarked-integrasjon",
+    "description": "MTL"
+  }
 }

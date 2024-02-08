@@ -1,110 +1,134 @@
 {
-    "extension_Name": {
-        "message": "Chromium Web Mağazası",
-        "description": "Chrome Web Mağazası'nda görüntülenen uzantının başlığı."
-    },
-    "extension_Description": {
-        "message": "Chromium tabanlı tarayıcılarda Chrome Web Mağazası'ndan (veya başka bir yerden) uzantılar için yükleme ve yarı otomatik güncelleme sağlar.",
-        "description": "Chrome Web Mağazası'nda görüntülenen uzantının başlığı."
-    },
-
-    "options_updateHeading": {
-        "message": "Güncelleme seçenekleri",
-        "description": ""
-    },
-    "options_ignoredExtensionsHeading": {
-        "message": "Yoksayılan uzantılar",
-        "description": ""
-    },
-    "options_importExportHeading": {
-        "message": "İçe/Dışa Aktar",
-        "description": ""
-    },
-    "options_autoUpdate": {
-        "message": "Uzantı güncellemelerini otomatik olarak denetle",
-        "description": ""
-    },
-    "options_autoUpdateTooltip": {
-        "message": "Manuel kontrol yapmak için Chromium Web Mağazası amblemine tıklayın",
-        "description": ""
-    },
-    "options_updateWebstore": {
-        "message": "Chrome Web Mağazası uzantılarında güncelleme olup olmadığını denetle",
-        "description": ""
-    },
-    "options_updateWebstoreTooltip": {
-        "message": "Güncellemeleri denetlemek için Google ile iletişime geçilecek",
-        "description": ""
-    },
-    "options_updateNonWebstore": {
-        "message": "Chrome Web Mağazası'ndan olmayan uzantılara yönelik güncellemeleri denetle",
-        "description": ""
-    },
-    "options_updateNonWebstoreTooltip": {
-        "message": "Yalnızca uzantı otomatik güncellemeyi destekliyorsa çalışır",
-        "description": ""
-    },
-    "options_neverCheckTooltip": {
-        "message": "Bu uzantının güncellemelerini asla denetleme",
-        "description": ""
-    },
-    "options_updateDelay": {
-        "message": "Her $delayInMinutes$ dakikada bir güncellemeleri denetle",
-        "description": "delayInMinutes kullanıcı tarafından düzenlenebilen bir alan olacaktır",
-        "placeholders": {
-            "delayInMinutes": {
-                "content": "$1"
-            }
-        }
-    },
-    "options_importExportInstallAllButton": {
-        "message": "Hepsini Yükle",
-        "description": ""
-    },
-    "options_importExportDescription": {
-        "message": "Metni dışa aktarmak için buraya bir dosyaya kaydedin. İçe aktarmak için bu metni buraya yapıştırın ve $installButton$'a basın",
-        "description": "installButton options_importExportInstallAllButton içinde tanımlanan düğme üzerindeki metindir",
-        "placeholders": {
-            "installButton": {
-                "content": "$1"
-            }
-        }
-    },
-    "popup_checkingForUpdates": {
-        "message": "Güncellemeler denetleniyor...",
-        "description": ""
-    },
-    "popup_allUpToDate": {
-        "message": "Tüm uzantılar güncel!",
-        "description": ""
-    },
-    "popup_updateFailed": {
-        "message": "$extName$ Güncelleme başarısız oldu",
-        "description": "extName güncellenemeyen uzantının adı olacaktır.",
-        "placeholders": {
-            "extName": {
-                "content": "$1"
-            }
-        }
-    },
-    "popup_removedExtensions": {
-        "message": "Aşağıdaki uzantılar Chrome Web Mağazası'ndan kaldırıldı",
-        "description": "Kaldırılan uzantıların listesinin üstünde gösterilecektir."
-    },
-    "popup_removedExtensionsTooltip": {
-        "message": "Bunlar, Hizmet Koşulları'nın ihlali nedeniyle kaldırılmış olabilir.",
-        "description": "Popup_removedExtensions'ın üzerine gelindiğinde gösterilir."
-    },
-    "contextMenu_updateAll": {
-        "message": "Tüm uzantıları güncelle",
-        "description": ""
-    },
-    "webstore_addButton": {
-        "message": "Chromium'a ekle",
-        "description": ""
-    },
-    "webstore_removeButton": {
-        "message": "Chromium'dan kaldır",
-        "description": ""
+  "extension_Name": {
+    "message": "Chromium Web Mağazası",
+    "description": "Chrome Web Mağazası'nda görüntülenen uzantının başlığı."
+  },
+  "extension_Description": {
+    "message": "Chromium tabanlı tarayıcılarda Chrome Web Mağazası'ndan (veya başka bir yerden) uzantılar için yükleme ve yarı otomatik güncelleme sağlar.",
+    "description": "Chrome Web Mağazası'nda görüntülenen uzantının başlığı."
+  },
+  "options_updateHeading": {
+    "message": "Güncelleme seçenekleri",
+    "description": ""
+  },
+  "options_ignoredExtensionsHeading": {
+    "message": "Yoksayılan uzantılar",
+    "description": ""
+  },
+  "options_importExportHeading": {
+    "message": "İçe/Dışa Aktar",
+    "description": ""
+  },
+  "options_autoUpdate": {
+    "message": "Uzantı güncellemelerini otomatik olarak denetle",
+    "description": ""
+  },
+  "options_autoUpdateTooltip": {
+    "message": "Manuel kontrol yapmak için Chromium Web Mağazası amblemine tıklayın",
+    "description": ""
+  },
+  "options_updateWebstore": {
+    "message": "Chrome Web Mağazası uzantılarında güncelleme olup olmadığını denetle",
+    "description": ""
+  },
+  "options_updateWebstoreTooltip": {
+    "message": "Güncellemeleri denetlemek için Google ile iletişime geçilecek",
+    "description": ""
+  },
+  "options_updateNonWebstore": {
+    "message": "Chrome Web Mağazası'ndan olmayan uzantılara yönelik güncellemeleri denetle",
+    "description": ""
+  },
+  "options_updateNonWebstoreTooltip": {
+    "message": "Yalnızca uzantı otomatik güncellemeyi destekliyorsa çalışır",
+    "description": ""
+  },
+  "options_neverCheckTooltip": {
+    "message": "Bu uzantının güncellemelerini asla denetleme",
+    "description": ""
+  },
+  "options_updateDelay": {
+    "message": "Her $delayInMinutes$ dakikada bir güncellemeleri denetle",
+    "description": "delayInMinutes kullanıcı tarafından düzenlenebilen bir alan olacaktır",
+    "placeholders": {
+      "delayInMinutes": {
+        "content": "$1"
+      }
     }
+  },
+  "options_importExportInstallAllButton": {
+    "message": "Hepsini Yükle",
+    "description": ""
+  },
+  "options_importExportDescription": {
+    "message": "Metni dışa aktarmak için buraya bir dosyaya kaydedin. İçe aktarmak için bu metni buraya yapıştırın ve $installButton$'a basın",
+    "description": "installButton options_importExportInstallAllButton içinde tanımlanan düğme üzerindeki metindir",
+    "placeholders": {
+      "installButton": {
+        "content": "$1"
+      }
+    }
+  },
+  "popup_checkingForUpdates": {
+    "message": "Güncellemeler denetleniyor...",
+    "description": ""
+  },
+  "popup_allUpToDate": {
+    "message": "Tüm uzantılar güncel!",
+    "description": ""
+  },
+  "popup_updateFailed": {
+    "message": "$extName$ Güncelleme başarısız oldu",
+    "description": "extName güncellenemeyen uzantının adı olacaktır.",
+    "placeholders": {
+      "extName": {
+        "content": "$1"
+      }
+    }
+  },
+  "popup_removedExtensions": {
+    "message": "Aşağıdaki uzantılar Chrome Web Mağazası'ndan kaldırıldı",
+    "description": "Kaldırılan uzantıların listesinin üstünde gösterilecektir."
+  },
+  "popup_removedExtensionsTooltip": {
+    "message": "Bunlar, Hizmet Koşulları'nın ihlali nedeniyle kaldırılmış olabilir.",
+    "description": "Popup_removedExtensions'ın üzerine gelindiğinde gösterilir."
+  },
+  "contextMenu_updateAll": {
+    "message": "Tüm uzantıları güncelle",
+    "description": ""
+  },
+  "webstore_addButton": {
+    "message": "Chromium'a ekle",
+    "description": ""
+  },
+  "webstore_removeButton": {
+    "message": "Chromium'dan kaldır",
+    "description": ""
+  },
+  "notify_manuallyInstall_message": {
+    "message": "1. Geliştirici modunu etkinleştirin (sağ üstte)\n2. .crx dosyasını indirme çubuğundan uzantılar sayfasına sürükleyin",
+    "description": "MTL"
+  },
+  "options_webstoreIntegration": {
+    "message": "Chrome Web Mağazası Entegrasyonunu Etkinleştirin",
+    "description": "MTL"
+  },
+  "options_manuallyInstallTooltip": {
+    "message": "'CRX_REQUIRED_PROOF_MISSING' hataları alıyorsanız bu seçeneği değiştirin",
+    "description": "MTL"
+  },
+  "options_advanced": { "message": "Gelişmiş", "description": "MTL" },
+  "notify_manuallyInstall_title": {
+    "message": "Uzantı indirildi! Lütfen manuel olarak yükleyin:",
+    "description": "MTL"
+  },
+  "options_manuallyInstall": {
+    "message": "Her zaman CRX dosyalarını indirin",
+    "description": "MTL"
+  },
+  "options_webstoreIntegrationTooltip": {
+    "message": "Chrome Web Mağazası'ndaki Yükle/Kaldır düğmelerini etkinleştirin. (Google'a hangi uzantıları yüklediğinize ilişkin bilgilerin açığa çıkmasına neden olabilir.)",
+    "description": "MTL"
+  }
 }

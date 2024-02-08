@@ -1,12 +1,6 @@
 function load_options() {
     var maindiv = document.getElementById("updatetoggle");
-    var default_options = {
-        auto_update: true,
-        check_store_apps: true,
-        check_external_apps: true,
-        update_period_in_minutes: 60,
-        manually_install: false,
-    };
+    var default_options = { ...DEFAULT_MANAGEMENT_OPTIONS };
     chrome.management.getAll(function (e) {
         e = e.filter((ex) => ex.updateUrl);
         installed_extensions = e.map((ex) => ex.id);
@@ -95,7 +89,7 @@ function load_options() {
                     updatever,
                     is_webstore
                 ) {
-                    let crx_url = updateCheck.getAttribute("codebase");
+                    let crx_url = updateCheck["@codebase"];
                     promptInstall(crx_url, is_webstore);
                 },
                 null,
@@ -112,36 +106,38 @@ function load_options() {
                 delete items.ignored_extensions;
                 for (const [setting, value] of Object.entries(items)) {
                     let node = document.getElementById(setting);
-                    if (node.type == "checkbox") {
-                        if (!node.checked) node.checked = value;
-                        node.addEventListener("change", (e) => {
-                            const checked = e.target.checked;
-                            chrome.storage.sync.set(
-                                {
-                                    [e.target.id]: checked,
-                                },
-                                function () {
-                                    if (chrome.runtime.lastError) {
-                                        node.checked = !checked;
+                    if (node) {
+                        if (node.type == "checkbox") {
+                            if (!node.checked) node.checked = value;
+                            node.addEventListener("change", (e) => {
+                                const checked = e.target.checked;
+                                chrome.storage.sync.set(
+                                    {
+                                        [e.target.id]: checked,
+                                    },
+                                    function () {
+                                        if (chrome.runtime.lastError) {
+                                            node.checked = !checked;
+                                        }
                                     }
-                                }
-                            );
-                        });
-                    } else {
-                        node.value = value;
-                        node.addEventListener("input", (e) => {
-                            const val = parseInt(e.target.value) || 60;
-                            chrome.storage.sync.set(
-                                {
-                                    [e.target.id]: Math.max(1, val),
-                                },
-                                function () {
-                                    if (chrome.runtime.lastError) {
-                                        node.value = "60";
+                                );
+                            });
+                        } else {
+                            node.value = value;
+                            node.addEventListener("input", (e) => {
+                                const val = parseInt(e.target.value) || 60;
+                                chrome.storage.sync.set(
+                                    {
+                                        [e.target.id]: Math.max(1, val),
+                                    },
+                                    function () {
+                                        if (chrome.runtime.lastError) {
+                                            node.value = "60";
+                                        }
                                     }
-                                }
-                            );
-                        });
+                                );
+                            });
+                        }
                     }
                 }
                 document.querySelectorAll("label.sub").forEach((node) => {
