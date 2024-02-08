@@ -1,101 +1,130 @@
 {
-    "extension_Name": {
-        "message": "Chromium Web Store",
-        "description": "Название расширения, отображаемое в Web Store."
-    },
-    "extension_Description": {
-        "message": "Включает установку и полуавтоматическое обновление расширений из Chrome Web Store (или других сайтов) в браузерах, основанных на Chromium.",
-        "description": "Описание расширения, отображаемое в Web Store."
-    },
-
-    "options_updateHeading": {
-        "message": "Настройки обновлений",
-        "description": ""
-    },
-    "options_ignoredExtensionsHeading": {
-        "message": "Исключенные расширения",
-        "description": ""
-    },
-    "options_importExportHeading": {
-        "message": "Импорт/Экспорт",
-        "description": ""
-    },
-    "options_autoUpdate": {
-        "message": "Автоматически проверять обновления расширений",
-        "description": ""
-    },
-    "options_autoUpdateTooltip": {
-        "message": "Нажмите на ярлык Chromium Web Store, чтобы выполнить ручную проверку",
-        "description": ""
-    },
-    "options_updateWebstore": {
-        "message": "Проверять обновления расширений из Web Store",
-        "description": ""
-    },
-    "options_updateWebstoreTooltip": {
-        "message": "Для проверки обновлений требуется подключение к серверам Google",
-        "description": ""
-    },
-    "options_updateNonWebstore": {
-        "message": "Проверять обновления расширений не из Web Store",
-        "description": ""
-    },
-    "options_updateNonWebstoreTooltip": {
-        "message": "Работает только в том случае, если расширение поддерживает автоматическое обновление",
-        "description": ""
-    },
-    "options_neverCheckTooltip": {
-        "message": "Никогда не проверять обновления для этого расширения",
-        "description": ""
-    },
-    "options_updateDelay": {
-        "message": "Проверять наличие обновлений каждые $delayInMinutes$ минут",
-        "description": "delayInMinutes - поле, содержимое которого может изменять пользователь",
-        "placeholders": {
-            "delayInMinutes": {
-                "content": "$1"
-            }
-        }
-    },
-    "options_importExportInstallAllButton": {
-        "message": "Установить все",
-        "description": ""
-    },
-    "popup_checkingForUpdates": {
-        "message": "Проверка обновлений...",
-        "description": ""
-    },
-    "popup_allUpToDate": {
-        "message": "Обновлений расширений нет!",
-        "description": ""
-    },
-    "popup_updateFailed": {
-        "message": "$extName$: не удалось обновить",
-        "description": "extName - название расширения, которое не удалось обновить.",
-        "placeholders": {
-            "extName": {
-                "content": "$1"
-            }
-        }
-    },
-    "popup_removedExtensions": {
-        "message": "Данные расширения были удалены из Chrome Web Store",
-        "description": "Отображается вверху списка удаленных расширений."
-    },
-    "popup_removedExtensionsTooltip": {
-        "message": "Они могли быть удалены из-за нарушения Условий использования.",
-        "description": "Отображается при наведении на popup_removedExtensions."
-    },
-    "contextMenu_updateAll": {
-        "message": "Обновить все расширения",
-        "description": ""
-    },
-    "webstore_addButton": {
-        "message": "Добавить в Chromium",
-        "description": ""
-    },
-    "webstore_removeButton": {
-        "message": "Удалить из Chromium",
-        "description": ""
+  "extension_Name": {
+    "message": "Chromium Web Store",
+    "description": "Название расширения, отображаемое в Web Store."
+  },
+  "extension_Description": {
+    "message": "Включает установку и полуавтоматическое обновление расширений из Chrome Web Store (или других сайтов) в браузерах, основанных на Chromium.",
+    "description": "Описание расширения, отображаемое в Web Store."
+  },
+  "options_updateHeading": {
+    "message": "Настройки обновлений",
+    "description": ""
+  },
+  "options_ignoredExtensionsHeading": {
+    "message": "Исключенные расширения",
+    "description": ""
+  },
+  "options_importExportHeading": {
+    "message": "Импорт/Экспорт",
+    "description": "MTL"
+  },
+  "options_autoUpdate": {
+    "message": "Автоматически проверять обновления расширений",
+    "description": ""
+  },
+  "options_autoUpdateTooltip": {
+    "message": "Нажмите на ярлык Chromium Web Store, чтобы выполнить ручную проверку",
+    "description": ""
+  },
+  "options_updateWebstore": {
+    "message": "Проверять обновления расширений из Web Store",
+    "description": ""
+  },
+  "options_updateWebstoreTooltip": {
+    "message": "Для проверки обновлений требуется подключение к серверам Google",
+    "description": ""
+  },
+  "options_updateNonWebstore": {
+    "message": "Проверять обновления расширений не из Web Store",
+    "description": ""
+  },
+  "options_updateNonWebstoreTooltip": {
+    "message": "Работает только в том случае, если расширение поддерживает автоматическое обновление",
+    "description": ""
+  },
+  "options_neverCheckTooltip": {
+    "message": "Никогда не проверять обновления для этого расширения",
+    "description": ""
+  },
+  "options_updateDelay": {
+    "message": "Проверять наличие обновлений каждые $delayInMinutes$ минут",
+    "description": "delayInMinutes - поле, содержимое которого может изменять пользователь",
+    "placeholders": {
+      "delayInMinutes": {
+        "content": "$1"
+      }
     }
+  },
+  "options_importExportInstallAllButton": {
+    "message": "Установить все",
+    "description": "MTL"
+  },
+  "popup_checkingForUpdates": {
+    "message": "Проверка обновлений...",
+    "description": ""
+  },
+  "popup_allUpToDate": {
+    "message": "Обновлений расширений нет!",
+    "description": ""
+  },
+  "popup_updateFailed": {
+    "message": "$extName$: не удалось обновить",
+    "description": "extName - название расширения, которое не удалось обновить.",
+    "placeholders": {
+      "extName": {
+        "content": "$1"
+      }
+    }
+  },
+  "popup_removedExtensions": {
+    "message": "Данные расширения были удалены из Chrome Web Store",
+    "description": "Отображается вверху списка удаленных расширений."
+  },
+  "popup_removedExtensionsTooltip": {
+    "message": "Они могли быть удалены из-за нарушения Условий использования.",
+    "description": "Отображается при наведении на popup_removedExtensions."
+  },
+  "contextMenu_updateAll": {
+    "message": "Обновить все расширения",
+    "description": ""
+  },
+  "webstore_addButton": {
+    "message": "Добавить в Chromium",
+    "description": ""
+  },
+  "webstore_removeButton": {
+    "message": "Удалить из Chromium",
+    "description": "MTL"
+  },
+  "options_manuallyInstall": {
+    "message": "Всегда скачивайте файлы CRX",
+    "description": "MTL"
+  },
+  "notify_manuallyInstall_title": {
+    "message": "Расширение скачано! Пожалуйста, установите вручную:",
+    "description": "MTL"
+  },
+  "options_webstoreIntegration": {
+    "message": "Включить интеграцию с Интернет-магазином Chrome",
+    "description": "MTL"
+  },
+  "options_manuallyInstallTooltip": {
+    "message": "Включите эту опцию, если вы получаете ошибки «CRX_REQUIRED_PROOF_MISSING».",
+    "description": "MTL"
+  },
+  "options_importExportDescription": {
+    "message": "Сохраните текст здесь в файл для экспорта. Чтобы импортировать, вставьте этот текст сюда и нажмите $installButton$.",
+    "description": "MTL",
+    "placeholders": { "installButton": { "content": "$1" } }
+  },
+  "notify_manuallyInstall_message": {
+    "message": "1. Включите режим разработчика (вверху справа)\n2. Перетащите .crx с панели загрузок на страницу расширений.",
+    "description": "MTL"
+  },
+  "options_advanced": { "message": "Передовой", "description": "MTL" },
+  "options_webstoreIntegrationTooltip": {
+    "message": "Включите кнопки «Установить/Удалить» в Интернет-магазине Chrome. (Может предоставить Google информацию о том, какие расширения вы установили.)",
+    "description": "MTL"
+  }
 }
