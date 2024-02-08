@@ -39,7 +39,7 @@
         "scripts": ["scripts/util.js", "scripts/background.js"],
         "persistent": false
     },
-    "update_url": "https://raw.githubusercontent.com/NeverDecaf/chromium-web-store/master/updates.xml",
+    "update_url": "https://raw.githubusercontent.com/NeverDecaf/chromium-web-store/manifestv2/updates.xml",
     "icons": {
         "16": "assets/icon/icon_16.png",
         "24": "assets/icon/icon_24.png",
