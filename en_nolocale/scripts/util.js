@@ -116,10 +116,10 @@ function promptInstall(
                     });
                     break;
                 default:
-                    // copy the edge method instead of window.open(,_blank) so this works in the service worker (mv3)
-                    msgHandler({
-                        newTabUrl: crx_url,
-                    });
+                    window.open(
+                        crx_url,
+                        "_blank"
+                    );
                     break;
             }
             return;
