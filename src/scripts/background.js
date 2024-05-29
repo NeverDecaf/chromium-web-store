@@ -150,9 +150,7 @@ const msgHandler = function (request, sender, sendResponse) {
         );
     }
     if (request.newTabUrl) {
-        chrome.tabs.create({ active: false }, (tab) => {
-            chrome.tabs.update(tab.id, { url: request.newTabUrl });
-        });
+        chrome.tabs.create({ active: false, url: request.newTabUrl });
     }
     if (request.checkExtInstalledId) {
         chrome.management.get(request.checkExtInstalledId, (extinfo) => {
