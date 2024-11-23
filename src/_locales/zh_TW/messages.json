@@ -1,0 +1,138 @@
+{
+    "extension_Name": {
+        "message": "Chromium 線上應用程式商店",
+        "description": "The title of the extension, displayed in the Chrome Web Store."
+    },
+    "extension_Description": {
+        "message": "允許在基於 Chromium 的瀏覽器上安裝和半自動更新來自 Chrome 線上應用程式商店（或其他地方）的擴充功能。",
+        "description": "The description of the extension, displayed in the Chrome Web Store."
+    },
+
+    "options_updateHeading": {
+        "message": "更新選項",
+        "description": ""
+    },
+    "options_ignoredExtensionsHeading": {
+        "message": "已忽略的擴充功能",
+        "description": ""
+    },
+    "options_importExportHeading": {
+        "message": "匯入／匯出",
+        "description": ""
+    },
+    "options_autoUpdate": {
+        "message": "自動檢查擴充功能更新",
+        "description": ""
+    },
+    "options_autoUpdateTooltip": {
+        "message": "點擊 Chromium 線上應用程式商店徽章以執行手動檢查",
+        "description": ""
+    },
+    "options_updateWebstore": {
+        "message": "檢查 Chrome 線上應用程式商店擴充功能的更新",
+        "description": ""
+    },
+    "options_updateWebstoreTooltip": {
+        "message": "將接觸 Google 以檢查更新",
+        "description": ""
+    },
+    "options_updateNonWebstore": {
+        "message": "檢查非 Chrome 線上應用程式商店擴充功能的更新",
+        "description": ""
+    },
+    "options_updateNonWebstoreTooltip": {
+        "message": "僅當擴充功能支援自動更新時有效",
+        "description": ""
+    },
+    "options_neverCheckTooltip": {
+        "message": "從不檢查此擴充功能的更新",
+        "description": ""
+    },
+    "options_updateDelay": {
+        "message": "每 $delayInMinutes$ 分鐘檢查一次更新",
+        "description": "delayInMinutes will be a field that can be edited by the user",
+        "placeholders": {
+            "delayInMinutes": {
+                "content": "$1"
+            }
+        }
+    },
+    "options_advanced": {
+        "message": "進階",
+        "description": ""
+    },
+    "options_manuallyInstallTooltip": {
+        "message": "如果你遇到「CRX_REQUIRED_PROOF_MISSING」錯誤，請啟用此選項",
+        "description": ""
+    },
+    "options_manuallyInstall": {
+        "message": "總是下載 CRX 檔案",
+        "description": ""
+    },
+    "options_webstoreIntegrationTooltip": {
+        "message": "啟用 Chrome 線上應用程式商店中的安裝／解除安裝按鈕。（可能會向 Google 傳送有關你已安裝的擴充功能的資訊。）",
+        "description": ""
+    },
+    "options_webstoreIntegration": {
+        "message": "啟用 Chrome 線上應用程式商店整合",
+        "description": ""
+    },
+    "options_importExportInstallAllButton": {
+        "message": "安裝全部",
+        "description": ""
+    },
+    "options_importExportDescription": {
+        "message": "將此處的文字儲存至檔案以匯出。若要匯入，請將該文字貼上至此處並且點擊「$installButton$」",
+        "description": "installButton is the text on the button, defined in options_importExportInstallAllButton",
+        "placeholders": {
+            "installButton": {
+                "content": "$1"
+            }
+        }
+    },
+    "popup_checkingForUpdates": {
+        "message": "檢查更新中…",
+        "description": ""
+    },
+    "popup_allUpToDate": {
+        "message": "全部擴充功能都是最新的！",
+        "description": ""
+    },
+    "popup_updateFailed": {
+        "message": "「$extName$」更新失敗",
+        "description": "extName will be the name of the extension that failed to update.",
+        "placeholders": {
+            "extName": {
+                "content": "$1"
+            }
+        }
+    },
+    "popup_removedExtensions": {
+        "message": "以下擴充功能已從 Chrome 線上應用程式商店中移除",
+        "description": "Will be shown above list of removed extensions."
+    },
+    "popup_removedExtensionsTooltip": {
+        "message": "這些擴充功能可能因為違反服務條款而被移除。",
+        "description": "Shown when hovering over popup_removedExtensions."
+    },
+    "contextMenu_updateAll": {
+        "message": "更新全部擴充功能",
+        "description": ""
+    },
+    "webstore_addButton": {
+        "message": "增加至 Chromium",
+        "description": ""
+    },
+    "webstore_removeButton": {
+        "message": "從 Chromium 中移除",
+        "description": ""
+    },
+    "notify_manuallyInstall_title": {
+        "message": "擴充功能已下載！請手動安裝：",
+        "description": ""
+    },
+    "notify_manuallyInstall_message": {
+        "message": "1. 啟用開發者模式（右上角）\n2.將 .crx 從下載欄拖曳至擴充功能頁面",
+        "description": ""
+    }
+}
