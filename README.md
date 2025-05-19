@@ -8,7 +8,7 @@ This extension brings the following functionality to ungoogled-chromium (and oth
 
 # Read this first
 
--   **If you are using `ungoogled-chromium`**: You **must** change the flag `chrome://flags/#extension-mime-request-handling` to `Always prompt for install`.
+-   **If you are using `ungoogled-chromium`**: You **must** change the flag `chrome://flags/#extension-mime-request-handling` to `Always prompt for install`. You may need to restart the browser after changing the flag.
 -   **If you are NOT using `ungoogled-chromium`**: Ensure the following option is **checked**: Extension Options (chrome://extensions/?options=ocaahdebbfolfmndjeplogmgcagdmblk) > Advanced > `Always download CRX files`
 -   If you are seeing `CRX_REQUIRED_PROOF_MISSING` or `Apps, extensions and user scripts cannot be added from this website` errors, please be **sure** you have followed the instructions above before opening an issue.
 -   Some extensions may not update until you restart your browser, see [#4](https://github.com/NeverDecaf/chromium-web-store/issues/4).
