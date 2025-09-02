@@ -1,6 +1,5 @@
 // https://source.chromium.org/chromium/chromium/src/+/main:chrome/common/extensions/api/webstore_private.json
 const ncws_re = /.*detail(?:\/[^\/]+)?\/([a-z]{32})/i; // copied from util.js since it's out of context
-const THIS_EXT_ID = ncws_re.exec(window.location.href)[1];
 const EXT_ID = document.currentScript.getAttribute("extension_id");
 const port = chrome.runtime.connect(EXT_ID, { name: "windowchromeport" });
 const CALLBACKS = [];
@@ -68,7 +67,7 @@ window.chrome.management = {
 	getAll: function (cb) {
 		chrome.runtime.sendMessage(
 			EXT_ID,
-			{ func: "getAll", args: [THIS_EXT_ID] },
+			{ func: "getAll", args: [window.location.href] },
 			(resp) => {
 				resp.args && cb(...resp.args);
 			},

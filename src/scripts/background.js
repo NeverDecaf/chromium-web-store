@@ -283,11 +283,12 @@ chrome.runtime.onMessageExternal.addListener(function (
             });
             break;
         case "getAll":
-            var [id, ..._] = request.args;
+            var [href, ..._] = request.args;
+            const target_ext = ncws_re.exec(href)?.[1];
             chrome.management.getAll((exts) => {
                 // instead of exposing entire extension list, filter to only the relevant extension.
                 sendResponse({
-                    args: [exts.filter((extInfo) => extInfo.id === id)],
+                    args: [exts.filter((extInfo) => extInfo.id === target_ext)],
                 });
             });
             break;
